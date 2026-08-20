@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 import ScrollVideo from './ScrollVideo';
 import { AuroraBackground } from '../ui/AuroraBackground';
 import { Meteors } from '../ui/Meteors';
+import { SpotlightCard } from '../react-bits/SpotlightCard';
+import { ShinyText } from '../react-bits/ShinyText';
+import { DecryptedText } from '../react-bits/DecryptedText';
+import { TrueFocus } from '../react-bits/TrueFocus';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -144,25 +148,7 @@ const LandingPage = () => {
     document.addEventListener('mousemove', handlePassportTilt);
     document.addEventListener('mouseleave', handlePassportReset);
 
-    // 6. Word Split Reveal on Subhead with GSAP
-    const subText = subheadRef.current;
-    if (subText) {
-      const words = subText.innerText.split(' ');
-      subText.innerHTML = words.map((w) => `<span class="word-split" style="display:inline-block; opacity:0; transform:translateY(10px)">${w}</span>`).join(' ');
-      const splits = subText.querySelectorAll('.word-split');
-      
-      gsap.to(splits, {
-        scrollTrigger: {
-          trigger: subText,
-          start: "top 80%",
-        },
-        y: 0,
-        opacity: 1,
-        duration: 0.5,
-        stagger: 0.03,
-        ease: "power2.out"
-      });
-    }
+    // Removed GSAP text split on subhead to use TrueFocus instead
 
     // 7. General Reveal Observers
     const revealObserver = new IntersectionObserver(
@@ -441,12 +427,18 @@ const LandingPage = () => {
 
         <div className="hero-copy" ref={heroCopyRef} id="heroCopy">
           <h1>
-            <span className="hero-line"><span>Stop applying</span></span>
-            <span className="hero-line"><span>into the void.</span></span>
+            <span className="hero-line"><ShinyText text="Stop applying" speed={3} className="!text-cover-deep" /></span>
+            <span className="hero-line"><ShinyText text="into the void." speed={4} shineColor="#F3ECD8" className="!text-gold" /></span>
           </h1>
-          <p className="sub" ref={subheadRef} id="subheadText">
-            Build one verified Talent Passport — real evidence, not guesswork — and let employers come to you. You choose who sees it, and what happens next.
-          </p>
+          <div className="sub" id="subheadText" style={{ marginTop: '1rem', marginBottom: '2.5rem' }}>
+            <TrueFocus 
+              words={['Build', 'one', 'verified', 'Passport', '—', 'real', 'evidence', '—', 'and', 'let', 'employers', 'come', 'to', 'you.']} 
+              blurAmount={2.5}
+              borderColor="#C7A868"
+              glowColor="rgba(199, 168, 104, 0.4)"
+              animationDuration={0.3}
+            />
+          </div>
           <div className="hero-actions">
             <Link
               to="/auth/register?role=candidate"
@@ -487,8 +479,8 @@ const LandingPage = () => {
               <div className="page-top">
                 <div className="page-avatar" />
                 <div>
-                  <div className="page-id"><strong>PASSPORT NO.</strong> TX-64471</div>
-                  <div className="page-name">Anika R.</div>
+                  <div className="page-id"><strong>PASSPORT NO.</strong> <DecryptedText text="TX-64471" animateOn="hover" /></div>
+                  <div className="page-name"><ShinyText text="Anika R." speed={2.5} color="#0D1930" shineColor="#C7A868" /></div>
                   <div className="page-role">Backend Engineer</div>
                 </div>
               </div>
@@ -524,11 +516,11 @@ const LandingPage = () => {
           </div>
           <div className="problem-grid">
             {problems.map((problem) => (
-              <div key={problem.num} className="problem-item" data-reveal>
+              <SpotlightCard key={problem.num} className="problem-item border-none !p-8" data-reveal spotlightColor="rgba(199, 168, 104, 0.1)">
                 <span className="num">{problem.num}</span>
                 <h3>{problem.title}</h3>
                 <p>{problem.desc}</p>
-              </div>
+              </SpotlightCard>
             ))}
           </div>
         </div>
@@ -544,11 +536,11 @@ const LandingPage = () => {
           </div>
           <div className="stamp-grid">
             {stamps.map((stamp) => (
-              <div key={stamp.num} className="stamp">
+              <SpotlightCard key={stamp.num} className="stamp border-none !p-6" spotlightColor="rgba(199, 168, 104, 0.1)">
                 <div className="stamp-badge" data-reveal="stamp">{stamp.num}</div>
                 <h3>{stamp.title}</h3>
                 <p>{stamp.desc}</p>
-              </div>
+              </SpotlightCard>
             ))}
           </div>
         </div>
@@ -594,10 +586,10 @@ const LandingPage = () => {
             <h2>Nothing is a black box</h2>
             <p>Every match comes with a full, per-component breakdown — shown to both sides, every time.</p>
           </div>
-          <div className="match-panel glass-card" data-reveal="glass">
+          <SpotlightCard className="match-panel !p-0" data-reveal="glass" spotlightColor="rgba(199, 168, 104, 0.12)">
             <div className="match-left">
-              <div className="id">PASSPORT NO. TX-64471</div>
-              <h3>Anika R.</h3>
+              <div className="id">PASSPORT NO. <DecryptedText text="TX-64471" animateOn="hover" /></div>
+              <h3><ShinyText text="Anika R." speed={2.5} color="#0D1930" shineColor="#C7A868" /></h3>
               <div className="role">Backend Engineer</div>
               <div className="match-score" ref={counterRef} data-counter="94" data-suffix="%">0%</div>
               <div className="match-score-label">MATCH SCORE</div>
@@ -610,7 +602,7 @@ const LandingPage = () => {
               <div className="bar-row"><div className="bar-top"><span>Profile Completeness</span><span>5%</span></div><div className="bar-track"><div className="bar-fill" data-reveal-bar style={{ width: '5%' }} /></div></div>
               <div className="match-caption">Same breakdown, shown to the candidate and the employer.</div>
             </div>
-          </div>
+          </SpotlightCard>
         </div>
       </section>
 
@@ -630,13 +622,13 @@ const LandingPage = () => {
               </div>
             ))}
           </div>
-          <div className="challenge-card glass-card" data-reveal="glass">
+          <SpotlightCard className="challenge-card !p-8" data-reveal="glass" spotlightColor="rgba(199, 168, 104, 0.15)">
             <div>
               <h4>Employer Challenges</h4>
               <p>Paid micro-tasks that let new candidates prove themselves fast — post a challenge, review submissions, pick a winner.</p>
             </div>
             <div className="amount">₹8K–₹40K</div>
-          </div>
+          </SpotlightCard>
         </div>
       </section>
 
@@ -648,7 +640,7 @@ const LandingPage = () => {
             <h2>The honest comparison</h2>
             <p>No spin — just what changes when discovery replaces applying.</p>
           </div>
-          <div data-reveal="glass" className="table-wrap glass-card">
+          <SpotlightCard data-reveal="glass" className="table-wrap !p-0" spotlightColor="rgba(199, 168, 104, 0.08)">
             <table className="compare">
               <thead>
                 <tr>
@@ -690,7 +682,7 @@ const LandingPage = () => {
                 </tr>
               </tbody>
             </table>
-          </div>
+          </SpotlightCard>
         </div>
       </section>
 
