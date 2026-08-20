@@ -1,0 +1,185 @@
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { ShieldCheck, ArrowRight, Lock, Mail } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
+import Button from '../components/common/Button';
+import Input from '../components/common/Input';
+import GlassCard from '../components/common/GlassCard';
+
+const Login = () => {
+  const { login } = useAuth();
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [role, setRole] = useState('candidate');
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const activeUser = await login(email, password);
+      navigate(`/${(activeUser?.role || role).toLowerCase()}/dashboard`);
+    } catch (error) {
+      // Handled via toast
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-page text-ink flex flex-col justify-center items-center p-4 relative overflow-hidden">
+      
+      {/* Background Ambient Glow */}
+      <motion.div
+        animate={{ 
+          scale: [1, 1.15, 1],
+          opacity: [0.3, 0.5, 0.3],
+          rotate: [0, 15, 0]
+        }}
+        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+        className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-gold/15 rounded-full blur-[140px] pointer-events-none"
+        aria-hidden="true"
+      />
+
+      {/* Main Container */}
+      <motion.div 
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+        className="w-full max-w-md relative z-10"
+      >
+        
+        {/* Brand Header */}
+        <div className="text-center mb-8">
+          <Link to="/" className="inline-flex items-center gap-2.5 mb-3 group">
+            <motion.div 
+              whileHover={{ scale: 1.1, rotate: 6 }}
+              className="w-11 h-11 rounded-2xl bg-cover border border-gold/40 flex items-center justify-center text-gold shadow-md"
+            >
+              <ShieldCheck className="w-6 h-6" />
+            </motion.div>
+            <span className="font-extrabold text-2xl tracking-wider font-sans text-cover">
+              TALENT<span className="text-gold">X</span>
+            </span>
+          </Link>
+          <h2 className="font-display text-3xl font-bold text-cover tracking-tight">
+            Sign in to your Portal
+          </h2>
+          <p className="text-xs text-ink-soft mt-1.5">
+            Access your verified evidence, invitations, and governed projects
+          </p>
+        </div>
+
+        {/* Login Glass Card */}
+        <GlassCard className="p-6 sm:p-8 border-cover/15 shadow-xl bg-white/90 backdrop-blur-xl rounded-3xl">
+          
+          <form onSubmit={handleSubmit} className="space-y-4">
+            
+            {/* Role Select with Animated Pill */}
+            <div>
+              <label className="block text-xs font-bold text-cover mb-2 font-sans">
+                Portal Role
+              </label>
+              <div className="grid grid-cols-3 gap-1.5 p-1 rounded-xl bg-cover/5 border border-cover/10 relative">
+                {['candidate', 'employer', 'admin'].map((r) => {
+                  const isSelected = role === r;
+                  return (
+                    <button
+                      key={r}
+                      type="button"
+                      onClick={() => setRole(r)}
+                      className={`relative py-2 text-xs font-bold font-mono rounded-lg transition-colors cursor-pointer z-10 ${
+                        isSelected ? 'text-white' : 'text-ink-soft hover:text-cover'
+                      }`}
+                    >
+                      {isSelected && (
+                        <motion.div
+                          layoutId="loginRolePill"
+                          transition={{ type: 'spring', stiffness: 450, damping: 30 }}
+                          className="absolute inset-0 bg-cover rounded-lg shadow-sm z-[-1]"
+                        />
+                      )}
+                      {r.toUpperCase()}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            <Input
+              label="Email Address"
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder={role === 'candidate' ? 'candidate@talentx.proof' : 'user@company.com'}
+              icon={Mail}
+              required
+            />
+
+            <Input
+              label="Password"
+              id="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••••••"
+              icon={Lock}
+              required
+            />
+
+            <div className="flex items-center justify-between text-xs pt-1">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  defaultChecked
+                  className="rounded border-cover/20 text-cover focus:ring-gold"
+                />
+                <span className="text-ink-soft">Remember device</span>
+              </label>
+              <Link
+                to="/auth/forgot-password"
+                className="text-gold-dark hover:text-cover font-bold transition-colors"
+              >
+                Forgot password?
+              </Link>
+            </div>
+
+            <Button
+              type="submit"
+              variant="primary"
+              size="md"
+              className="w-full mt-3 !py-3 font-bold"
+              loading={loading}
+              icon={ArrowRight}
+              iconPosition="right"
+            >
+              Sign In to {role.charAt(0).toUpperCase() + role.slice(1)} Portal
+            </Button>
+
+          </form>
+
+          {/* Footer inside card */}
+          <div className="mt-6 pt-4 border-t border-cover/10 text-center text-xs text-ink-soft">
+            Don't have a Talent Passport yet?{' '}
+            <Link
+              to="/auth/register"
+              className="text-gold-dark font-bold hover:text-cover transition-colors"
+            >
+              Register here
+            </Link>
+          </div>
+
+        </GlassCard>
+
+      </motion.div>
+
+    </div>
+  );
+};
+
+export default Login;
+export { Login };

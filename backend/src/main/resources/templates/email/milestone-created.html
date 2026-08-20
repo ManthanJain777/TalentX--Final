@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Milestone Created – TALENTX</title>
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #F7F3E8; margin: 0; padding: 40px 20px; }
+        .container { max-width: 520px; margin: 0 auto; background: #FFFFFF; border-radius: 20px; padding: 40px 32px; box-shadow: 0 20px 60px rgba(20,37,68,0.06); border: 1px solid rgba(20,37,68,0.06); }
+        .footer { text-align: center; font-size: 12px; color: #93979F; padding-top: 24px; border-top: 1px solid rgba(20,37,68,0.06); }
+        .info-box { background: #FBF8F1; border-radius: 12px; padding: 16px; margin: 20px 0; border-left: 4px solid #142544; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 style="font-family:'Georgia',serif; font-size:20px; color:#142544;">📋 New Milestone Created!</h2>
+        <p style="color:#585D68; font-size:15px;">
+            Hi <strong th:text="${freelancerName}">Anika</strong>, a new milestone was created for your project <strong th:text="${projectTitle}">Project</strong>.
+        </p>
+
+        <div class="info-box">
+            <p style="margin:0; font-size:14px; color:#585D68; line-height: 1.6;">
+                <strong>Milestone:</strong> <span th:text="${milestoneTitle}">Design Architecture</span><br>
+                <strong>Weight:</strong> <span th:text="${weight}">20%</span><br>
+                <strong>Deadline:</strong> <span th:text="${deadline}">TBD</span>
+            </p>
+        </div>
+
+        <div class="footer">
+            <p>© <span th:text="${currentYear}">2026</span> TALENTX. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

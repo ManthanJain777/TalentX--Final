@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Verification Requested – TALENTX</title>
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #F7F3E8; margin: 0; padding: 40px 20px; }
+        .container { max-width: 520px; margin: 0 auto; background: #FFFFFF; border-radius: 20px; padding: 40px 32px; box-shadow: 0 20px 60px rgba(20,37,68,0.06); }
+        .footer { text-align: center; font-size: 12px; color: #93979F; padding-top: 24px; border-top: 1px solid rgba(20,37,68,0.06); }
+        .info-box { background: #FBF8F1; border-radius: 12px; padding: 16px; margin: 20px 0; }
+        .btn { display: inline-block; background: #142544; color: white !important; padding: 12px 32px; border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 style="font-family:'Georgia',serif; font-size:20px; color:#142544;">🛂 Verification Request</h2>
+        <p style="color:#585D68; font-size:15px;">
+            Hi <strong th:text="${adminName}">Admin</strong>, a new verification request requires your attention.
+        </p>
+
+        <div class="info-box">
+            <p style="margin:0; font-size:14px; color:#585D68; line-height: 1.6;">
+                <strong>User:</strong> <span th:text="${userName}">Name</span> (<span th:text="${userEmail}">email@domain.com</span>)<br>
+                <strong>Type:</strong> <span th:text="${verificationType}">Identity</span><br>
+                <strong>Evidence:</strong> <span th:text="${evidence}">document.pdf</span>
+            </p>
+        </div>
+
+        <div style="text-align:center; margin:24px 0;">
+            <a href="#" th:href="${verifyLink}" class="btn">Review Request</a>
+        </div>
+
+        <div class="footer">
+            <p>© <span th:text="${currentYear}">2026</span> TALENTX. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>
