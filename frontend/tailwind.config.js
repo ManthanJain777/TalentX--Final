@@ -7,17 +7,17 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        page: '#F7F3E8',
+        page: '#FFFFF0', // Ivory
         paper: '#FFFFFF',
         ink: {
-          DEFAULT: '#1C1F26',
-          soft: '#585D68',
-          faint: '#93979F',
+          DEFAULT: '#111827', // Obsidian Ink
+          soft: '#4B5563',
+          faint: '#9CA3AF',
         },
         cover: {
-          DEFAULT: '#142544',
-          deep: '#0D1930',
-          light: '#1E355F',
+          DEFAULT: '#0F172A', // Slate/Obsidian
+          deep: '#020617',
+          light: '#1E293B',
         },
         gold: {
           DEFAULT: '#8B6B23',

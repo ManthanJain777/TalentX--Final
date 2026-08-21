@@ -4,67 +4,76 @@
  <meta charset="UTF-8">
  <title>Welcome Employer – TALENTX</title>
  <style>
- body { font-family: 'Inter', sans-serif; background: #050505; margin: 0; padding: 40px 20px; }
- .container { max-width: 560px; margin: 0 auto; background: #0A0A0B; border-radius: 20px; padding: 48px 40px; box-shadow: 0 20px 60px rgba(199,168,104,0.15); border: 1px solid rgba(199,168,104,0.15); }
- .greeting { font-family: 'Inter', sans-serif, monospace; font-size: 22px; font-weight: 600; color: #FFFFFF; margin: 0 0 8px 0; }
- .greeting span { color: #8B6B23; }
- .btn { display: inline-block; background: #050505; color: #FFFFFF !important; padding: 14px 40px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 15px; }
- .btn-gold { background: #8B6B23; }
- .btn-gold:hover { background: #C7A868; }
- .footer { text-align: center; font-size: 13px; color: #71717A; padding-top: 24px; border-top: 1px solid rgba(199,168,104,0.15); }
+ body { font-family: 'Inter', -apple-system, sans-serif; background: #FFFFF0; margin: 0; padding: 40px 20px; color: #111827; }
+ .container { max-width: 560px; margin: 0 auto; background: #FFFFFF; border-radius: 16px; padding: 48px 40px; box-shadow: 0 12px 40px rgba(17, 24, 39, 0.05); border: 1px solid rgba(17, 24, 39, 0.08); }
+ .header-logo { text-align: center; margin-bottom: 32px; }
+ .logo-icon { width: 40px; height: 40px; border-radius: 50%; border: 2px solid #111827; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; background: #FFFFF0; }
+ .logo-inner { width: 12px; height: 12px; border-radius: 50%; background: #111827; margin: 0 auto; margin-top: 12px; }
+ .logo-text { font-family: 'Inter', sans-serif, monospace; font-weight: 800; font-size: 22px; margin: 0; color: #111827; letter-spacing: -0.5px; }
+ .logo-sub { color: #6B7280; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 4px; font-weight: 600; }
+ .greeting { font-size: 20px; font-weight: 700; color: #111827; margin: 0 0 12px 0; }
+ .message { font-size: 15px; line-height: 1.6; color: #4B5563; margin: 0 0 24px 0; }
+ .details-box { background: #F9FAFB; border: 1px solid rgba(17, 24, 39, 0.08); border-radius: 12px; padding: 20px; margin: 24px 0; }
+ .details-title { margin-top: 0; color: #111827; font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
+ .details-row { margin: 8px 0; font-size: 14px; color: #4B5563; display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(17, 24, 39, 0.1); padding-bottom: 4px; }
+ .details-val { font-weight: 600; color: #111827; font-family: monospace; }
+ .btn { display: inline-block; background: #111827; color: #FFFFFF !important; padding: 14px 32px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px; letter-spacing: 0.5px; transition: background 0.2s; width: 100%; box-sizing: border-box; }
+ .btn-outline { background: transparent; color: #111827 !important; border: 1px solid #111827; }
+ .btn-container { text-align: center; margin: 12px 0; }
+ .tip-box { background: rgba(199, 168, 104, 0.1); border-left: 3px solid #8B6B23; padding: 16px; margin: 24px 0; font-size: 13px; color: #4B5563; line-height: 1.5; }
+ .footer { text-align: center; font-size: 12px; color: #9CA3AF; padding-top: 32px; margin-top: 32px; border-top: 1px solid rgba(17, 24, 39, 0.08); }
  </style>
 </head>
 <body>
  <div class="container">
- <div style="text-align:center; margin-bottom:20px;">
- <div style="width:48px; height:48px; border-radius:50%; border:2px solid #C7A868; display:flex; align-items:center; justify-content:center; margin:0 auto 12px; background: #050505;">
- <div style="width:14px; height:14px; border-radius:50%; background:#C7A868;"></div>
+ <div class="header-logo">
+ <div class="logo-icon">
+ <div class="logo-inner"></div>
  </div>
- <h2 style="font-family: 'Inter', sans-serif, monospace; font-weight:700; font-size:24px; margin:0; color: #FFFFFF;">TALENT<span style="color:#8B6B23;">X</span></h2>
- <p style="color: #71717A; font-size:12px; letter-spacing:1px; text-transform:uppercase;">Proof-First Talent Ecosystem</p>
- </div>
-
- <p class="greeting">Hi <span th:text="${userName}">TechCorp</span>,</p>
- <p style="font-size:15px; color: #A1A1AA;">
- Welcome to <strong style="color: #FFFFFF;">TALENTX</strong>! 
- </p>
- <p style="font-size:15px; color: #A1A1AA;">
- As an <strong style="color: #FFFFFF;">Employer</strong>, you can discover verified talent and post opportunities.
- </p>
-
- <div style="background: #111111; border: 1px solid rgba(255,255,255,0.05); border-radius:12px; padding:16px; margin:20px 0;">
- <h4 style="margin-top:0; color: #FFFFFF; font-family: 'Inter', sans-serif;">Account Details</h4>
- <p style="margin:4px 0; font-size:14px; color: #A1A1AA;">
- <strong>Email:</strong> <span style="color: #FFFFFF;" th:text="${userEmail}">email@example.com</span>
- </p>
- <p style="margin:4px 0; font-size:14px; color: #A1A1AA;">
- <strong>Password:</strong> <span style="color: #FFFFFF;" th:text="${plainPassword}">********</span>
- </p>
- <p style="margin:4px 0; font-size:14px; color: #A1A1AA;">
- <strong>Account Created:</strong> <span style="color: #FFFFFF;" th:text="${creationTime}">Time</span>
- </p>
- <p style="margin:12px 0 0 0; font-size:14px; color: #A1A1AA; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.05);">
- Company: <strong style="color: #FFFFFF;" th:text="${companyName}">TechCorp Inc.</strong>
- </p>
+ <h2 class="logo-text">TALENT<span style="color:#8B6B23;">X</span></h2>
+ <div class="logo-sub">Proof-First Talent Ecosystem</div>
  </div>
 
- <div style="text-align:center; margin:24px 0;">
- <a href="#" th:href="${discoveryLink}" class="btn btn-gold"> Discover Talent</a>
- </div>
-
- <div style="text-align:center; margin:12px 0;">
- <a href="#" class="btn" style="border: 1px solid #C7A868;"> Post an Opportunity</a>
- </div>
-
- <div style="background: rgba(199, 168, 104, 0.05); border: 1px solid rgba(199, 168, 104, 0.2); border-radius:8px; padding:12px; text-align:center; margin:20px 0;">
- <p style="margin:0; font-size:13px; color: #A1A1AA;">
- <strong>Tip:</strong> Post your first opportunity and get matched with top candidates!
+ <p class="greeting">Welcome, <span th:text="${userName}">TechCorp</span>.</p>
+ <p class="message">
+ Your Employer workspace has been initialized on the TALENTX protocol. You now have access to verified, high-signal engineering talent and deterministic matching capabilities.
  </p>
+
+ <div class="details-box">
+ <h4 class="details-title">Workspace Ledger</h4>
+ <div class="details-row">
+ <span>Company Entity</span>
+ <span class="details-val" th:text="${companyName}">TechCorp Inc.</span>
+ </div>
+ <div class="details-row">
+ <span>Auth Email</span>
+ <span class="details-val" th:text="${userEmail}">email@example.com</span>
+ </div>
+ <div class="details-row">
+ <span>Temp Key</span>
+ <span class="details-val" th:text="${plainPassword}">********</span>
+ </div>
+ <div class="details-row" style="border-bottom: none; margin-bottom: 0;">
+ <span>Timestamp</span>
+ <span class="details-val" th:text="${creationTime}">Time</span>
+ </div>
+ </div>
+
+ <div class="btn-container" style="margin-top: 32px;">
+ <a href="#" th:href="${discoveryLink}" class="btn">Access Talent Discovery</a>
+ </div>
+
+ <div class="btn-container">
+ <a href="#" class="btn btn-outline">Post New Opportunity</a>
+ </div>
+
+ <div class="tip-box">
+ <strong>System Protocol:</strong> We recommend changing your temporary key immediately upon logging into your dashboard.
  </div>
 
  <div class="footer">
- <p> <span th:text="${currentYear}">2026</span> TALENTX. All rights reserved.</p>
- <p style="font-size:11px; color:#aaa;">This email was sent to <span th:text="${userEmail}">tech@corp.com</span></p>
+ <p>&copy; <span th:text="${currentYear}">2026</span> TALENTX. Immutable records.</p>
+ <p>Dispatched to <span th:text="${userEmail}">tech@corp.com</span></p>
  </div>
  </div>
 </body>

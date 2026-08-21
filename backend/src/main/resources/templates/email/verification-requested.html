@@ -4,22 +4,22 @@
  <meta charset="UTF-8">
  <title>Verification Requested – TALENTX</title>
  <style>
- body { font-family: 'Inter', sans-serif; background: #050505; margin: 0; padding: 40px 20px; }
- .container { max-width: 520px; margin: 0 auto; background: #0A0A0B; border-radius: 20px; padding: 40px 32px; box-shadow: 0 20px 60px rgba(199,168,104,0.15); }
- .footer { text-align: center; font-size: 12px; color: #71717A; padding-top: 24px; border-top: 1px solid rgba(199,168,104,0.15); }
- .info-box { background: #111111; border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding: 16px; margin: 20px 0; }
- .btn { display: inline-block; background: #050505; color: white !important; padding: 12px 32px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px; }
+ body { font-family: 'Inter', -apple-system, sans-serif; background: #FFFFF0; margin: 0; padding: 40px 20px; }
+ .container { max-width: 520px; margin: 0 auto; background: #FFFFFF; border-radius: 20px; padding: 40px 32px; box-shadow: 0 20px 60px rgba(17, 24, 39, 0.05); }
+ .footer { text-align: center; font-size: 12px; color: #6B7280; padding-top: 24px; border-top: 1px solid rgba(17, 24, 39, 0.05); }
+ .info-box { background: #F9FAFB; border: 1px solid rgba(17, 24, 39, 0.08); border-radius: 12px; padding: 16px; margin: 20px 0; }
+ .btn { display: inline-block; background: #111827; color: white !important; padding: 12px 32px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px; }
  </style>
 </head>
 <body>
  <div class="container">
- <h2 style="font-family: 'Inter', sans-serif, monospace; font-size:20px; color: #FFFFFF;"> Verification Request</h2>
- <p style="color: #A1A1AA; font-size:15px;">
+ <h2 style="font-family: 'Inter', sans-serif, monospace; font-size:20px; color: #111827;"> Verification Request</h2>
+ <p style="color: #4B5563; font-size:15px;">
  Hi <strong th:text="${adminName}">Admin</strong>, a new verification request requires your attention.
  </p>
 
  <div class="info-box">
- <p style="margin:0; font-size:14px; color: #A1A1AA; line-height: 1.6;">
+ <p style="margin:0; font-size:14px; color: #4B5563; line-height: 1.6;">
  <strong>User:</strong> <span th:text="${userName}">Name</span> (<span th:text="${userEmail}">email@domain.com</span>)<br>
  <strong>Type:</strong> <span th:text="${verificationType}">Identity</span><br>
  <strong>Evidence:</strong> <span th:text="${evidence}">document.pdf</span>

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ShieldCheck, ArrowRight, Lock, Mail } from 'lucide-react';
+import { ShieldCheck, ArrowRight, Lock, Mail, Eye, EyeOff } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
+import { toast } from 'react-hot-toast';
 import Button from '../components/common/Button';
 import Input from '../components/common/Input';
 import GlassCard from '../components/common/GlassCard';
+import { Meteors } from '../components/ui/Meteors';
 
 const Login = () => {
   const { login } = useAuth();
@@ -33,6 +35,10 @@ const Login = () => {
     <div className="min-h-screen bg-page text-ink flex flex-col justify-center items-center p-4 relative overflow-hidden">
       
       {/* Background Ambient Glow */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+        <Meteors number={15} />
+      </div>
+      
       <motion.div
         animate={{ 
           scale: [1, 1.15, 1],
@@ -40,7 +46,7 @@ const Login = () => {
           rotate: [0, 15, 0]
         }}
         transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-gold/15 rounded-full blur-[140px] pointer-events-none"
+        className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-gold/15 rounded-full blur-[140px] pointer-events-none z-0"
         aria-hidden="true"
       />
 

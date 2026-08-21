@@ -4,27 +4,27 @@
  <meta charset="UTF-8">
  <title>Challenge Posted – TALENTX</title>
  <style>
- body { font-family: 'Inter', sans-serif; background: #050505; margin: 0; padding: 40px 20px; }
- .container { max-width: 520px; margin: 0 auto; background: #0A0A0B; border-radius: 20px; padding: 40px 32px; box-shadow: 0 20px 60px rgba(199,168,104,0.15); border: 1px solid rgba(199,168,104,0.15); }
- .footer { text-align: center; font-size: 12px; color: #71717A; padding-top: 24px; border-top: 1px solid rgba(199,168,104,0.15); }
- .info-box { background: #111111; border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding: 16px; margin: 20px 0; border-left: 4px solid #8B6B23; }
+ body { font-family: 'Inter', -apple-system, sans-serif; background: #FFFFF0; margin: 0; padding: 40px 20px; }
+ .container { max-width: 520px; margin: 0 auto; background: #FFFFFF; border-radius: 20px; padding: 40px 32px; box-shadow: 0 20px 60px rgba(17, 24, 39, 0.05); border: 1px solid rgba(17, 24, 39, 0.05); }
+ .footer { text-align: center; font-size: 12px; color: #6B7280; padding-top: 24px; border-top: 1px solid rgba(17, 24, 39, 0.05); }
+ .info-box { background: #F9FAFB; border: 1px solid rgba(17, 24, 39, 0.08); border-radius: 12px; padding: 16px; margin: 20px 0; border-left: 4px solid #8B6B23; }
  </style>
 </head>
 <body>
  <div class="container">
- <h2 style="font-family: 'Inter', sans-serif, monospace; font-size:20px; color: #FFFFFF;"> Challenge Posted!</h2>
- <p style="color: #A1A1AA; font-size:15px;">
+ <h2 style="font-family: 'Inter', sans-serif, monospace; font-size:20px; color: #111827;"> Challenge Posted!</h2>
+ <p style="color: #4B5563; font-size:15px;">
  Hi <strong th:text="${employerName}">Employer</strong>, your challenge has been successfully published.
  </p>
 
  <div class="info-box">
- <p style="margin:0; font-size:14px; color: #A1A1AA; line-height: 1.6;">
+ <p style="margin:0; font-size:14px; color: #4B5563; line-height: 1.6;">
  <strong>Title:</strong> <span th:text="${challengeTitle}">Code Refactor</span><br>
  <strong>Prize:</strong> <span th:text="${prizeAmount}">$500</span><br>
  <strong>Deadline:</strong> <span th:text="${deadline}">TBD</span>
  </p>
  </div>
- <p style="color: #A1A1AA; font-size:13px; font-style:italic;" th:text="${challengeDescription}">Description...</p>
+ <p style="color: #4B5563; font-size:13px; font-style:italic;" th:text="${challengeDescription}">Description...</p>
 
  <div class="footer">
  <p> <span th:text="${currentYear}">2026</span> TALENTX. All rights reserved.</p>

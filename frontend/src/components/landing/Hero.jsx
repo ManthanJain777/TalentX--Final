@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ShieldCheck, ArrowRight, Search, Award } from 'lucide-react';
+import Meteors from '../ui/Meteors';
+import { TrueFocus } from '../react-bits/TrueFocus';
 
 const Hero = () => {
   const shouldReduceMotion = useReducedMotion();
@@ -65,9 +67,14 @@ const Hero = () => {
   return (
     <section
       id="hero"
-      className="relative pt-12 pb-20 sm:pt-16 sm:pb-28 overflow-hidden passport-bg"
+      className="relative pt-12 pb-20 sm:pt-16 sm:pb-28 overflow-hidden"
       aria-label="TALENTX Hero Section"
     >
+      {/* Background Meteors for Beast Mode */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+        <Meteors number={20} />
+      </div>
+
       {/* Top Ambient Gold Glow */}
       <div
         className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-gold/10 rounded-full blur-[140px] pointer-events-none z-0"
@@ -98,10 +105,17 @@ const Hero = () => {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="text-center max-w-4xl mx-auto mb-5"
         >
-          <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-semibold tracking-tight leading-[1.08] text-white">
-            Stop applying into the void.<br />
-            <span className="text-gold italic">Get discovered instead.</span>
-          </h1>
+          <div className="font-display text-4xl sm:text-6xl lg:text-7xl font-semibold tracking-tight leading-[1.08] text-white">
+            <TrueFocus 
+              sentence="Stop applying into the void"
+              manualMode={false}
+              blurAmount={5}
+              borderColor="#C7A868"
+              glowColor="rgba(199, 168, 104, 0.6)"
+            />
+            <br />
+            <span className="text-gold italic mt-2 block">Get discovered instead.</span>
+          </div>
         </motion.div>
 
         {/* Plain, Direct Subhead */}
