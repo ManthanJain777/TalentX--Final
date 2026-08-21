@@ -29,31 +29,20 @@ const CandidateDashboard = () => {
     const fetchDashboardData = async () => {
       try {
         setLoading(true);
-        // 1. Fetch Passport
-        try {
-          const passportRes = await api.get('/passports/me');
-          setPassport(passportRes.data);
-        } catch (e) {
-          console.log('No passport found yet', e);
-        }
+        
+        const fetchPromises = [
+          api.get('/passports/me').then(res => setPassport(res.data)).catch(e => console.log('No passport found', e)),
+          api.get('/projects').then(res => setProjects(Array.isArray(res.data) ? res.data : [])).catch(e => console.log('No projects', e))
+        ];
 
-        // 2. Fetch Matches if user ID exists
         if (user?.id) {
-          try {
-            const matchesRes = await api.get(`/matches/candidate/${user.id}`);
-            setMatches(Array.isArray(matchesRes.data) ? matchesRes.data : []);
-          } catch (e) {
-            console.log('No matches found', e);
-          }
+          fetchPromises.push(
+            api.get(`/matches/candidate/${user.id}`).then(res => setMatches(Array.isArray(res.data) ? res.data : [])).catch(e => console.log('No matches', e))
+          );
         }
 
-        // 3. Fetch Projects
-        try {
-          const projectsRes = await api.get('/projects');
-          setProjects(Array.isArray(projectsRes.data) ? projectsRes.data : []);
-        } catch (e) {
-          console.log('No projects found', e);
-        }
+        await Promise.allSettled(fetchPromises);
+
       } catch (err) {
         console.error('Error fetching dashboard data:', err);
       } finally {
@@ -115,7 +104,7 @@ const CandidateDashboard = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ type: 'spring', stiffness: 100, damping: 20 }}
-        className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-6 border-b border-cover/10"
+        className="glass-panel rounded-3xl p-8 flex flex-col sm:flex-row sm:items-end justify-between gap-6"
       >
         <div className="max-w-2xl">
           <p className="meta-label mb-3 flex items-center gap-2">
@@ -327,7 +316,7 @@ const CandidateDashboard = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.7, duration: 0.8 }}
-        className="mt-12 py-8 border-y border-cover/10 flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-16 opacity-70 hover:opacity-100 transition-opacity duration-500"
+        className="glass-panel rounded-2xl mt-12 py-6 px-8 flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-16 opacity-80 hover:opacity-100 transition-all duration-500 shadow-sm"
       >
         <div className="flex items-center gap-3">
           <Shield className="w-5 h-5 text-gold" />

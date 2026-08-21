@@ -4,9 +4,9 @@ import { motion } from 'framer-motion';
 const StatsCard = ({ title, value, trend, colorClass = 'text-verified', icon: Icon, iconBg = 'bg-cover/5', style = {} }) => {
   return (
     <motion.div
-      whileHover={{ y: -3, scale: 1.01 }}
-      transition={{ type: 'spring', stiffness: 350, damping: 25 }}
-      className="glass-2 glass-2-gold p-5 group relative overflow-hidden transition-shadow duration-300 hover:shadow-xl hover:shadow-gold/10"
+      whileHover={{ y: -6, scale: 1.02 }}
+      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+      className="glass-card p-6 group relative overflow-hidden transition-all duration-400 hover:shadow-2xl hover:shadow-gold/20"
       style={style}
     >
       <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-gold/10 via-transparent to-transparent rounded-full blur-2xl pointer-events-none group-hover:bg-gold/20 transition-colors duration-500" />

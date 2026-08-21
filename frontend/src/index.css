@@ -123,21 +123,38 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
    GLASSMORPHISM SYSTEM
    ============================================================ */
 .glass-card {
-  background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(24px) saturate(1.4);
-  -webkit-backdrop-filter: blur(24px) saturate(1.4);
-  border: 1px solid rgba(255, 255, 255, 0.85);
-  border-radius: 18px;
-  box-shadow: 0 8px 32px rgba(20, 37, 68, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.6);
-  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease), border-color 0.3s ease;
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(28px) saturate(1.8);
+  -webkit-backdrop-filter: blur(28px) saturate(1.8);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  box-shadow: 0 10px 40px -10px rgba(20, 37, 68, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  transition: transform 0.4s var(--ease-spring), box-shadow 0.4s var(--ease), border-color 0.3s ease;
   position: relative;
   overflow: hidden;
 }
 
 .glass-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 60px rgba(20, 37, 68, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.6);
-  border-color: rgba(199, 168, 104, 0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px -15px rgba(20, 37, 68, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  border-color: rgba(199, 168, 104, 0.5);
+}
+
+.glass-pill {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(32px) saturate(2);
+  -webkit-backdrop-filter: blur(32px) saturate(2);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 9999px;
+  box-shadow: 0 8px 32px rgba(20, 37, 68, 0.06), inset 0 1px 1px rgba(255, 255, 255, 0.9);
+}
+
+.glass-panel {
+  background: rgba(247, 243, 232, 0.7);
+  backdrop-filter: blur(40px) saturate(1.5);
+  -webkit-backdrop-filter: blur(40px) saturate(1.5);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 4px 24px rgba(20, 37, 68, 0.04);
 }
 
 .glass-card .shine {

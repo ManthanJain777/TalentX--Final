@@ -28,31 +28,20 @@ const EmployerDashboard = () => {
     const fetchEmployerData = async () => {
       try {
         setLoading(true);
-        // 1. Fetch Employer Challenges
+        
+        const fetchPromises = [
+          api.get('/projects').then(res => setProjects(Array.isArray(res.data) ? res.data : [])).catch(e => console.log('No projects', e)),
+          api.get('/discovery/candidates').then(res => setCandidates(Array.isArray(res.data) ? res.data : [])).catch(e => console.log('No candidates in discovery', e))
+        ];
+
         if (user?.id) {
-          try {
-            const chRes = await api.get(`/challenges/employer/${user.id}`);
-            setChallenges(Array.isArray(chRes.data) ? chRes.data : []);
-          } catch (e) {
-            console.log('No challenges for employer yet', e);
-          }
+          fetchPromises.push(
+            api.get(`/challenges/employer/${user.id}`).then(res => setChallenges(Array.isArray(res.data) ? res.data : [])).catch(e => console.log('No challenges for employer yet', e))
+          );
         }
 
-        // 2. Fetch Projects
-        try {
-          const projRes = await api.get('/projects');
-          setProjects(Array.isArray(projRes.data) ? projRes.data : []);
-        } catch (e) {
-          console.log('No projects yet', e);
-        }
+        await Promise.allSettled(fetchPromises);
 
-        // 3. Fetch Discovered Candidates
-        try {
-          const candRes = await api.get('/discovery/candidates');
-          setCandidates(Array.isArray(candRes.data) ? candRes.data : []);
-        } catch (e) {
-          console.log('No candidates in discovery', e);
-        }
       } catch (err) {
         console.error('Error fetching employer dashboard data:', err);
       } finally {
@@ -84,7 +73,7 @@ const EmployerDashboard = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ type: 'spring', stiffness: 100, damping: 20 }}
-        className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-6 border-b border-cover/10"
+        className="glass-panel rounded-3xl p-8 flex flex-col sm:flex-row sm:items-end justify-between gap-6"
       >
         <div className="max-w-2xl">
           <p className="meta-label mb-3 flex items-center gap-2">
