@@ -21,7 +21,11 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        mongoClient = MongoClients.create("mongodb+srv://<username>:<password>@cluster0.anwteik.mongodb.net");
+        String uri = System.getenv("MONGODB_URI");
+        if (uri == null || uri.isEmpty()) {
+            uri = "mongodb+srv://<username>:<password>@cluster0.anwteik.mongodb.net";
+        }
+        mongoClient = MongoClients.create(uri);
         database = mongoClient.getDatabase("talentx");
     }
 
