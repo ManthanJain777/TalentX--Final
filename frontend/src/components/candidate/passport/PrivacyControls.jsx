@@ -75,14 +75,14 @@ const ToggleSwitch = ({ value, onChange }) => {
   return (
     <button
       onClick={onChange}
-      className={`w-12 h-6 shrink-0 rounded-full transition-all duration-300 ${
-        value ? 'bg-gold' : 'bg-ink/20'
+      className={`w-12 h-6 shrink-0 rounded-full transition-all duration-300 border ${
+        value ? 'bg-gold border-gold/10' : 'bg-gold-soft/15 border-gold/30'
       } relative`}
     >
       <div
-        className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-all duration-300 ${
-          value ? 'left-7' : 'left-1'
-        } shadow-md`}
+        className={`absolute top-[3px] w-[16px] h-[16px] rounded-full transition-all duration-300 ${
+          value ? 'left-[28px] bg-white' : 'left-[3px] bg-gold-soft border border-gold/30'
+        } shadow-sm`}
       />
     </button>
   );

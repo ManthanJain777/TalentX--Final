@@ -13,10 +13,13 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const verifyAuth = async () => {
       try {
-        const res = await api.get('/auth/me');
-        if (res.data?.data?.user) {
+        const res = await api.get('/auth/me').catch(() => null);
+        if (res && res.data?.data?.user) {
           setUser(res.data.data.user);
           setIsAuthenticated(true);
+        } else {
+          setUser(null);
+          setIsAuthenticated(false);
         }
       } catch (error) {
         setUser(null);

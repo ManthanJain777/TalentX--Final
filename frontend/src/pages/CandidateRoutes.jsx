@@ -18,7 +18,7 @@ const CandidateRoutes = () => {
   return (
     <DashboardLayout title="Candidate Passport Portal">
       <Routes>
-        <Route path="/" element={<Navigate to="dashboard" replace />} />
+        <Route path="/" element={<Navigate to="/candidate/dashboard" replace />} />
         <Route path="dashboard" element={<CandidateDashboard />} />
         <Route path="passport" element={<PassportBuilder />} />
         <Route path="passport/edit" element={<PassportEdit />} />
@@ -31,7 +31,7 @@ const CandidateRoutes = () => {
         <Route path="challenges/:id" element={<ChallengeDetail />} />
         <Route path="messages" element={<CandidateMessages />} />
         <Route path="settings" element={<CandidateSettings />} />
-        <Route path="*" element={<Navigate to="dashboard" replace />} />
+        <Route path="*" element={<Navigate to="/candidate/dashboard" replace />} />
       </Routes>
     </DashboardLayout>
   );

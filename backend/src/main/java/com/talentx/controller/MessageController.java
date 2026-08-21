@@ -17,7 +17,7 @@ public class MessageController {
         this.messageRepository = messageRepository;
     }
 
-    @GetMapping("/project/{projectId}")
+    @GetMapping({"/project/{projectId}", "/{projectId}"})
     public ResponseEntity<List<Message>> getProjectMessages(@PathVariable String projectId) {
         return ResponseEntity.ok(messageRepository.findByProjectIdOrderBySentAtAsc(projectId));
     }

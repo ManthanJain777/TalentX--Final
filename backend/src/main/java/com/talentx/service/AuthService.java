@@ -36,12 +36,12 @@ public class AuthService {
     }
 
     public Map<String, Object> register(RegisterRequest request) {
-        // Check if user exists
-        if (userDao.findByEmail(request.getEmail()).isPresent()) {
-            throw new IllegalArgumentException("User already exists");
-        }
+        // Validate if user exists
+        userDao.findByEmail(request.getEmail()).ifPresent(u -> {
+            throw new IllegalArgumentException("An account with this email already exists.");
+        });
 
-        // Create user
+        // Construct new user entity
         User user = new User();
         user.setEmail(request.getEmail());
         user.setPasswordHash(passwordEncoder.encode(request.getPassword()));
@@ -50,54 +50,48 @@ public class AuthService {
         user.setStatus("ACTIVE");
         user.setVerified(false);
         user.setDiscoverable(true);
-        // Instant/LocalDateTime mapping: User uses Instant, but setting LocalDateTime is tricky. Let's use Instant.now()
         user.setCreatedAt(java.time.Instant.now());
 
-        if ("EMPLOYER".equals(request.getRole().toUpperCase())) {
+        if ("EMPLOYER".equalsIgnoreCase(request.getRole())) {
             user.setCompanyName(request.getCompanyName());
         }
 
         User savedUser = userDao.save(user);
 
-        // Create initial passport if candidate
-        if ("CANDIDATE".equals(request.getRole().toUpperCase())) {
+        // Initialize Candidate Passport
+        if ("CANDIDATE".equalsIgnoreCase(request.getRole())) {
             Passport passport = new Passport();
             passport.setUserId(savedUser.getId());
-            passport.setHeadline("Software Developer");
+            passport.setHeadline("Software Engineer");
             passport.setLocation("Remote");
             passport.setAvailability(true);
             passport.setVisibility(true);
             passport.setProfileCompleteness(10);
-            passport.setSkills(new ArrayList<>());
-            passport.setProjects(new ArrayList<>());
-            passport.setCertifications(new ArrayList<>());
-            passport.setAssessments(new ArrayList<>());
-            passport.setInternships(new ArrayList<>());
+            
             passportRepository.save(passport);
 
-            // SEND CANDIDATE WELCOME EMAIL
+            // Dispatch welcome email asynchronously
             emailService.sendWelcomeEmailCandidate(savedUser, passport, request.getPassword());
         } else {
-            // SEND EMPLOYER WELCOME EMAIL
+            // Dispatch employer welcome email
             emailService.sendWelcomeEmailEmployer(savedUser, request.getPassword());
         }
 
-        Map<String, Object> response = new HashMap<>();
-        response.put("token", "TOKEN_GENERATED_BY_CONTROLLER");
-        response.put("user", sanitizeUser(savedUser));
-        return response;
+        return Map.of(
+            "token", "TOKEN_GENERATED_BY_CONTROLLER",
+            "user", sanitizeUser(savedUser)
+        );
     }
 
-    // Retaining signature expected by controller but parsing the request
     public Map<String, Object> login(LoginRequest request, HttpServletRequest httpReq) {
         User user = userDao.findByEmail(request.getEmail())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid credentials"));
+                .orElseThrow(() -> new IllegalArgumentException("Invalid email or password."));
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPasswordHash())) {
-            throw new IllegalArgumentException("Invalid credentials");
+            throw new IllegalArgumentException("Invalid email or password.");
         }
 
-        // Get IP, User Agent, and location
+        // Gather security context data
         String ipAddress = httpReq != null ? httpReq.getRemoteAddr() : "Unknown";
         String userAgent = httpReq != null ? httpReq.getHeader("User-Agent") : "Unknown";
         String location = "Unknown Location"; // getLocationFromIP(ipAddress);
@@ -146,10 +140,11 @@ public class AuthService {
         return response;
     }
 
-    public void captureLoginDetails(String email) {
+    public void captureLoginDetails(String email, String ipAddress, String userAgent) {
         User user = userDao.findByEmail(email).orElse(null);
         if (user != null) {
-            emailService.sendLoginAlert(user, "Unknown IP", "Unknown Device", "Unknown Location");
+            String location = "Location Lookup Disabled"; // Usually requires GeoIP API
+            emailService.sendLoginAlert(user, ipAddress, userAgent, location);
         }
     }
 

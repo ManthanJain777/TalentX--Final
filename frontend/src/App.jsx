@@ -34,7 +34,7 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <div className="min-h-screen bg-[#F7F3E8] text-[#1C1F26] font-sans selection:bg-[#C7A868] selection:text-[#142544]">
+        <div className="min-h-screen bg-page text-ink font-sans selection:bg-gold-wash selection:text-cover-deep">
           <AppRoutes />
           <Toaster
             position="bottom-right"

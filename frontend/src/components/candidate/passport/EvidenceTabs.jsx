@@ -179,12 +179,11 @@ const EvidenceTabs = ({
                   
                   <div className="w-full max-w-sm flex gap-2">
                     <div className="relative flex-1">
-                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#8B949E] font-mono text-sm">github.com/</span>
                       <input
                         value={githubUsername}
                         onChange={(e) => setGithubUsername(e.target.value)}
-                        placeholder="username"
-                        className="w-full bg-[#010409] border border-[#30363D] text-white rounded-lg pl-[90px] pr-3 py-2.5 text-sm focus:outline-none focus:border-[#58A6FF] transition-colors"
+                        placeholder="https://github.com/username"
+                        className="w-full bg-[#010409] border border-[#30363D] text-white rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#58A6FF] transition-colors"
                         autoFocus
                         onKeyDown={(e) => e.key === 'Enter' && handleConnectGithub()}
                       />

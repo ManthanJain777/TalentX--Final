@@ -3,6 +3,12 @@ package com.talentx.controller;
 import com.talentx.dto.request.CreateProjectRequest;
 import com.talentx.model.Project;
 import com.talentx.repository.ProjectRepository;
+import com.talentx.repository.MilestoneRepository;
+import com.talentx.repository.EscrowRepository;
+import com.talentx.repository.DeliverableRepository;
+import com.talentx.model.Milestone;
+import com.talentx.model.EscrowTransaction;
+import com.talentx.model.Deliverable;
 import com.talentx.service.ProjectService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -18,10 +24,18 @@ public class ProjectController {
 
     private final ProjectRepository projectRepository;
     private final ProjectService projectService;
+    private final MilestoneRepository milestoneRepository;
+    private final EscrowRepository escrowRepository;
+    private final DeliverableRepository deliverableRepository;
 
-    public ProjectController(ProjectRepository projectRepository, ProjectService projectService) {
+    public ProjectController(ProjectRepository projectRepository, ProjectService projectService,
+                             MilestoneRepository milestoneRepository, EscrowRepository escrowRepository,
+                             DeliverableRepository deliverableRepository) {
         this.projectRepository = projectRepository;
         this.projectService = projectService;
+        this.milestoneRepository = milestoneRepository;
+        this.escrowRepository = escrowRepository;
+        this.deliverableRepository = deliverableRepository;
     }
 
     @GetMapping
@@ -69,5 +83,20 @@ public class ProjectController {
         
         project.setStatus(status);
         return ResponseEntity.ok(projectRepository.save(project));
+    }
+
+    @GetMapping("/{id}/milestones")
+    public ResponseEntity<List<Milestone>> getProjectMilestones(@PathVariable String id) {
+        return ResponseEntity.ok(milestoneRepository.findByProjectId(id));
+    }
+
+    @GetMapping("/{id}/escrow")
+    public ResponseEntity<List<EscrowTransaction>> getProjectEscrow(@PathVariable String id) {
+        return ResponseEntity.ok(escrowRepository.findByProjectId(id));
+    }
+
+    @GetMapping("/{id}/deliverables")
+    public ResponseEntity<List<Deliverable>> getProjectDeliverables(@PathVariable String id) {
+        return ResponseEntity.ok(deliverableRepository.findByProjectId(id));
     }
 }

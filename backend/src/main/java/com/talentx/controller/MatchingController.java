@@ -60,6 +60,12 @@ public class MatchingController {
         return ResponseEntity.ok(matchDao.findByCandidateId(candidateId));
     }
 
+    @GetMapping("/{matchId}")
+    public ResponseEntity<Match> getMatchById(@PathVariable String matchId) {
+        return ResponseEntity.ok(matchDao.findById(matchId)
+                .orElseThrow(() -> new com.talentx.exception.ResourceNotFoundException("Match not found")));
+    }
+
     @PatchMapping("/{matchId}/accept")
     public ResponseEntity<Match> acceptMatch(@PathVariable String matchId) {
         Match match = matchDao.findById(matchId)

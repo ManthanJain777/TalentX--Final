@@ -192,7 +192,7 @@ const EmployerDashboard = () => {
                           </span>
                         ))}
                       </div>
-                      <Link to={`/employer/talent/${cand.id}`}>
+                      <Link to={`/employer/discovery/${cand.id}`}>
                         <Button variant="ghost" className="!px-3 !py-1.5 !text-xs">
                           <Eye className="w-4 h-4 mr-1" /> View Passport
                         </Button>
@@ -216,19 +216,19 @@ const EmployerDashboard = () => {
 
           <GlassCard className="p-6 space-y-3">
             <Link to="/employer/challenges/new" className="block">
-              <Button variant="secondary" className="w-full justify-start">
+              <Button className="w-full justify-start bg-gold-soft/10 text-gold border-gold/30 hover:bg-gold-soft/20 hover:text-gold-deep transition-all">
                 <Briefcase className="w-4 h-4 text-gold" />
                 Post Bounty Challenge
               </Button>
             </Link>
             <Link to="/employer/discovery" className="block">
-              <Button variant="secondary" className="w-full justify-start">
+              <Button className="w-full justify-start bg-gold-soft/10 text-gold border-gold/30 hover:bg-gold-soft/20 hover:text-gold-deep transition-all">
                 <Search className="w-4 h-4 text-gold" />
                 Query Candidate Passports
               </Button>
             </Link>
             <Link to="/employer/projects" className="block">
-              <Button variant="secondary" className="w-full justify-start">
+              <Button className="w-full justify-start bg-gold-soft/10 text-gold border-gold/30 hover:bg-gold-soft/20 hover:text-gold-deep transition-all">
                 <Shield className="w-4 h-4 text-gold" />
                 Inspect Governed Projects ({projects.length})
               </Button>

@@ -29,7 +29,7 @@ const CandidateCard = ({ candidate, onInvite }) => {
     setIsHovered(false);
   };
 
-  const initials = (candidate.name || 'Candidate')
+  const initials = (candidate.fullName || candidate.name || 'Candidate')
     .split(' ')
     .map(n => n[0])
     .join('')
@@ -57,7 +57,7 @@ const CandidateCard = ({ candidate, onInvite }) => {
           </div>
           <div className="min-w-0">
             <h4 className="font-sans font-bold text-lg text-[#142544] truncate group-hover:text-[#8B6B23] transition-colors">
-              {candidate.name}
+              {candidate.fullName || candidate.name || 'Candidate'}
             </h4>
             <p className="text-xs font-semibold text-[#585D68] truncate mt-0.5">
               {candidate.headline || 'Verified Engineer'}
@@ -93,7 +93,7 @@ const CandidateCard = ({ candidate, onInvite }) => {
       {/* Verified Sources Pill */}
       <div className="flex items-center gap-2 mb-5 px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-800 font-semibold w-fit">
         <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0" />
-        <span>{candidate.verifiedSources || 3} cryptographic proof sources</span>
+        <span>{candidate.verifiedSources || (candidate.socialLinks?.github ? 1 : 0) + (candidate.socialLinks?.linkedin ? 1 : 0) + (candidate.certifications?.length || 0)} cryptographic proof sources</span>
       </div>
 
       {/* Breakdown & Explanation */}
@@ -105,7 +105,7 @@ const CandidateCard = ({ candidate, onInvite }) => {
       {/* Actions */}
       <div className="mt-auto pt-4 border-t border-cover/10 flex gap-3">
         <button 
-          onClick={() => navigate(`/employer/passports/${candidate.id || 'me'}`)}
+          onClick={() => navigate(`/employer/discovery/${candidate.id || 'me'}`)}
           className="flex-1 py-2.5 px-3 rounded-xl border border-cover/15 bg-white/70 hover:bg-white text-[#142544] font-bold text-xs sm:text-sm transition-all hover:border-cover/30 shadow-xs cursor-pointer"
         >
           View Profile

@@ -15,7 +15,7 @@ const AdminRoutes = () => {
   return (
     <DashboardLayout title="Admin & Arbitration Portal">
       <Routes>
-        <Route path="/" element={<Navigate to="dashboard" replace />} />
+        <Route path="/" element={<Navigate to="/admin/dashboard" replace />} />
         <Route path="dashboard" element={<AdminDashboard />} />
         <Route path="users" element={<AdminUsers />} />
         <Route path="users/:id" element={<UserDetails />} />
@@ -25,7 +25,7 @@ const AdminRoutes = () => {
         <Route path="disputes/:id" element={<DisputeRoom />} />
         <Route path="audit" element={<AdminAudit />} />
         <Route path="analytics" element={<AdminAnalytics />} />
-        <Route path="*" element={<Navigate to="dashboard" replace />} />
+        <Route path="*" element={<Navigate to="/admin/dashboard" replace />} />
       </Routes>
     </DashboardLayout>
   );

@@ -19,7 +19,7 @@ const EmployerRoutes = () => {
   return (
     <DashboardLayout title="Employer Portal">
       <Routes>
-        <Route path="/" element={<Navigate to="dashboard" replace />} />
+        <Route path="/" element={<Navigate to="/employer/dashboard" replace />} />
         <Route path="dashboard" element={<EmployerDashboard />} />
         <Route path="opportunities" element={<EmployerOpportunities />} />
         <Route path="opportunities/new" element={<OpportunityNew />} />
@@ -33,7 +33,7 @@ const EmployerRoutes = () => {
         <Route path="challenges/:id" element={<EmployerChallengeDetail />} />
         <Route path="messages" element={<EmployerMessages />} />
         <Route path="settings" element={<EmployerSettings />} />
-        <Route path="*" element={<Navigate to="dashboard" replace />} />
+        <Route path="*" element={<Navigate to="/employer/dashboard" replace />} />
       </Routes>
     </DashboardLayout>
   );

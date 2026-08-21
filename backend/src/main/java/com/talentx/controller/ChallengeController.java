@@ -36,6 +36,7 @@ public class ChallengeController {
                 .orElseThrow(() -> new com.talentx.exception.ResourceNotFoundException("Challenge not found")));
     }
 
+
     @PostMapping
     public ResponseEntity<Challenge> createChallenge(@RequestBody Challenge challenge) {
         challenge.setStatus("OPEN");
