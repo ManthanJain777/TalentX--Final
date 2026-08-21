@@ -70,11 +70,6 @@ const Hero = () => {
       className="relative pt-12 pb-20 sm:pt-16 sm:pb-28 overflow-hidden"
       aria-label="TALENTX Hero Section"
     >
-      {/* Background Meteors for Beast Mode */}
-      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-        <Meteors number={20} />
-      </div>
-
       {/* Top Ambient Gold Glow */}
       <div
         className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-gold/10 rounded-full blur-[140px] pointer-events-none z-0"

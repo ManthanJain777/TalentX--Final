@@ -5,53 +5,34 @@ import api from '../api/api';
 export const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(() => {
-    const saved = localStorage.getItem('talentx_user');
-    if (saved) {
-      try {
-        return JSON.parse(saved);
-      } catch (e) {
-        console.error('Failed to parse saved user:', e);
-      }
-    }
-    return null;
-  });
+  const [user, setUser] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    return !!localStorage.getItem('talentx_token');
-  });
-
-  // Verify token on load
+  // Verify token on load via API (relies on HttpOnly cookie being sent)
   useEffect(() => {
     const verifyAuth = async () => {
-      const token = localStorage.getItem('talentx_token');
-      if (token) {
-        try {
-          const res = await api.get('/auth/me');
+      try {
+        const res = await api.get('/auth/me');
+        if (res.data?.data?.user) {
           setUser(res.data.data.user);
           setIsAuthenticated(true);
-        } catch (error) {
-          logout();
         }
+      } catch (error) {
+        setUser(null);
+        setIsAuthenticated(false);
+      } finally {
+        setIsLoading(false);
       }
     };
     verifyAuth();
   }, []);
 
-  useEffect(() => {
-    if (user) {
-      localStorage.setItem('talentx_user', JSON.stringify(user));
-    } else {
-      localStorage.removeItem('talentx_user');
-    }
-  }, [user]);
-
   const login = async (email, password) => {
     try {
       const res = await api.post('/auth/login', { email, password });
-      const { token, user: activeUser } = res.data.data;
+      const { user: activeUser } = res.data.data;
       
-      localStorage.setItem('talentx_token', token);
       setUser(activeUser);
       setIsAuthenticated(true);
       
@@ -61,7 +42,6 @@ export const AuthProvider = ({ children }) => {
           color: '#FFFFFF',
           border: '1px solid #C7A868',
         },
-        icon: '🛡️',
       });
       return activeUser;
     } catch (error) {
@@ -77,7 +57,6 @@ export const AuthProvider = ({ children }) => {
       toast.success('Registration successful. Please login.', {
         style: { background: '#142544', color: '#FFFFFF', border: '1px solid #C7A868' }
       });
-      // Optionally login automatically here
       return true;
     } catch (error) {
       toast.error(error.response?.data?.message || 'Registration failed');
@@ -85,11 +64,14 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const logout = () => {
+  const logout = async () => {
+    try {
+      await api.post('/auth/logout');
+    } catch (e) {
+      console.error("Logout failed on server, clearing local state anyway", e);
+    }
     setUser(null);
     setIsAuthenticated(false);
-    localStorage.removeItem('talentx_user');
-    localStorage.removeItem('talentx_token');
     toast.success('Logged out successfully', {
       style: {
         background: '#142544',
@@ -106,6 +88,10 @@ export const AuthProvider = ({ children }) => {
       ...updates,
     }));
   };
+
+  if (isLoading) {
+    return <div className="min-h-screen bg-[#111827] flex items-center justify-center text-white">Loading...</div>;
+  }
 
   return (
     <AuthContext.Provider

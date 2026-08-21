@@ -26,16 +26,8 @@ const Discovery = () => {
     const fetchCandidates = async () => {
       try {
         const response = await api.get('/discovery/candidates');
-        const mapped = response.data.map(c => ({
-          ...c,
-          name: c.name || 'Candidate',
-          headline: c.headline || 'Talent',
-          skills: c.skills || [],
-          matchScore: c.matchScore || 0,
-          breakdown: c.breakdown || { skills: 0, projects: 0, assessments: 0, certifications: 0, profile: 0 },
-          explanation: c.explanation || {}
-        }));
-        setCandidates(mapped);
+        // Backend now returns the fully hydrated candidate objects including match scores and explanation
+        setCandidates(response.data);
       } catch (err) {
         console.error('Error fetching candidates:', err);
         toast.error('Failed to load discovery data.');

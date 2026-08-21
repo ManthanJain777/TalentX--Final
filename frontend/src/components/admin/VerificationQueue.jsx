@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Search } from 'lucide-react';
 import VerificationModal from './VerificationModal';
 
-const VerificationQueue = ({ verifications }) => {
+const VerificationQueue = ({ verifications, onApprove, onReject }) => {
   const [filter, setFilter] = useState('All');
   const [search, setSearch] = useState('');
   const [selected, setSelected] = useState(null);
@@ -128,6 +128,14 @@ const VerificationQueue = ({ verifications }) => {
         isOpen={!!selected} 
         onClose={() => setSelected(null)} 
         verification={selected} 
+        onApprove={(id, notes) => {
+          onApprove(id, notes);
+          setSelected(null);
+        }}
+        onReject={(id, notes) => {
+          onReject(id, notes);
+          setSelected(null);
+        }}
       />
     </>
   );

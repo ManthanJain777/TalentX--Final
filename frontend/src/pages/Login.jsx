@@ -7,7 +7,7 @@ import { toast } from 'react-hot-toast';
 import Button from '../components/common/Button';
 import Input from '../components/common/Input';
 import GlassCard from '../components/common/GlassCard';
-import { Meteors } from '../components/ui/Meteors';
+import { AuroraBackground } from '../components/ui/AuroraBackground';
 
 const Login = () => {
   const { login } = useAuth();
@@ -32,12 +32,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-page text-ink flex flex-col justify-center items-center p-4 relative overflow-hidden">
-      
-      {/* Background Ambient Glow */}
-      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-        <Meteors number={15} />
-      </div>
+    <AuroraBackground className="p-4 relative overflow-hidden">
       
       <motion.div
         animate={{ 
@@ -90,13 +85,19 @@ const Login = () => {
                 Portal Role
               </label>
               <div className="grid grid-cols-3 gap-1.5 p-1 rounded-xl bg-cover/5 border border-cover/10 relative">
-                {['candidate', 'employer', 'admin'].map((r) => {
-                  const isSelected = role === r;
+                {[
+                  { key: 'candidate', label: 'CANDIDATE', email: 'anika@talentx.com', pass: 'anika123' },
+                  { key: 'employer', label: 'EMPLOYER', email: 'cranes@gmail.com', pass: 'cranes123' },
+                  { key: 'admin', label: 'ADMIN', email: 'admin@talentx.com', pass: 'admin123' }
+                ].map((r) => {
+                  const isSelected = role === r.key;
                   return (
                     <button
-                      key={r}
+                      key={r.key}
                       type="button"
-                      onClick={() => setRole(r)}
+                      onClick={() => {
+                        setRole(r.key);
+                      }}
                       className={`relative py-2 text-xs font-bold font-mono rounded-lg transition-colors cursor-pointer z-10 ${
                         isSelected ? 'text-white' : 'text-ink-soft hover:text-cover'
                       }`}
@@ -108,7 +109,7 @@ const Login = () => {
                           className="absolute inset-0 bg-cover rounded-lg shadow-sm z-[-1]"
                         />
                       )}
-                      {r.toUpperCase()}
+                      {r.label}
                     </button>
                   );
                 })}
@@ -121,7 +122,7 @@ const Login = () => {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder={role === 'candidate' ? 'candidate@talentx.proof' : 'user@company.com'}
+              placeholder="user@talentx.com"
               icon={Mail}
               required
             />
@@ -183,7 +184,7 @@ const Login = () => {
 
       </motion.div>
 
-    </div>
+    </AuroraBackground>
   );
 };
 

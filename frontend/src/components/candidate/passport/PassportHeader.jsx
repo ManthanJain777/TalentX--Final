@@ -5,20 +5,37 @@ const PassportHeader = ({
   name,
   headline,
   location,
+  avatarUrl,
   setName,
   setHeadline,
   setLocation,
+  setAvatarUrl,
 }) => {
+  const [editingAvatar, setEditingAvatar] = useState(false);
+  const [tempAvatar, setTempAvatar] = useState(avatarUrl || '');
+
+  const handleAvatarSave = () => {
+    setAvatarUrl(tempAvatar);
+    setEditingAvatar(false);
+  };
+
   return (
     <div className="glass-panel p-6 space-y-4 relative group">
       <div className="shimmer-track" />
       <div className="flex items-start gap-6">
         {/* Avatar */}
         <div className="relative shrink-0">
-          <div className="w-20 h-20 rounded-full bg-gradient-to-br from-cover to-cover-deep flex items-center justify-center text-white text-2xl font-display border-2 border-gold-soft/30">
-            {name?.charAt(0) || '?'}
+          <div className="w-20 h-20 rounded-full bg-gradient-to-br from-cover to-cover-deep flex items-center justify-center text-white text-2xl font-display border-2 border-gold-soft/30 overflow-hidden">
+            {avatarUrl ? (
+              <img src={avatarUrl} alt={name} className="w-full h-full object-cover" />
+            ) : (
+              name?.charAt(0) || '?'
+            )}
           </div>
-          <button className="absolute -bottom-1 -right-1 p-1.5 rounded-full bg-gold text-white hover:bg-gold-soft transition-colors shadow-lg">
+          <button 
+            onClick={() => setEditingAvatar(!editingAvatar)}
+            className="absolute -bottom-1 -right-1 p-1.5 rounded-full bg-gold text-white hover:bg-gold-soft transition-colors shadow-lg"
+          >
             <Edit2 className="w-3 h-3" />
           </button>
         </div>
@@ -50,6 +67,29 @@ const PassportHeader = ({
           />
         </div>
       </div>
+
+      {editingAvatar && (
+        <div className="flex items-center gap-2 mt-4 pt-2 border-t border-ink/5">
+          <input
+            type="text"
+            placeholder="Paste Image URL (e.g., from LinkedIn or GitHub)"
+            value={tempAvatar}
+            onChange={(e) => setTempAvatar(e.target.value)}
+            className="flex-1 bg-white/50 border border-gold-soft/30 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold-soft/30"
+            autoFocus
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') handleAvatarSave();
+              if (e.key === 'Escape') setEditingAvatar(false);
+            }}
+          />
+          <button
+            onClick={handleAvatarSave}
+            className="px-3 py-1.5 rounded-lg bg-verified/10 text-verified hover:bg-verified/20 transition-colors text-sm font-medium"
+          >
+            Save
+          </button>
+        </div>
+      )}
 
       {/* Profile Completion */}
       <div className="pt-4 border-t border-ink/5">

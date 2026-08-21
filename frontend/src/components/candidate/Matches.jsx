@@ -8,6 +8,7 @@ import Loader from '../ui/Loader';
 import EmptyState from '../ui/EmptyState';
 import { SpotlightCard } from '../react-bits/SpotlightCard';
 import { ShinyText } from '../react-bits/ShinyText';
+import MatchScore from '../ui/MatchScore';
 
 const Matches = () => {
   const { user } = useAuth();
@@ -111,9 +112,7 @@ const Matches = () => {
 
               {/* Match Score */}
               <div className="mb-4">
-                <span className="font-mono text-sm text-gold font-bold">
-                  Score: {Math.round(match.totalScore || match.matchScore || 90)}% Fit
-                </span>
+                <MatchScore score={Math.round(match.totalScore || match.matchScore || 90)} size="sm" />
               </div>
 
               {/* Action */}

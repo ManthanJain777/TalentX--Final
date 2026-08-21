@@ -56,10 +56,10 @@ const LandingPage = () => {
 
   // Stats data
   const stats = [
-    { label: 'Pilot Talents', value: '50+', icon: '👤' },
-    { label: 'Pilot Employers', value: '15+', icon: '🏢' },
-    { label: 'Completed Matches', value: '12', icon: '✅' },
-    { label: 'Match Accuracy', value: '92%', icon: '📊' },
+    { label: 'Pilot Talents', value: '50+' },
+    { label: 'Pilot Employers', value: '15+' },
+    { label: 'Completed Matches', value: '12' },
+    { label: 'Match Accuracy', value: '92%' },
   ];
 
   useEffect(() => {
@@ -556,8 +556,8 @@ const LandingPage = () => {
               <li><span className="tick">✓</span>One profile, reused across every opportunity that finds you.</li>
             </ul>
           </div>
-          <div data-reveal="glass">
-            <div className="card-passport glass-card" style={{ background: '#111111', borderColor: 'rgba(199,168,104,0.2)' }}>
+          <div data-reveal="glass" className="flex justify-center">
+            <div className="card-passport glass-card" style={{ maxWidth: '800px', width: '100%', background: 'rgba(255,255,255,0.6)', borderColor: 'rgba(199,168,104,0.3)', boxShadow: '0 20px 40px rgba(0,0,0,0.05)' }}>
               <div className="shimmer" />
               <div className="skill-grid">
                 <div className="skill-tile"><div className="name">Java</div><div className="src">CERTIFIED</div></div>
@@ -697,7 +697,6 @@ const LandingPage = () => {
 
       {/* ===================== FINAL CTA ===================== */}
       <section className="section final-cta relative overflow-hidden" id="final">
-        <Meteors number={30} className="z-0 opacity-40" />
         <div className="container relative z-10">
           <div data-reveal>
             <h2>Ready to be found?</h2>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Shield, GitBranch, FileText, CheckCircle, XCircle } from 'lucide-react';
 
-const VerificationModal = ({ isOpen, onClose, verification }) => {
+const VerificationModal = ({ isOpen, onClose, verification, onApprove, onReject }) => {
   const [notes, setNotes] = useState('');
 
   if (!verification) return null;
@@ -65,19 +65,19 @@ const VerificationModal = ({ isOpen, onClose, verification }) => {
                     {verification.type === 'Skill' && (
                       <div className="space-y-3">
                         <div className="flex items-center gap-2 text-sm text-ink-soft">
-                          <GitBranch className="w-4 h-4" /> <span>{verification.details.githubRepos.length} Repositories</span>
+                          <GitBranch className="w-4 h-4" /> <span>{verification.details?.githubRepos?.length || 0} Repositories</span>
                         </div>
                         <ul className="list-disc pl-5 text-sm font-mono text-ink-faint space-y-1">
-                          {verification.details.githubRepos.map(repo => <li key={repo}>{repo}</li>)}
+                          {(verification.details?.githubRepos || []).map(repo => <li key={repo}>{repo}</li>)}
                         </ul>
                         <div className="flex gap-4 mt-4 pt-4 border-t border-ink/5">
                           <div>
                             <p className="text-xs text-ink-faint uppercase">PRs Merged</p>
-                            <p className="font-mono text-ink font-semibold">{verification.details.prsMerged}</p>
+                            <p className="font-mono text-ink font-semibold">{verification.details?.prsMerged || 0}</p>
                           </div>
                           <div>
                             <p className="text-xs text-ink-faint uppercase">Stars</p>
-                            <p className="font-mono text-ink font-semibold">{verification.details.stars}</p>
+                            <p className="font-mono text-ink font-semibold">{verification.details?.stars || 0}</p>
                           </div>
                         </div>
                       </div>
@@ -109,7 +109,7 @@ const VerificationModal = ({ isOpen, onClose, verification }) => {
               {/* Actions */}
               <div className="p-6 border-t border-ink/5 bg-white/30 flex justify-end gap-3">
                 <button 
-                  onClick={onClose}
+                  onClick={() => onReject(verification.id, notes)}
                   className="px-4 py-2 rounded-lg border border-red-500/20 text-red-500 hover:bg-red-50 transition-colors text-sm font-medium flex items-center gap-1.5"
                 >
                   <XCircle className="w-4 h-4" /> Reject
@@ -121,7 +121,7 @@ const VerificationModal = ({ isOpen, onClose, verification }) => {
                   Request Info
                 </button>
                 <button 
-                  onClick={onClose}
+                  onClick={() => onApprove(verification.id, notes)}
                   className="px-6 py-2 rounded-lg bg-verified text-white hover:bg-verified/90 transition-colors text-sm font-medium shadow-lg shadow-verified/20 flex items-center gap-1.5"
                 >
                   <CheckCircle className="w-4 h-4" /> Approve

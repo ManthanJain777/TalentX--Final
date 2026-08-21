@@ -6,6 +6,8 @@ import com.talentx.model.User;
 import com.talentx.repository.AuditRepository;
 import com.talentx.repository.DisputeRepository;
 import com.talentx.repository.UserRepository;
+import com.talentx.model.VerificationRequest;
+import com.talentx.repository.VerificationRequestRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.time.Instant;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 
@@ -25,12 +28,14 @@ public class AdminController {
     private final UserRepository userRepository;
     private final DisputeRepository disputeRepository;
     private final AuditRepository auditRepository;
+    private final VerificationRequestRepository verificationRequestRepository;
 
     public AdminController(UserRepository userRepository, DisputeRepository disputeRepository,
-                           AuditRepository auditRepository) {
+                           AuditRepository auditRepository, VerificationRequestRepository verificationRequestRepository) {
         this.userRepository = userRepository;
         this.disputeRepository = disputeRepository;
         this.auditRepository = auditRepository;
+        this.verificationRequestRepository = verificationRequestRepository;
     }
 
     // ─── User Management ───
@@ -60,8 +65,39 @@ public class AdminController {
 
     // ─── Verifications ───
     @GetMapping("/verifications")
-    public ResponseEntity<List<User>> getPendingVerifications() {
-        return ResponseEntity.ok(userRepository.findByVerifiedFalse());
+    public ResponseEntity<List<VerificationRequest>> getVerifications(@RequestParam(required = false, defaultValue = "PENDING") String status) {
+        if ("ALL".equalsIgnoreCase(status)) {
+            return ResponseEntity.ok(verificationRequestRepository.findAll());
+        }
+        return ResponseEntity.ok(verificationRequestRepository.findByStatus(status.toUpperCase()));
+    }
+    
+    @PatchMapping("/verifications/{id}/approve")
+    public ResponseEntity<VerificationRequest> approveVerification(@PathVariable String id) {
+        VerificationRequest req = verificationRequestRepository.findById(id)
+                .orElseThrow(() -> new com.talentx.exception.ResourceNotFoundException("Verification not found"));
+        req.setStatus("APPROVED");
+        req.setUpdatedAt(Instant.now());
+        verificationRequestRepository.save(req);
+        
+        // Also verify user if it's an Identity verification
+        if ("Identity".equalsIgnoreCase(req.getType())) {
+            User user = userRepository.findById(req.getUserId()).orElse(null);
+            if (user != null) {
+                user.setVerified(true);
+                userRepository.save(user);
+            }
+        }
+        return ResponseEntity.ok(req);
+    }
+    
+    @PatchMapping("/verifications/{id}/reject")
+    public ResponseEntity<VerificationRequest> rejectVerification(@PathVariable String id) {
+        VerificationRequest req = verificationRequestRepository.findById(id)
+                .orElseThrow(() -> new com.talentx.exception.ResourceNotFoundException("Verification not found"));
+        req.setStatus("REJECTED");
+        req.setUpdatedAt(Instant.now());
+        return ResponseEntity.ok(verificationRequestRepository.save(req));
     }
 
     // ─── Disputes ───

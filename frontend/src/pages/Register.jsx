@@ -6,7 +6,7 @@ import { useAuth } from '../contexts/AuthContext';
 import Button from '../components/common/Button';
 import Input from '../components/common/Input';
 import GlassCard from '../components/common/GlassCard';
-import { Meteors } from '../components/ui/Meteors';
+import { AuroraBackground } from '../components/ui/AuroraBackground';
 
 const Register = () => {
   const { register } = useAuth();
@@ -39,12 +39,7 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen bg-page text-ink flex flex-col justify-center items-center p-4 relative overflow-hidden">
-      
-      {/* Background Ambient Glow */}
-      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-        <Meteors number={15} />
-      </div>
+    <AuroraBackground className="p-4 relative overflow-hidden">
 
       <motion.div
         animate={{ 
@@ -240,7 +235,7 @@ const Register = () => {
 
       </motion.div>
 
-    </div>
+    </AuroraBackground>
   );
 };
 

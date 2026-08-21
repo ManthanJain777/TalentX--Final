@@ -46,13 +46,37 @@ public class AuthController {
         Object userObj = authService.getMe(userPrincipal.getUsername()).get("user");
 
         JwtAuthenticationResponse response = new JwtAuthenticationResponse(
-                jwt,
+                null, // JWT is now in cookie
                 userPrincipal.getUserId(), 
                 role,
                 userObj
         );
 
-        return ResponseEntity.ok(ApiResponse.success("Login successful", response));
+        org.springframework.http.ResponseCookie cookie = org.springframework.http.ResponseCookie.from("talentx_token", jwt)
+                .httpOnly(true)
+                .secure(false) // Set to true in production with HTTPS
+                .path("/")
+                .maxAge(24 * 60 * 60)
+                .sameSite("Strict")
+                .build();
+
+        return ResponseEntity.ok()
+                .header(org.springframework.http.HttpHeaders.SET_COOKIE, cookie.toString())
+                .body(ApiResponse.success("Login successful", response));
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<ApiResponse<String>> logout() {
+        org.springframework.http.ResponseCookie cookie = org.springframework.http.ResponseCookie.from("talentx_token", "")
+                .httpOnly(true)
+                .secure(false)
+                .path("/")
+                .maxAge(0)
+                .sameSite("Strict")
+                .build();
+        return ResponseEntity.ok()
+                .header(org.springframework.http.HttpHeaders.SET_COOKIE, cookie.toString())
+                .body(ApiResponse.success("Logout successful", null));
     }
 
     @PostMapping("/register/candidate")
@@ -82,6 +106,10 @@ public class AuthController {
 
     @GetMapping("/me")
     public ResponseEntity<ApiResponse<java.util.Map<String, Object>>> getMe(Authentication authentication) {
+        if (authentication == null || !authentication.isAuthenticated() || !(authentication.getPrincipal() instanceof com.talentx.security.UserPrincipal)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(ApiResponse.error("Unauthorized: No active session"));
+        }
         com.talentx.security.UserPrincipal userPrincipal = (com.talentx.security.UserPrincipal) authentication.getPrincipal();
         return ResponseEntity.ok(ApiResponse.success("User fetched successfully", authService.getMe(userPrincipal.getUsername())));
     }

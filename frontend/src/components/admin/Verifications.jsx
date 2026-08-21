@@ -12,18 +12,16 @@ const AdminVerifications = () => {
   useEffect(() => {
     const fetchVerifications = async () => {
       try {
-        const response = await api.get('/admin/verifications');
-        const mapped = response.data.map(u => ({
-          id: u.id,
-          user: u.fullName || u.companyName || u.email || 'Registered User',
-          email: u.email,
-          type: u.role === 'CANDIDATE' ? 'Skill' : 'Identity',
-          evidence: u.role === 'CANDIDATE' ? 'GitHub profile attached' : 'Business registration',
-          status: 'pending',
-          submitted: new Date().toISOString().split('T')[0],
-          details: {
-            info: 'Additional info fetched from user profile'
-          }
+        const response = await api.get('/admin/verifications?status=ALL');
+        const mapped = response.data.map(v => ({
+          id: v.id,
+          user: v.userFullName || 'Registered User',
+          email: v.userEmail || '',
+          type: v.type || 'Identity',
+          evidence: v.evidence || 'N/A',
+          status: v.status?.toLowerCase() || 'pending',
+          submitted: v.createdAt ? new Date(v.createdAt).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+          details: v.details || {}
         }));
         setVerifications(mapped);
       } catch (err) {
@@ -37,6 +35,26 @@ const AdminVerifications = () => {
   }, []);
 
   if (loading) return <Loader />;
+
+  const handleApprove = async (id, notes) => {
+    try {
+      await api.patch(`/admin/verifications/${id}/approve`, { notes });
+      toast.success('Verification approved successfully');
+      setVerifications(prev => prev.filter(v => v.id !== id));
+    } catch (err) {
+      toast.error('Failed to approve verification');
+    }
+  };
+
+  const handleReject = async (id, notes) => {
+    try {
+      await api.patch(`/admin/verifications/${id}/reject`, { notes });
+      toast.success('Verification rejected');
+      setVerifications(prev => prev.filter(v => v.id !== id));
+    } catch (err) {
+      toast.error('Failed to reject verification');
+    }
+  };
 
   return (
     <div className="space-y-8">
@@ -77,7 +95,11 @@ const AdminVerifications = () => {
         </div>
       </div>
 
-      <VerificationQueue verifications={verifications} />
+      <VerificationQueue 
+        verifications={verifications} 
+        onApprove={handleApprove} 
+        onReject={handleReject} 
+      />
     </div>
   );
 };

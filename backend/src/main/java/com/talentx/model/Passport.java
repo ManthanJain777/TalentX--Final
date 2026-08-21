@@ -22,6 +22,7 @@ public class Passport {
     private String headline;
     private String location;
     private String bio;
+    private String avatarUrl;
 
     private List<Skill> skills = new ArrayList<>();
     private List<ProjectEvidence> projects = new ArrayList<>();
@@ -54,6 +55,9 @@ public class Passport {
 
     public String getBio() { return bio; }
     public void setBio(String bio) { this.bio = bio; }
+
+    public String getAvatarUrl() { return avatarUrl; }
+    public void setAvatarUrl(String avatarUrl) { this.avatarUrl = avatarUrl; }
 
     public List<Skill> getSkills() { return skills; }
     public void setSkills(List<Skill> skills) { this.skills = skills; }
