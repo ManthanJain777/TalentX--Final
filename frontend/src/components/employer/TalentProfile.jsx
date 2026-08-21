@@ -89,6 +89,13 @@ const EmployerTalentProfile = () => {
       <SpotlightCard spotlightColor="rgba(199, 168, 104, 0.1)" className="p-6 sm:p-10 border-cover/20 shadow-xl bg-white/90">
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
           <div className="flex items-start gap-5">
+            <div className="w-16 h-16 shrink-0 rounded-full bg-gradient-to-br from-cover to-cover-deep flex items-center justify-center text-white text-2xl font-display overflow-hidden border-2 border-gold-soft/30 shadow-md">
+              {passport.avatarUrl ? (
+                <img src={passport.avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
+              ) : (
+                '?' 
+              )}
+            </div>
             <div>
               <div className="flex items-center gap-2.5 flex-wrap">
                 <h1 className="text-2xl sm:text-3xl font-bold text-cover">

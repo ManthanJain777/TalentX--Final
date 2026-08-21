@@ -1,38 +1,196 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
- <meta charset="UTF-8">
- <title>Verification Requested – TALENTX</title>
- <style>
- body { font-family: 'Inter', -apple-system, sans-serif; background: #FFFFF0; margin: 0; padding: 40px 20px; }
- .container { max-width: 520px; margin: 0 auto; background: #FFFFFF; border-radius: 20px; padding: 40px 32px; box-shadow: 0 20px 60px rgba(17, 24, 39, 0.05); }
- .footer { text-align: center; font-size: 12px; color: #6B7280; padding-top: 24px; border-top: 1px solid rgba(17, 24, 39, 0.05); }
- .info-box { background: #F9FAFB; border: 1px solid rgba(17, 24, 39, 0.08); border-radius: 12px; padding: 16px; margin: 20px 0; }
- .btn { display: inline-block; background: #111827; color: white !important; padding: 12px 32px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px; }
- </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verification Requested – TALENTX</title>
+  <style>
+    /* Reset & Base */
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #f7f7f7;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrapper {
+      padding: 40px 20px;
+      background-color: #f7f7f7;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #FFFFFF;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(17, 24, 39, 0.05);
+      border: 1px solid rgba(17, 24, 39, 0.05);
+    }
+    
+    /* Header */
+    .header {
+      background: #111827; /* Ink */
+      padding: 30px;
+      text-align: center;
+      position: relative;
+    }
+    .header::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #C7A868, #8B6B23); /* Gold */
+    }
+    .brand {
+      font-family: 'Inter', sans-serif, monospace;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #FFFFF0;
+      margin: 0;
+    }
+    .brand span {
+      color: #C7A868; /* Gold */
+    }
+
+    /* Content */
+    .content {
+      padding: 40px;
+    }
+    .greeting {
+      font-size: 20px;
+      font-weight: 700;
+      color: #111827;
+      margin: 0 0 16px 0;
+    }
+    .message {
+      font-size: 15px;
+      line-height: 1.6;
+      color: #4B5563;
+      margin: 0 0 24px 0;
+    }
+
+    /* Info Box */
+    .info-box {
+      background: #F9FAFB;
+      border: 1px solid #E5E7EB;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 32px;
+    }
+    .info-title {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #111827;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .info-grid {
+      display: table;
+      width: 100%;
+    }
+    .info-row {
+      display: table-row;
+    }
+    .info-label {
+      display: table-cell;
+      font-size: 13px;
+      color: #6B7280;
+      padding: 8px 0;
+      width: 40%;
+    }
+    .info-value {
+      display: table-cell;
+      font-size: 14px;
+      color: #111827;
+      font-weight: 600;
+      padding: 8px 0;
+    }
+
+    /* Action Button */
+    .action-container {
+      text-align: center;
+      margin: 32px 0;
+    }
+    .btn {
+      display: inline-block;
+      background: #111827;
+      color: #FFFFFF !important;
+      padding: 14px 32px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 15px;
+      transition: background 0.3s;
+    }
+    .btn:hover {
+      background: #374151;
+    }
+
+    /* Footer */
+    .footer {
+      background: #F9FAFB;
+      padding: 32px 40px;
+      text-align: center;
+      border-top: 1px solid #F3F4F6;
+    }
+    .footer p {
+      font-size: 12px;
+      color: #6B7280;
+      margin: 0 0 8px 0;
+    }
+  </style>
 </head>
 <body>
- <div class="container">
- <h2 style="font-family: 'Inter', sans-serif, monospace; font-size:20px; color: #111827;"> Verification Request</h2>
- <p style="color: #4B5563; font-size:15px;">
- Hi <strong th:text="${adminName}">Admin</strong>, a new verification request requires your attention.
- </p>
+  <div class="wrapper">
+    <div class="container">
+      <!-- Header -->
+      <div class="header">
+        <h1 class="brand">TALENT<span>X</span> Admin</h1>
+      </div>
 
- <div class="info-box">
- <p style="margin:0; font-size:14px; color: #4B5563; line-height: 1.6;">
- <strong>User:</strong> <span th:text="${userName}">Name</span> (<span th:text="${userEmail}">email@domain.com</span>)<br>
- <strong>Type:</strong> <span th:text="${verificationType}">Identity</span><br>
- <strong>Evidence:</strong> <span th:text="${evidence}">document.pdf</span>
- </p>
- </div>
+      <!-- Content -->
+      <div class="content">
+        <h2 class="greeting">Action Required: New Verification Request</h2>
+        
+        <p class="message">
+          Hi <span th:text="${adminName}">Admin</span>, a user has submitted a new verification request that requires your review in the admin dashboard.
+        </p>
 
- <div style="text-align:center; margin:24px 0;">
- <a href="#" th:href="${verifyLink}" class="btn" style="border: 1px solid #C7A868;">Review Request</a>
- </div>
+        <div class="info-box">
+          <div class="info-title">Request Details</div>
+          <div class="info-grid">
+            <div class="info-row">
+              <div class="info-label">User</div>
+              <div class="info-value" th:text="${userName}">User Name</div>
+            </div>
+            <div class="info-row">
+              <div class="info-label">Email</div>
+              <div class="info-value" th:text="${userEmail}">user@domain.com</div>
+            </div>
+            <div class="info-row">
+              <div class="info-label">Type</div>
+              <div class="info-value" th:text="${verificationType}">Identity</div>
+            </div>
+            <div class="info-row">
+              <div class="info-label">Evidence</div>
+              <div class="info-value" style="font-family: monospace;" th:text="${evidence}">document.pdf</div>
+            </div>
+          </div>
+        </div>
 
- <div class="footer">
- <p> <span th:text="${currentYear}">2026</span> TALENTX. All rights reserved.</p>
- </div>
- </div>
+        <div class="action-container">
+          <a th:href="${verifyLink}" class="btn">Review Request</a>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="footer">
+        <p>&copy; <span th:text="${currentYear}">2026</span> TALENTX. All rights reserved.</p>
+        <p>Internal Admin Notification System.</p>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 
-const Input = ({
+const Input = forwardRef(({
   label,
   id,
   type = 'text',
@@ -14,7 +14,7 @@ const Input = ({
   disabled = false,
   className = '',
   ...props
-}) => {
+}, ref) => {
   return (
     <div className={`w-full ${className}`}>
       {label && (
@@ -34,6 +34,7 @@ const Input = ({
         )}
 
         <input
+          ref={ref}
           id={id}
           type={type}
           value={value}
@@ -59,7 +60,9 @@ const Input = ({
       )}
     </div>
   );
-};
+});
+
+Input.displayName = 'Input';
 
 export default Input;
 export { Input };

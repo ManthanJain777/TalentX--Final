@@ -7,29 +7,72 @@ import Button from '../components/common/Button';
 import Input from '../components/common/Input';
 import GlassCard from '../components/common/GlassCard';
 import { AuroraBackground } from '../components/ui/AuroraBackground';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+
+const registerSchema = z.object({
+  role: z.enum(['candidate', 'employer']),
+  email: z.string().min(1, 'Email is required').email('Invalid email address'),
+  password: z.string()
+    .min(8, 'Password must be at least 8 characters')
+    .regex(/[0-9]/, 'Password must contain at least one number')
+    .regex(/[^a-zA-Z0-9]/, 'Password must contain at least one special character'),
+  firstName: z.string().optional(),
+  lastName: z.string().optional(),
+  companyName: z.string().optional(),
+  agreeTerms: z.literal(true, {
+    errorMap: () => ({ message: 'You must agree to the terms and privacy policy' }),
+  }),
+}).superRefine((data, ctx) => {
+  if (data.role === 'candidate') {
+    if (!data.firstName || data.firstName.trim() === '') {
+      ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'First name is required', path: ['firstName'] });
+    }
+    if (!data.lastName || data.lastName.trim() === '') {
+      ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'Last name is required', path: ['lastName'] });
+    }
+  } else {
+    if (!data.companyName || data.companyName.trim() === '') {
+      ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'Company name is required', path: ['companyName'] });
+    }
+  }
+});
 
 const Register = () => {
-  const { register } = useAuth();
+  const { register: authRegister } = useAuth();
   const navigate = useNavigate();
-
-  const [role, setRole] = useState('candidate');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [companyName, setCompanyName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [agreeTerms, setAgreeTerms] = useState(true);
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(registerSchema),
+    defaultValues: {
+      role: 'candidate',
+      firstName: '',
+      lastName: '',
+      companyName: '',
+      email: '',
+      password: '',
+      agreeTerms: true,
+    },
+  });
+
+  const role = watch('role');
+
+  const onSubmit = async (data) => {
     setLoading(true);
     try {
-      const userData = role === 'employer' 
-        ? { email, password, companyName } 
-        : { email, password, firstName, lastName };
+      const userData = data.role === 'employer' 
+        ? { email: data.email, password: data.password, companyName: data.companyName } 
+        : { email: data.email, password: data.password, firstName: data.firstName, lastName: data.lastName };
       
-      await register(userData, role);
+      await authRegister(userData, data.role);
       navigate('/auth/login');
     } catch (error) {
       // Handled in AuthContext toast
@@ -82,7 +125,7 @@ const Register = () => {
         {/* Register Glass Card */}
         <GlassCard className="p-6 sm:p-8 border-cover/15 shadow-xl bg-white/90 backdrop-blur-xl rounded-3xl">
           
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             
             {/* Role Selection Toggle */}
             <div>
@@ -94,7 +137,7 @@ const Register = () => {
                   type="button"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  onClick={() => setRole('candidate')}
+                  onClick={() => setValue('role', 'candidate', { shouldValidate: true })}
                   className={`p-3 rounded-2xl border flex items-center gap-3 transition-colors cursor-pointer text-left ${
                     role === 'candidate'
                       ? 'bg-cover text-white border-cover shadow-md'
@@ -112,7 +155,7 @@ const Register = () => {
                   type="button"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  onClick={() => setRole('employer')}
+                  onClick={() => setValue('role', 'employer', { shouldValidate: true })}
                   className={`p-3 rounded-2xl border flex items-center gap-3 transition-colors cursor-pointer text-left ${
                     role === 'employer'
                       ? 'bg-cover text-white border-cover shadow-md'
@@ -134,21 +177,19 @@ const Register = () => {
                   label="First Name"
                   id="firstName"
                   type="text"
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
                   placeholder="Jane"
                   icon={User}
-                  required
+                  error={errors.firstName?.message}
+                  {...register('firstName')}
                 />
                 <Input
                   label="Last Name"
                   id="lastName"
                   type="text"
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
                   placeholder="Doe"
                   icon={User}
-                  required
+                  error={errors.lastName?.message}
+                  {...register('lastName')}
                 />
               </div>
             ) : (
@@ -156,11 +197,10 @@ const Register = () => {
                 label="Company Name"
                 id="companyName"
                 type="text"
-                value={companyName}
-                onChange={(e) => setCompanyName(e.target.value)}
                 placeholder="TechCorp Innovations"
                 icon={Briefcase}
-                required
+                error={errors.companyName?.message}
+                {...register('companyName')}
               />
             )}
 
@@ -168,11 +208,10 @@ const Register = () => {
               label="Email Address"
               id="email"
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
               placeholder="you@domain.com"
               icon={Mail}
-              required
+              error={errors.email?.message}
+              {...register('email')}
             />
 
             <div>
@@ -180,15 +219,16 @@ const Register = () => {
                 label="Create Password"
                 id="password"
                 type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
                 placeholder="Minimum 8 characters"
                 icon={Lock}
-                required
+                error={errors.password?.message}
+                {...register('password')}
               />
-              <p className="text-[10px] text-ink-soft mt-1.5 ml-1">
-                Must contain at least 8 chars, 1 uppercase, 1 lowercase, 1 number, and 1 special character.
-              </p>
+              {!errors.password && (
+                <p className="text-[10px] text-ink-soft mt-1.5 ml-1">
+                  Must contain at least 8 chars, 1 uppercase, 1 lowercase, 1 number, and 1 special character.
+                </p>
+              )}
             </div>
 
             {/* Terms checkbox */}
@@ -196,15 +236,14 @@ const Register = () => {
               <label className="flex items-start gap-2.5 cursor-pointer text-xs text-ink-soft">
                 <input
                   type="checkbox"
-                  checked={agreeTerms}
-                  onChange={(e) => setAgreeTerms(e.target.checked)}
+                  {...register('agreeTerms')}
                   className="rounded border-cover/20 text-cover focus:ring-gold mt-0.5"
-                  required
                 />
                 <span>
                   I agree to the <span className="text-cover font-bold">TALENTX Protocol Terms</span>, Milestone Escrow rules, and Privacy Protection guidelines.
                 </span>
               </label>
+              {errors.agreeTerms && <p className="text-[10px] text-risk mt-1 ml-6">{errors.agreeTerms.message}</p>}
             </div>
 
             <Button

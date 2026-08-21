@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, X, Check } from 'lucide-react';
+import { Plus, X, ShieldCheck, CheckCircle2, Circle } from 'lucide-react';
 
 const proficiencyLevels = ['Beginner', 'Intermediate', 'Advanced', 'Expert'];
 
@@ -43,7 +43,11 @@ const SkillManager = ({ skills, setSkills }) => {
     if (newSkill.trim() && !skills.find((s) => s.name.toLowerCase() === newSkill.trim().toLowerCase())) {
       setSkills([
         ...skills,
-        { name: newSkill.trim(), proficiency: selectedProficiency, verified: false },
+        { 
+          name: newSkill.trim(), 
+          proficiency: selectedProficiency, 
+          verificationLevel: 'SELF_REPORTED' 
+        },
       ]);
       setNewSkill('');
       setShowSuggestions(false);
@@ -54,10 +58,28 @@ const SkillManager = ({ skills, setSkills }) => {
     setSkills(skills.filter((s) => s.name !== name));
   };
 
-  const toggleVerification = (name) => {
+  const getVerificationBadge = (level) => {
+    switch (level) {
+      case 'PROVEN_IN_WORK':
+        return <ShieldCheck className="w-4 h-4 text-gold" title="Proven in Escrow Work" />;
+      case 'ASSESSED':
+        return <CheckCircle2 className="w-4 h-4 text-purple-500" title="Assessed by TalentX" />;
+      case 'PEER_REVIEWED':
+        return <CheckCircle2 className="w-4 h-4 text-blue-500" title="Peer Reviewed" />;
+      default:
+        return <Circle className="w-3 h-3 text-ink-faint" title="Self Reported" />;
+    }
+  };
+
+  // For testing purposes, we'll allow clicking the badge to cycle verification levels
+  const cycleVerification = (name, currentLevel) => {
+    const levels = ['SELF_REPORTED', 'PEER_REVIEWED', 'ASSESSED', 'PROVEN_IN_WORK'];
+    const currentIndex = levels.indexOf(currentLevel || 'SELF_REPORTED');
+    const nextIndex = (currentIndex + 1) % levels.length;
+    
     setSkills(
       skills.map((s) =>
-        s.name === name ? { ...s, verified: !s.verified } : s
+        s.name === name ? { ...s, verificationLevel: levels[nextIndex] } : s
       )
     );
   };
@@ -140,14 +162,10 @@ const SkillManager = ({ skills, setSkills }) => {
               <span className="text-sm font-medium text-ink">{skill.name}</span>
               <span className="text-[10px] font-mono text-ink-faint">{skill.proficiency}</span>
               <button
-                onClick={() => toggleVerification(skill.name)}
-                className={`p-0.5 rounded-full transition-colors ${
-                  skill.verified
-                    ? 'text-verified hover:text-verified/80'
-                    : 'text-ink-faint hover:text-ink'
-                }`}
+                onClick={() => cycleVerification(skill.name, skill.verificationLevel)}
+                className="p-1 rounded-full transition-all hover:scale-110 hover:bg-cover/5"
               >
-                <Check className={`w-3 h-3 ${skill.verified ? '' : 'opacity-30'}`} />
+                {getVerificationBadge(skill.verificationLevel)}
               </button>
               <button
                 onClick={() => removeSkill(skill.name)}

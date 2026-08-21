@@ -28,6 +28,9 @@ public class Passport {
     private List<ProjectEvidence> projects = new ArrayList<>();
     private List<Certification> certifications = new ArrayList<>();
     private List<Assessment> assessments = new ArrayList<>();
+    private List<Experience> experience = new ArrayList<>();
+    private List<Education> education = new ArrayList<>();
+    private SocialLinks socialLinks = new SocialLinks();
 
     private boolean availability;
     private boolean visibility;
@@ -71,6 +74,15 @@ public class Passport {
     public List<Assessment> getAssessments() { return assessments; }
     public void setAssessments(List<Assessment> assessments) { this.assessments = assessments; }
     
+    public List<Experience> getExperience() { return experience; }
+    public void setExperience(List<Experience> experience) { this.experience = experience; }
+
+    public List<Education> getEducation() { return education; }
+    public void setEducation(List<Education> education) { this.education = education; }
+
+    public SocialLinks getSocialLinks() { return socialLinks; }
+    public void setSocialLinks(SocialLinks socialLinks) { this.socialLinks = socialLinks; }
+
     // Some usages might use getInternships instead of assessments in candidate builder. The user's code uses setInternships, let me add it.
     private List<String> internships = new ArrayList<>();
     public List<String> getInternships() { return internships; }
@@ -94,7 +106,8 @@ public class Passport {
     public static class Skill {
         private String name;
         private String proficiency; // Beginner, Intermediate, Advanced, Expert
-        private boolean verified;
+        private VerificationLevel verificationLevel = VerificationLevel.SELF_REPORTED;
+        private boolean verified; // Legacy, kept for backwards compatibility
         private String verifiedBy;
 
         public Skill() {}
@@ -105,11 +118,21 @@ public class Passport {
         public String getProficiency() { return proficiency; }
         public void setProficiency(String proficiency) { this.proficiency = proficiency; }
 
-        public boolean isVerified() { return verified; }
+        public VerificationLevel getVerificationLevel() { return verificationLevel; }
+        public void setVerificationLevel(VerificationLevel verificationLevel) { this.verificationLevel = verificationLevel; }
+
+        public boolean isVerified() { return verified || verificationLevel != VerificationLevel.SELF_REPORTED; }
         public void setVerified(boolean verified) { this.verified = verified; }
 
         public String getVerifiedBy() { return verifiedBy; }
         public void setVerifiedBy(String verifiedBy) { this.verifiedBy = verifiedBy; }
+    }
+
+    public enum VerificationLevel {
+        SELF_REPORTED,
+        PEER_REVIEWED,
+        ASSESSED,
+        PROVEN_IN_WORK
     }
 
     public static class ProjectEvidence {
@@ -174,4 +197,64 @@ public class Passport {
         public String getDateCompleted() { return dateCompleted; }
         public void setDateCompleted(String dateCompleted) { this.dateCompleted = dateCompleted; }
     }
+
+    public static class SocialLinks {
+        private String github;
+        private String linkedin;
+        private String portfolio;
+
+        public SocialLinks() {}
+
+        public String getGithub() { return github; }
+        public void setGithub(String github) { this.github = github; }
+
+        public String getLinkedin() { return linkedin; }
+        public void setLinkedin(String linkedin) { this.linkedin = linkedin; }
+
+        public String getPortfolio() { return portfolio; }
+        public void setPortfolio(String portfolio) { this.portfolio = portfolio; }
+    }
+
+    public static class Experience {
+        private String company;
+        private String role;
+        private String startDate;
+        private String endDate;
+        private String description;
+
+        public Experience() {}
+
+        public String getCompany() { return company; }
+        public void setCompany(String company) { this.company = company; }
+
+        public String getRole() { return role; }
+        public void setRole(String role) { this.role = role; }
+
+        public String getStartDate() { return startDate; }
+        public void setStartDate(String startDate) { this.startDate = startDate; }
+
+        public String getEndDate() { return endDate; }
+        public void setEndDate(String endDate) { this.endDate = endDate; }
+
+        public String getDescription() { return description; }
+        public void setDescription(String description) { this.description = description; }
+    }
+
+    public static class Education {
+        private String institution;
+        private String degree;
+        private String year;
+
+        public Education() {}
+
+        public String getInstitution() { return institution; }
+        public void setInstitution(String institution) { this.institution = institution; }
+
+        public String getDegree() { return degree; }
+        public void setDegree(String degree) { this.degree = degree; }
+
+        public String getYear() { return year; }
+        public void setYear(String year) { this.year = year; }
+    }
 }
+

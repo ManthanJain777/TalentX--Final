@@ -31,13 +31,13 @@ const CandidateDashboard = () => {
         setLoading(true);
         
         const fetchPromises = [
-          api.get('/passports/me').then(res => setPassport(res.data)).catch(e => console.log('No passport found', e)),
-          api.get('/projects').then(res => setProjects(Array.isArray(res.data) ? res.data : [])).catch(e => console.log('No projects', e))
+          api.get('/passports/me').then(res => setPassport(res.data)).catch(e => console.error('No passport found', e)),
+          api.get('/projects').then(res => setProjects(Array.isArray(res.data) ? res.data : [])).catch(e => console.error('No projects', e))
         ];
 
         if (user?.id) {
           fetchPromises.push(
-            api.get(`/matches/candidate/${user.id}`).then(res => setMatches(Array.isArray(res.data) ? res.data : [])).catch(e => console.log('No matches', e))
+            api.get(`/matches/candidate/${user.id}`).then(res => setMatches(Array.isArray(res.data) ? res.data : [])).catch(e => console.error('No matches', e))
           );
         }
 

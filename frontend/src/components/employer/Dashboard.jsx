@@ -30,13 +30,13 @@ const EmployerDashboard = () => {
         setLoading(true);
         
         const fetchPromises = [
-          api.get('/projects').then(res => setProjects(Array.isArray(res.data) ? res.data : [])).catch(e => console.log('No projects', e)),
-          api.get('/discovery/candidates').then(res => setCandidates(Array.isArray(res.data) ? res.data : [])).catch(e => console.log('No candidates in discovery', e))
+          api.get('/projects').then(res => setProjects(Array.isArray(res.data) ? res.data : [])).catch(e => console.error('No projects', e)),
+          api.get('/discovery/candidates').then(res => setCandidates(Array.isArray(res.data) ? res.data : [])).catch(e => console.error('No candidates in discovery', e))
         ];
 
         if (user?.id) {
           fetchPromises.push(
-            api.get(`/challenges/employer/${user.id}`).then(res => setChallenges(Array.isArray(res.data) ? res.data : [])).catch(e => console.log('No challenges for employer yet', e))
+            api.get(`/challenges/employer/${user.id}`).then(res => setChallenges(Array.isArray(res.data) ? res.data : [])).catch(e => console.error('No challenges for employer yet', e))
           );
         }
 

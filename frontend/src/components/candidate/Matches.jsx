@@ -112,7 +112,7 @@ const Matches = () => {
 
               {/* Match Score */}
               <div className="mb-4">
-                <MatchScore score={Math.round(match.totalScore || match.matchScore || 90)} size="sm" />
+                <MatchScore score={Math.round(match.totalScore || match.matchScore || 0)} size="sm" />
               </div>
 
               {/* Action */}

@@ -8,21 +8,38 @@ import Button from '../components/common/Button';
 import Input from '../components/common/Input';
 import GlassCard from '../components/common/GlassCard';
 import { AuroraBackground } from '../components/ui/AuroraBackground';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+
+const loginSchema = z.object({
+  email: z.string().min(1, 'Email is required').email('Invalid email address'),
+  password: z.string().min(6, 'Password must be at least 6 characters'),
+});
 
 const Login = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [role, setRole] = useState('candidate');
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
+
+  const onSubmit = async (data) => {
     setLoading(true);
     try {
-      const activeUser = await login(email, password);
+      const activeUser = await login(data.email, data.password);
       navigate(`/${(activeUser?.role || role).toLowerCase()}/dashboard`);
     } catch (error) {
       // Handled via toast
@@ -77,7 +94,7 @@ const Login = () => {
         {/* Login Glass Card */}
         <GlassCard className="p-6 sm:p-8 border-cover/15 shadow-xl bg-white/90 backdrop-blur-xl rounded-3xl">
           
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             
             {/* Role Select with Animated Pill */}
             <div>
@@ -120,22 +137,20 @@ const Login = () => {
               label="Email Address"
               id="email"
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
               placeholder="user@talentx.com"
               icon={Mail}
-              required
+              error={errors.email?.message}
+              {...register('email')}
             />
 
             <Input
               label="Password"
               id="password"
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••••••"
               icon={Lock}
-              required
+              error={errors.password?.message}
+              {...register('password')}
             />
 
             <div className="flex items-center justify-between text-xs pt-1">

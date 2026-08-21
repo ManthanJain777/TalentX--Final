@@ -1,58 +1,185 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
- <meta charset="UTF-8">
- <title>Login Alert – TALENTX</title>
- <style>
- body { font-family: 'Inter', -apple-system, sans-serif; background: #FFFFF0; margin: 0; padding: 40px 20px; }
- .container { max-width: 520px; margin: 0 auto; background: #FFFFFF; border-radius: 20px; padding: 40px 32px; box-shadow: 0 20px 60px rgba(17, 24, 39, 0.05); border: 1px solid rgba(17, 24, 39, 0.05); }
- .badge { display: inline-block; background: #8B6B23; color: white; padding: 4px 16px; border-radius: 8px; font-size: 12px; font-weight: 600; text-transform: uppercase; }
- .detail-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(17, 24, 39, 0.05); font-size: 14px; }
- .detail-label { color: #6B7280; }
- .detail-value { color: #111827; font-weight: 500; }
- .footer { text-align: center; font-size: 12px; color: #6B7280; padding-top: 24px; border-top: 1px solid rgba(17, 24, 39, 0.05); }
- .btn { display: inline-block; background: #111827; color: white; padding: 12px 32px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px; }
- </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TALENTX Security Alert</title>
+  <style>
+    /* Reset & Base */
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #f7f7f7;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrapper {
+      padding: 40px 20px;
+      background-color: #f7f7f7;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #FFFFFF;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(17, 24, 39, 0.05);
+      border: 1px solid rgba(17, 24, 39, 0.05);
+    }
+    
+    /* Header */
+    .header {
+      background: #111827; /* Ink */
+      padding: 30px;
+      text-align: center;
+      position: relative;
+    }
+    .header::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #EF4444, #B91C1C); /* Red for alert */
+    }
+    .brand {
+      font-family: 'Inter', sans-serif, monospace;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #FFFFF0;
+      margin: 0;
+    }
+    .brand span {
+      color: #C7A868; /* Gold */
+    }
+
+    /* Content */
+    .content {
+      padding: 40px;
+    }
+    .greeting {
+      font-size: 20px;
+      font-weight: 700;
+      color: #111827;
+      margin: 0 0 16px 0;
+    }
+    .message {
+      font-size: 15px;
+      line-height: 1.6;
+      color: #4B5563;
+      margin: 0 0 24px 0;
+    }
+
+    /* Alert Box */
+    .alert-box {
+      background: #FEF2F2;
+      border: 1px solid #FCA5A5;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 32px;
+    }
+    .alert-title {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #B91C1C;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .info-grid {
+      display: table;
+      width: 100%;
+    }
+    .info-row {
+      display: table-row;
+    }
+    .info-label {
+      display: table-cell;
+      font-size: 13px;
+      color: #6B7280;
+      padding: 8px 0;
+      width: 40%;
+    }
+    .info-value {
+      display: table-cell;
+      font-size: 14px;
+      color: #111827;
+      font-weight: 600;
+      padding: 8px 0;
+      font-family: monospace;
+    }
+
+    /* Footer */
+    .footer {
+      background: #F9FAFB;
+      padding: 32px 40px;
+      text-align: center;
+      border-top: 1px solid #F3F4F6;
+    }
+    .footer p {
+      font-size: 12px;
+      color: #6B7280;
+      margin: 0 0 8px 0;
+    }
+    .footer a {
+      color: #111827;
+      font-weight: 500;
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
- <div class="container">
- <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
- <div style="width:40px; height:40px; border-radius:50%; border:2px solid #C7A868; display:flex; align-items:center; justify-content:center; background: #FFFFF0;">
- <div style="width:12px; height:12px; border-radius:50%; background:#C7A868;"></div>
- </div>
- <h2 style="font-family: 'Inter', sans-serif, monospace; font-weight:700; font-size:22px; margin:0; color: #111827;">TALENT<span style="color:#8B6B23;">X</span></h2>
- </div>
+  <div class="wrapper">
+    <div class="container">
+      <!-- Header -->
+      <div class="header">
+        <h1 class="brand">TALENT<span>X</span> Security</h1>
+      </div>
 
- <span class="badge"> New Login Detected</span>
+      <!-- Content -->
+      <div class="content">
+        <h2 class="greeting">New login to your account</h2>
+        
+        <p class="message">
+          Hi <span th:text="${userName}">User</span>, we detected a new login to your TALENTX account from an unrecognized device or IP address.
+        </p>
 
- <h2 style="font-family: 'Inter', sans-serif, monospace; font-size:20px; margin-top:12px; color: #111827;">
- Hello, <span th:text="${userName}">Anika</span>
- </h2>
- <p style="color: #4B5563; font-size:15px; margin-bottom:20px;">
- A new login was detected for your <strong style="color: #111827;">TALENTX</strong> account.
- </p>
+        <div class="alert-box">
+          <div class="alert-title">Login Details</div>
+          <div class="info-grid">
+            <div class="info-row">
+              <div class="info-label">Time</div>
+              <div class="info-value" th:text="${loginTime}">Now</div>
+            </div>
+            <div class="info-row">
+              <div class="info-label">IP Address</div>
+              <div class="info-value" th:text="${ipAddress}">0.0.0.0</div>
+            </div>
+            <div class="info-row">
+              <div class="info-label">Location</div>
+              <div class="info-value" th:text="${location}">Unknown</div>
+            </div>
+            <div class="info-row">
+              <div class="info-label">Browser</div>
+              <div class="info-value" th:text="${userAgent}">Unknown Browser</div>
+            </div>
+          </div>
+        </div>
 
- <div style="background: #F9FAFB; border: 1px solid rgba(17, 24, 39, 0.08); border-radius:12px; padding:16px; margin-bottom:20px;">
- <div class="detail-row"><span class="detail-label"> Time</span><span class="detail-value" th:text="${loginTime}">19 Aug 2026, 02:30 PM</span></div>
- <div class="detail-row"><span class="detail-label"> IP Address</span><span class="detail-value" th:text="${ipAddress}">192.168.1.1</span></div>
- <div class="detail-row"><span class="detail-label"> Location</span><span class="detail-value" th:text="${location}">Bengaluru, IN</span></div>
- <div class="detail-row"><span class="detail-label">️ Device</span><span class="detail-value" th:text="${userAgent}">Chrome on Windows</span></div>
- <div class="detail-row"><span class="detail-label"> Role</span><span class="detail-value" th:text="${role}">Candidate</span></div>
- </div>
+        <p class="message">
+          <strong>If this was you,</strong> you can safely ignore this email.
+        </p>
+        <p class="message">
+          <strong>If you did not authorize this login,</strong> please secure your account immediately by changing your password.
+        </p>
+      </div>
 
- <div style="text-align:center; margin-top:20px;">
- <a href="#" th:href="${securityLink}" class="btn" style="border: 1px solid #C7A868;"> Review Security Settings</a>
- </div>
-
- <div style="background: rgba(199, 168, 104, 0.05); border: 1px solid rgba(199, 168, 104, 0.2); border-radius:8px; padding:12px; margin-top:20px; text-align:center;">
- <p style="margin:0; font-size:13px; color: #4B5563;">
- ️ If this wasn't you, <strong style="color:#C0424D;">reset your password immediately</strong>
- </p>
- </div>
-
- <div class="footer">
- <p> <span th:text="${currentYear}">2026</span> TALENTX. All rights reserved.</p>
- </div>
- </div>
+      <!-- Footer -->
+      <div class="footer">
+        <p>&copy; <span th:text="${currentYear}">2026</span> TALENTX. All rights reserved.</p>
+        <p>This automated security alert was sent to <span th:text="${userEmail}">you@email.com</span>.</p>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

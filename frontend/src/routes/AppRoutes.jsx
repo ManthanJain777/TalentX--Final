@@ -7,6 +7,7 @@ import ForgotPassword from '../pages/ForgotPassword';
 import CandidateRoutes from '../pages/CandidateRoutes';
 import EmployerRoutes from '../pages/EmployerRoutes';
 import AdminRoutes from '../pages/AdminRoutes';
+import NotFound from '../pages/NotFound';
 import ProtectedRoute from './ProtectedRoute';
 
 const AppRoutes = () => {
@@ -31,7 +32,7 @@ const AppRoutes = () => {
       <Route path="/projects" element={<Navigate to="/candidate/projects" replace />} />
 
       {/* Catch-all fallback */}
-      <Route path="*" element={<Navigate to="/" replace />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };

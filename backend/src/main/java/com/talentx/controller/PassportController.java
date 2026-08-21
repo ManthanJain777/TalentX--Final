@@ -39,6 +39,9 @@ public class PassportController {
     @GetMapping("/{userId}")
     public ResponseEntity<Passport> getPassport(@PathVariable String userId) {
         Passport passport = passportService.getByUserId(userId);
+        if (passport == null) {
+            throw new com.talentx.exception.ResourceNotFoundException("Passport not found for user: " + userId);
+        }
         return ResponseEntity.ok(passport);
     }
 }
