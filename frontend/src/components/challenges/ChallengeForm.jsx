@@ -28,7 +28,7 @@ const ChallengeForm = () => {
   );
 
   return (
-    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="glass-2 p-6 md:p-8">
+    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="glass-panel p-6 md:p-8">
       <div className="mb-6 border-b border-ink/5 pb-4">
         <h3 className="font-display font-semibold text-xl text-ink">Challenge Details</h3>
         <p className="text-sm text-ink-soft">Define the task, requirements, and reward.</p>

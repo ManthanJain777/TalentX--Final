@@ -82,7 +82,7 @@ const AdminStats = () => {
       {statCards.map((stat, index) => {
         const Icon = stat.icon;
         return (
-          <motion.div key={index} variants={item} className="glass-2 p-6 relative overflow-hidden group hover:border-gold-soft/30 transition-colors">
+          <motion.div key={index} variants={item} className="glass-panel p-6 relative overflow-hidden group hover:border-gold-soft/30 transition-colors">
             {stat.urgent && (
               <div className="absolute top-0 right-0 w-16 h-16 bg-red-500/10 blur-2xl rounded-full pointer-events-none" />
             )}

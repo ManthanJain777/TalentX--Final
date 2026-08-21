@@ -101,7 +101,7 @@ const EvidenceTabs = ({
   ];
 
   return (
-    <div className="glass-2 p-6">
+    <div className="glass-panel p-6">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h3 className="text-xl font-display font-semibold text-ink">Verified Evidence</h3>

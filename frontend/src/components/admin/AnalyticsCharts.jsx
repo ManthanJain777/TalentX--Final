@@ -27,7 +27,7 @@ const AnalyticsCharts = ({ data }) => {
     <motion.div variants={container} initial="hidden" animate="show" className="grid grid-cols-1 lg:grid-cols-2 gap-6">
       
       {/* Chart 1: User Growth */}
-      <motion.div variants={item} className="glass-2 p-6 h-80">
+      <motion.div variants={item} className="glass-panel p-6 h-80">
         <h3 className="font-display font-semibold text-lg text-ink mb-1">Platform Growth</h3>
         <p className="text-xs text-ink-soft font-mono mb-4">Total verified users (last 6 months)</p>
         <ResponsiveContainer width="100%" height="100%">
@@ -44,7 +44,7 @@ const AnalyticsCharts = ({ data }) => {
       </motion.div>
 
       {/* Chart 2: Project Volume */}
-      <motion.div variants={item} className="glass-2 p-6 h-80">
+      <motion.div variants={item} className="glass-panel p-6 h-80">
         <h3 className="font-display font-semibold text-lg text-ink mb-1">Project Volume</h3>
         <p className="text-xs text-ink-soft font-mono mb-4">Projects created vs completed</p>
         <ResponsiveContainer width="100%" height="100%">
@@ -62,7 +62,7 @@ const AnalyticsCharts = ({ data }) => {
       </motion.div>
 
       {/* Chart 3: Revenue */}
-      <motion.div variants={item} className="glass-2 p-6 h-80">
+      <motion.div variants={item} className="glass-panel p-6 h-80">
         <h3 className="font-display font-semibold text-lg text-ink mb-1">Escrow Volume</h3>
         <p className="text-xs text-ink-soft font-mono mb-4">Total funds locked in smart contracts</p>
         <ResponsiveContainer width="100%" height="100%">
@@ -86,7 +86,7 @@ const AnalyticsCharts = ({ data }) => {
       </motion.div>
 
       {/* Chart 4: Match Efficiency */}
-      <motion.div variants={item} className="glass-2 p-6 h-80 flex flex-col">
+      <motion.div variants={item} className="glass-panel p-6 h-80 flex flex-col">
         <div>
           <h3 className="font-display font-semibold text-lg text-ink mb-1">Match Outcomes</h3>
           <p className="text-xs text-ink-soft font-mono mb-4">Algorithm suggestion conversions</p>

@@ -7,7 +7,7 @@ const ContractViewer = ({ project }) => {
 
   return (
     <>
-      <div className="glass-2 p-6 h-full flex flex-col group transition-all duration-300 hover:border-gold-soft/30">
+      <div className="glass-panel p-6 h-full flex flex-col group transition-all duration-300 hover:border-gold-soft/30">
         <div className="flex items-center gap-2 mb-4">
           <FileText className="w-5 h-5 text-gold" />
           <h3 className="font-display font-semibold text-lg text-ink">Smart Contract</h3>
@@ -60,7 +60,7 @@ const ContractViewer = ({ project }) => {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className="glass-2 w-full max-w-2xl h-[80vh] flex flex-col overflow-hidden pointer-events-auto"
+                className="glass-panel w-full max-w-2xl h-[80vh] flex flex-col overflow-hidden pointer-events-auto"
               >
                 <div className="p-4 border-b border-ink/5 flex justify-between items-center bg-white/50">
                   <h3 className="font-display font-semibold text-lg text-ink">Smart Contract - {project.id}</h3>

@@ -30,7 +30,7 @@ const EscrowVault = ({ escrow }) => {
   const releasedPercent = (escrow.released / escrow.total) * 100;
   
   return (
-    <div className="glass-2 p-6 border-gold-soft/30 shadow-lg shadow-gold/5 overflow-hidden relative">
+    <div className="glass-panel p-6 border-gold-soft/30 shadow-lg shadow-gold/5 overflow-hidden relative">
       {/* Decorative gradient orb */}
       <div className="absolute -top-10 -right-10 w-32 h-32 bg-gold/10 rounded-full blur-2xl pointer-events-none" />
       

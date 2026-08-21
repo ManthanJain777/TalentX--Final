@@ -57,7 +57,7 @@ const CandidateProjects = () => {
           </h2>
           <p className="text-sm text-ink-soft mt-1 font-mono">Manage your active engagements</p>
         </div>
-        <div className="flex gap-4 p-4 glass-2 rounded-xl border border-ink/5">
+        <div className="flex gap-4 p-4 glass-panel rounded-2xl">
           <div className="text-center px-4 border-r border-ink/10">
             <p className="text-2xl font-mono text-ink font-bold">{projects.filter(p => p.status === 'Active').length}</p>
             <p className="text-[10px] uppercase tracking-wider text-ink-faint">Active</p>

@@ -10,7 +10,7 @@ const PassportHeader = ({
   setLocation,
 }) => {
   return (
-    <div className="glass-2 p-6 space-y-4 relative group">
+    <div className="glass-panel p-6 space-y-4 relative group">
       <div className="shimmer-track" />
       <div className="flex items-start gap-6">
         {/* Avatar */}

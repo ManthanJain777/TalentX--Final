@@ -31,7 +31,7 @@ const SkillManager = ({ skills, setSkills }) => {
   };
 
   return (
-    <div className="glass-2 p-6">
+    <div className="glass-panel p-6">
       <div className="flex items-center justify-between mb-4">
         <div>
           <h3 className="text-lg font-display font-semibold text-ink">Skills</h3>
@@ -77,7 +77,7 @@ const SkillManager = ({ skills, setSkills }) => {
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0, opacity: 0 }}
-              className="group flex items-center gap-2 px-3 py-1.5 rounded-full glass-2 border border-ink/10 hover:border-gold-soft/30 transition-all cursor-default"
+              className="group flex items-center gap-2 px-3 py-1.5 rounded-full glass-panel border border-ink/10 hover:border-gold-soft/30 transition-all cursor-default"
             >
               <span className="text-sm font-medium text-ink">{skill.name}</span>
               <span className="text-[10px] font-mono text-ink-faint">{skill.proficiency}</span>

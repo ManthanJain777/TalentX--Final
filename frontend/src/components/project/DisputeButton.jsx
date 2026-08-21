@@ -34,7 +34,7 @@ const DisputeButton = ({ project, onDisputeSubmit }) => {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className="glass-2 w-full max-w-md overflow-hidden pointer-events-auto"
+                className="glass-panel w-full max-w-md overflow-hidden pointer-events-auto"
               >
                 <div className="p-6 border-b border-ink/5 bg-red-500/5">
                   <div className="flex items-center gap-2 mb-1">

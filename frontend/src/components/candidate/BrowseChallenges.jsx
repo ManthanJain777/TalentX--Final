@@ -65,7 +65,7 @@ const BrowseChallenges = () => {
       </div>
       
       {filteredChallenges.length === 0 && (
-        <div className="glass-2 p-12 text-center text-ink-soft">
+        <div className="glass-panel p-12 text-center text-ink-soft">
           No challenges match your filters. Try adjusting your search criteria.
         </div>
       )}

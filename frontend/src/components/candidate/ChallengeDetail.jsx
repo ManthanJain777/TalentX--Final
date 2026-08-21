@@ -82,7 +82,7 @@ const CandidateChallengeDetail = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-8">
           {/* Description */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="glass-2 p-6 md:p-8">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="glass-panel p-6 md:p-8">
             <h3 className="font-display font-semibold text-xl text-ink mb-4">Task Description</h3>
             <p className="text-ink-soft leading-relaxed">{challenge.description}</p>
             
@@ -108,7 +108,7 @@ const CandidateChallengeDetail = () => {
 
         {/* Right Sidebar */}
         <div className="space-y-6">
-          <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }} className="glass-2 p-6">
+          <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }} className="glass-panel p-6">
             <h3 className="font-display font-semibold text-lg text-ink mb-4">Challenge Stats</h3>
             <div className="space-y-4">
               <div className="flex items-center justify-between pb-4 border-b border-ink/5">

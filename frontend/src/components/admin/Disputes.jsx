@@ -73,11 +73,11 @@ const AdminDisputes = () => {
       </div>
 
       {filteredDisputes.length === 0 ? (
-        <div className="glass-2 p-12 text-center text-ink-soft">No disputes found.</div>
+        <div className="glass-panel p-12 text-center text-ink-soft">No disputes found.</div>
       ) : (
       <motion.div variants={container} initial="hidden" animate="show" className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {filteredDisputes.map(dispute => (
-          <motion.div key={dispute.id} variants={item} className="glass-2 p-6 flex flex-col h-full hover:border-gold-soft/30 transition-colors group">
+          <motion.div key={dispute.id} variants={item} className="glass-panel p-6 flex flex-col h-full hover:border-gold-soft/30 transition-colors group">
             <div className="flex justify-between items-start mb-4 gap-4">
               <div className="min-w-0">
                 <div className="flex gap-2 mb-2">

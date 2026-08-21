@@ -18,7 +18,7 @@ const ChallengeCard = ({ challenge, role = 'candidate' }) => {
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
       style={{ perspective: 1000 }}
-      className={`glass-2 p-6 flex flex-col h-full transition-all duration-300 relative overflow-hidden ${
+      className={`glass-panel p-6 flex flex-col h-full transition-all duration-300 relative overflow-hidden ${
         isHovered ? 'border-gold-soft/40 shadow-xl shadow-gold/5' : 'border-cover/10'
       }`}
     >

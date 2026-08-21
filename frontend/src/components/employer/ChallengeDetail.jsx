@@ -103,7 +103,7 @@ const EmployerChallengeDetail = () => {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {submissions.map((sub, i) => (
-              <motion.div key={sub.id || i} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }} className="glass-2 p-6">
+              <motion.div key={sub.id || i} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }} className="glass-panel p-6">
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cover to-cover-deep flex items-center justify-center text-white text-sm font-display shrink-0">
@@ -134,7 +134,7 @@ const EmployerChallengeDetail = () => {
         </div>
       ) : (
         <div className="space-y-6">
-          <div className="glass-2 p-6 bg-verified/5 border-verified/30 text-center">
+          <div className="glass-panel p-6 bg-verified/5 border-verified/30 text-center">
             <Trophy className="w-12 h-12 text-verified mx-auto mb-4" />
             <h2 className="text-2xl font-display font-bold text-ink mb-2">Challenge Completed</h2>
             <p className="text-ink-soft">
@@ -150,7 +150,7 @@ const EmployerChallengeDetail = () => {
         {showConfirm && selectedWinner && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 bg-ink/40 backdrop-blur-sm" onClick={() => setShowConfirm(false)} />
-            <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} className="glass-2 w-full max-w-md p-8 relative z-10 text-center">
+            <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} className="glass-panel w-full max-w-md p-8 relative z-10 text-center">
               <AlertCircle className="w-12 h-12 text-gold mx-auto mb-4" />
               <h3 className="text-xl font-display font-semibold text-ink mb-2">Confirm Winner</h3>
               <p className="text-sm text-ink-soft mb-6">

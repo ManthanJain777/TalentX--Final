@@ -56,7 +56,7 @@ const DisputeRoom = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Left Column: Evidence Lockbox */}
         <div className="space-y-6">
-          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="glass-2 p-6 flex flex-col max-h-[600px]">
+          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="glass-panel p-6 flex flex-col max-h-[600px]">
             <h3 className="font-display font-semibold text-lg text-ink mb-4 flex items-center gap-2">
               Evidence Lockbox
             </h3>
@@ -115,7 +115,7 @@ const DisputeRoom = () => {
 
         {/* Right Column: Dispute Resolution Panel */}
         <div className="space-y-6">
-          <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="glass-2 p-6">
+          <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="glass-panel p-6">
             <h3 className="font-display font-semibold text-lg text-ink mb-6">Dispute Details</h3>
             
             <div className="grid grid-cols-2 gap-4 mb-6">

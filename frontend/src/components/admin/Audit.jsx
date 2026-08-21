@@ -47,7 +47,7 @@ const AdminAudit = () => {
         </button>
       </div>
 
-      <div className="flex-1 glass-2 rounded-xl border border-ink/5 overflow-hidden flex flex-col">
+      <div className="flex-1 glass-panel rounded-xl border border-ink/5 overflow-hidden flex flex-col">
         <div className="p-4 bg-ink text-white font-mono text-xs flex justify-between items-center">
           <div className="flex gap-4">
             <span className="text-white/60">NODE:</span> <span className="text-gold">validator-us-east-1</span>

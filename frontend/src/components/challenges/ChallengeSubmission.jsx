@@ -33,7 +33,7 @@ const ChallengeSubmission = ({ challenge, onSubmitSolution }) => {
 
   if (submitted) {
     return (
-      <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="glass-2 p-8 text-center flex flex-col items-center border-verified/30">
+      <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="glass-panel p-8 text-center flex flex-col items-center border-verified/30">
         <div className="w-16 h-16 rounded-full bg-verified/10 text-verified flex items-center justify-center mb-4">
           <CheckCircle className="w-8 h-8" />
         </div>
@@ -52,7 +52,7 @@ const ChallengeSubmission = ({ challenge, onSubmitSolution }) => {
   }
 
   return (
-    <div className="glass-2 p-6 md:p-8">
+    <div className="glass-panel p-6 md:p-8">
       <div className="mb-6 border-b border-ink/5 pb-4">
         <h3 className="font-display font-semibold text-xl text-ink">Submit Your Solution</h3>
         <p className="text-sm text-ink-soft mt-1">Provide a link to your repository or upload your compiled artifact.</p>

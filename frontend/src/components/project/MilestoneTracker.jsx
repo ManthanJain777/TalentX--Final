@@ -17,7 +17,7 @@ const MilestoneTracker = ({ milestones }) => {
   };
 
   return (
-    <div className="glass-2 p-6">
+    <div className="glass-panel p-6">
       <h3 className="font-display font-semibold text-lg text-ink mb-6">Milestones</h3>
       
       <motion.div 

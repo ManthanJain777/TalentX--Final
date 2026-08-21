@@ -46,7 +46,7 @@ const AdminVerifications = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div className="glass-2 p-6 flex items-center gap-4">
+        <div className="glass-panel p-6 flex items-center gap-4">
           <div className="p-3 bg-pending/10 rounded-xl text-pending">
             <Clock className="w-6 h-6" />
           </div>
@@ -56,7 +56,7 @@ const AdminVerifications = () => {
           </div>
         </div>
         
-        <div className="glass-2 p-6 flex items-center gap-4">
+        <div className="glass-panel p-6 flex items-center gap-4">
           <div className="p-3 bg-verified/10 rounded-xl text-verified">
             <CheckCircle className="w-6 h-6" />
           </div>
@@ -66,7 +66,7 @@ const AdminVerifications = () => {
           </div>
         </div>
 
-        <div className="glass-2 p-6 flex items-center gap-4">
+        <div className="glass-panel p-6 flex items-center gap-4">
           <div className="p-3 bg-gold/10 rounded-xl text-gold">
             <ShieldCheck className="w-6 h-6" />
           </div>

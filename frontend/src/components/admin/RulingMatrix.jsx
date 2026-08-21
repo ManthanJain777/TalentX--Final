@@ -50,7 +50,7 @@ const RulingMatrix = () => {
             <motion.div
               key={r.id}
               whileHover={{ y: -5 }}
-              className={`glass-2 p-6 flex flex-col items-center text-center cursor-pointer transition-colors border-2 border-transparent hover:${r.border} ${r.bgHover}`}
+              className={`glass-panel p-6 flex flex-col items-center text-center cursor-pointer transition-colors border-2 border-transparent hover:${r.border} ${r.bgHover}`}
               onClick={() => handleSelect(r)}
             >
               <div className={`w-12 h-12 rounded-full flex items-center justify-center mb-4 text-${r.color} bg-${r.color}/10`}>
@@ -78,7 +78,7 @@ const RulingMatrix = () => {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className="glass-2 w-full max-w-sm overflow-hidden pointer-events-auto p-6 text-center"
+                className="glass-panel w-full max-w-sm overflow-hidden pointer-events-auto p-6 text-center"
               >
                 <selectedRuling.icon className={`w-12 h-12 mx-auto text-${selectedRuling.color} mb-4`} />
                 <h3 className="font-display font-semibold text-xl text-ink mb-2">Confirm Ruling</h3>

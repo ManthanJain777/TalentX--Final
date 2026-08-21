@@ -21,7 +21,7 @@ const TopBar = ({ onMenuClick, title = 'Dashboard' }) => {
   };
 
   return (
-    <header className="glass-navbar-human sticky top-0 z-30">
+    <header className="glass-topbar sticky top-0 z-30">
       <div className="flex items-center justify-between px-4 sm:px-6 lg:px-8 py-3">
         {/* Left: Menu + Brand + Title */}
         <div className="flex items-center gap-4">

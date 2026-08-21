@@ -108,7 +108,7 @@ const MatchDetail = () => {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="glass-2 p-8 relative overflow-hidden"
+            className="glass-panel p-8 relative overflow-hidden"
           >
             <div className="absolute top-0 left-0 w-1 h-full bg-gold" />
             <div className="flex items-start gap-4 mb-4">
@@ -125,7 +125,7 @@ const MatchDetail = () => {
             </p>
           </motion.div>
 
-          <div className="glass-2 p-6">
+          <div className="glass-panel p-6">
             <h3 className="font-display font-semibold text-lg text-ink mb-6">Opportunity Details</h3>
             <div className="space-y-4">
               <div className="flex items-start gap-3">
@@ -161,7 +161,7 @@ const MatchDetail = () => {
 
         {/* Right Column: Match Analysis */}
         <div className="lg:col-span-5 space-y-6">
-          <div className="glass-2 p-8 flex flex-col items-center text-center">
+          <div className="glass-panel p-8 flex flex-col items-center text-center">
             <h3 className="font-display font-semibold text-lg text-ink mb-6">TalentX Match Score</h3>
             <MatchScoreDisplay score={match.score} size={120} />
             <p className="text-sm text-ink-soft mt-6">
@@ -169,12 +169,12 @@ const MatchDetail = () => {
             </p>
           </div>
 
-          <div className="glass-2 p-6">
+          <div className="glass-panel p-6">
             <h3 className="font-display font-semibold text-lg text-ink mb-6">Match Breakdown</h3>
             <SkillBreakdown breakdown={match.breakdown} />
           </div>
 
-          <div className="glass-2 p-6">
+          <div className="glass-panel p-6">
             <h3 className="font-display font-semibold text-lg text-ink mb-6">Why You're a Match</h3>
             <MatchExplanation explanation={match.explanation} />
           </div>

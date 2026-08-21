@@ -19,7 +19,7 @@ const DeliverableManager = ({ deliverables, isEmployer }) => {
   };
 
   return (
-    <div className="glass-2 p-6 flex flex-col h-full">
+    <div className="glass-panel p-6 flex flex-col h-full">
       <div className="flex justify-between items-center mb-6">
         <h3 className="font-display font-semibold text-lg text-ink">Deliverables</h3>
         {!isEmployer && (
@@ -108,7 +108,7 @@ const DeliverableManager = ({ deliverables, isEmployer }) => {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className="glass-2 w-full max-w-md p-6 overflow-hidden pointer-events-auto"
+                className="glass-panel w-full max-w-md p-6 overflow-hidden pointer-events-auto"
               >
                 <h3 className="font-display font-semibold text-lg text-ink mb-4">Upload Deliverable</h3>
                 

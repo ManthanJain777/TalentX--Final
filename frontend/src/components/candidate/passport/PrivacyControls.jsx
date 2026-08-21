@@ -37,7 +37,7 @@ const PrivacyControls = ({ privacy = {}, setPrivacy }) => {
   const totalCount = Object.values(privacy || {}).length || 4; // default to 4 options
 
   return (
-    <div className="glass-2 p-6">
+    <div className="glass-panel p-6">
       <div className="flex items-center gap-2 mb-4">
         <Shield className="w-5 h-5 text-gold" />
         <h3 className="text-lg font-display font-semibold text-ink">Privacy & Visibility</h3>

@@ -14,7 +14,7 @@ const MatchExplanation = ({ explanation }) => {
   ];
 
   return (
-    <div className="border border-ink/10 rounded-xl overflow-hidden glass-2 transition-colors hover:border-gold-soft/30">
+    <div className="border border-ink/10 rounded-xl overflow-hidden glass-panel transition-colors hover:border-gold-soft/30">
       <button 
         onClick={() => setIsOpen(!isOpen)}
         className="w-full flex items-center justify-between p-4 bg-white/30 hover:bg-white/50 transition-colors"

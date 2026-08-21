@@ -60,7 +60,7 @@ const EmployerProjects = () => {
           <h2 className="text-2xl font-display font-bold text-ink">Governed Projects</h2>
           <p className="text-sm text-ink-soft mt-1 font-mono">Manage your active freelance teams</p>
         </div>
-        <div className="flex gap-4 p-4 glass-2 rounded-xl border border-ink/5">
+        <div className="flex gap-4 p-4 glass-panel rounded-xl border border-ink/5">
           <div className="text-center px-4 border-r border-ink/10">
             <p className="text-2xl font-mono text-ink font-bold">{projects.filter(p => p.status === 'OPEN').length}</p>
             <p className="text-[10px] uppercase tracking-wider text-ink-faint">Open</p>
@@ -87,7 +87,7 @@ const EmployerProjects = () => {
       >
         {projects.map((project) => (
           <motion.div key={project.id} variants={item}>
-            <div className="glass-2 p-6 flex flex-col h-full transition-all duration-300 hover:border-gold-soft/30 hover:shadow-xl hover:shadow-gold/5">
+            <div className="glass-panel p-6 flex flex-col h-full transition-all duration-300 hover:border-gold-soft/30 hover:shadow-xl hover:shadow-gold/5">
               <div className="flex justify-between items-start mb-4 gap-4">
                 <div className="min-w-0">
                   <span className="px-2.5 py-1 rounded-full bg-gold/10 text-gold text-[10px] font-mono border border-gold/20 uppercase tracking-wider mb-2 inline-block">

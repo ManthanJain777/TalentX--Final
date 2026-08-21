@@ -14,7 +14,7 @@ const AuditTable = ({ logs }) => {
   const filtered = logs.filter(l => filter === 'All' || l.action.includes(filter));
 
   return (
-    <div className="glass-2 overflow-hidden flex flex-col h-full">
+    <div className="glass-panel overflow-hidden flex flex-col h-full">
       <div className="p-6 border-b border-ink/5 flex justify-between items-center">
         <h3 className="font-display font-semibold text-lg text-ink flex items-center gap-2">
           <Hash className="w-5 h-5 text-gold" />

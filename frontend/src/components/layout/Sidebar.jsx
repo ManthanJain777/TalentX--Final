@@ -54,14 +54,9 @@ const Sidebar = ({ isOpen, onClose }) => {
 
   return (
     <aside
-      className={`fixed inset-y-0 left-0 z-50 w-72 flex flex-col justify-between transition-transform duration-500 cubic-bezier(0.22, 1, 0.36, 1) md:translate-x-0 ${
+      className={`fixed inset-y-0 left-0 z-50 w-72 flex flex-col justify-between transition-transform duration-500 cubic-bezier(0.22, 1, 0.36, 1) md:translate-x-0 glass-sidebar ${
         isOpen ? 'translate-x-0' : '-translate-x-full'
       }`}
-      style={{
-        background: 'rgba(10,10,11,0.95)',
-        backdropFilter: 'blur(24px) saturate(1.5)',
-        borderRight: '1px solid rgba(255,255,255,0.05)'
-      }}
     >
       {/* Brand Header */}
       <div>

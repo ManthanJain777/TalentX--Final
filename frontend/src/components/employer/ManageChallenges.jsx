@@ -49,19 +49,19 @@ const ManageChallenges = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="glass-2 p-5 flex items-center gap-4">
+        <div className="glass-panel p-5 flex items-center gap-4">
           <div className="p-3 rounded-xl bg-ink/5 text-ink"><Layers className="w-5 h-5" /></div>
           <div><p className="text-2xl font-display font-bold text-ink">{employerChallenges.length}</p><p className="text-xs text-ink-soft font-mono uppercase">Total</p></div>
         </div>
-        <div className="glass-2 p-5 flex items-center gap-4">
+        <div className="glass-panel p-5 flex items-center gap-4">
           <div className="p-3 rounded-xl bg-gold/10 text-gold"><Target className="w-5 h-5" /></div>
           <div><p className="text-2xl font-display font-bold text-ink">{employerChallenges.filter(c => c.status === 'open').length}</p><p className="text-xs text-ink-soft font-mono uppercase">Open</p></div>
         </div>
-        <div className="glass-2 p-5 flex items-center gap-4">
+        <div className="glass-panel p-5 flex items-center gap-4">
           <div className="p-3 rounded-xl bg-verified/10 text-verified"><CheckCircle className="w-5 h-5" /></div>
           <div><p className="text-2xl font-display font-bold text-ink">{employerChallenges.filter(c => c.status === 'completed').length}</p><p className="text-xs text-ink-soft font-mono uppercase">Completed</p></div>
         </div>
-        <div className="glass-2 p-5 flex items-center gap-4">
+        <div className="glass-panel p-5 flex items-center gap-4">
           <div className="p-3 rounded-xl bg-gold/5 text-gold"><IndianRupee className="w-5 h-5" /></div>
           <div><p className="text-2xl font-display font-bold text-ink">{employerChallenges.reduce((acc, c) => acc + (c.prize || c.prizeAmount || 0), 0)}</p><p className="text-xs text-ink-soft font-mono uppercase">Prize Pool</p></div>
         </div>

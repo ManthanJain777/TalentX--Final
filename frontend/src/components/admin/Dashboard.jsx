@@ -77,7 +77,7 @@ const AdminDashboard = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="glass-2 p-0 overflow-hidden"
+            className="glass-panel p-0 overflow-hidden"
           >
             {loading ? (
               <div className="p-8 text-center"><Loader /></div>
@@ -111,7 +111,7 @@ const AdminDashboard = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="glass-2 p-6 flex flex-col items-center justify-center min-h-[200px]"
+            className="glass-panel p-6 flex flex-col items-center justify-center min-h-[200px]"
           >
             <Activity className="w-8 h-8 text-gold/30 mb-2" />
             <p className="text-sm text-ink-soft">MongoDB Live Analytics Feed</p>
@@ -136,7 +136,7 @@ const AdminDashboard = () => {
                   transition={{ delay: i * 0.1 }}
                 >
                   <Link to={action.link} className="block">
-                    <div className="glass-2 p-5 hover:border-gold-soft/30 transition-all group relative overflow-hidden">
+                    <div className="glass-panel p-5 hover:border-gold-soft/30 transition-all group relative overflow-hidden">
                       <div className={`absolute top-0 right-0 w-16 h-16 bg-${action.color}/10 blur-2xl rounded-full pointer-events-none group-hover:bg-${action.color}/20 transition-colors`} />
                       <div className="flex items-start gap-4 relative z-10">
                         <div className={`w-10 h-10 rounded-xl bg-${action.color}/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform`}>

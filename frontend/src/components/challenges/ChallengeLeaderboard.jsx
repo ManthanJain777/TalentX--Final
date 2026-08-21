@@ -23,7 +23,7 @@ const ChallengeLeaderboard = ({ submissions, winners }) => {
   });
 
   return (
-    <div className="glass-2 overflow-hidden">
+    <div className="glass-panel overflow-hidden">
       <div className="p-6 border-b border-ink/5 flex items-center justify-between">
         <h3 className="font-display font-semibold text-lg text-ink flex items-center gap-2">
           <Trophy className="w-5 h-5 text-gold" />

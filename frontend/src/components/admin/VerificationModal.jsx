@@ -23,7 +23,7 @@ const VerificationModal = ({ isOpen, onClose, verification }) => {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="glass-2 w-full max-w-2xl overflow-hidden pointer-events-auto flex flex-col max-h-[90vh]"
+              className="glass-panel w-full max-w-2xl overflow-hidden pointer-events-auto flex flex-col max-h-[90vh]"
             >
               {/* Header */}
               <div className="p-6 border-b border-ink/5 flex items-center justify-between">

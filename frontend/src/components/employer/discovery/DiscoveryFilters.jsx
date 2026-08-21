@@ -21,7 +21,7 @@ const DiscoveryFilters = ({ filters, setFilters }) => {
   };
 
   return (
-    <div className="glass-2 p-6 space-y-6 sticky top-24">
+    <div className="glass-panel p-6 space-y-6 sticky top-24">
       <div className="flex items-center gap-3 border-b border-ink/10 pb-4">
         <SlidersHorizontal className="w-5 h-5 text-gold" />
         <h3 className="font-display font-semibold text-lg text-ink">Filters</h3>

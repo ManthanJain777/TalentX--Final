@@ -11,7 +11,7 @@ const ProjectHeader = ({ project }) => {
     <motion.div 
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="glass-2 p-6 flex flex-col md:flex-row justify-between gap-6 relative overflow-hidden"
+      className="glass-panel p-6 flex flex-col md:flex-row justify-between gap-6 relative overflow-hidden"
     >
       <div className="absolute top-0 left-0 w-1 h-full bg-gold" />
       

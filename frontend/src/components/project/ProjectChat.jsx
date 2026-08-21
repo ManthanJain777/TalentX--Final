@@ -22,7 +22,7 @@ const ProjectChat = ({ messages, currentUser, onSendMessage }) => {
   };
 
   return (
-    <div className="glass-2 flex flex-col h-full max-h-[500px]">
+    <div className="glass-panel flex flex-col h-full max-h-[500px]">
       <div className="p-4 border-b border-ink/5 flex items-center justify-between">
         <h3 className="font-display font-semibold text-lg text-ink">Project Chat</h3>
       </div>

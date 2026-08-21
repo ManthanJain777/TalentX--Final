@@ -27,7 +27,7 @@ const InviteModal = ({ isOpen, onClose, candidate }) => {
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="glass-2 w-full max-w-lg overflow-hidden pointer-events-auto"
+              className="glass-panel w-full max-w-lg overflow-hidden pointer-events-auto"
             >
               {/* Header */}
               <div className="flex items-center justify-between p-6 border-b border-ink/5">

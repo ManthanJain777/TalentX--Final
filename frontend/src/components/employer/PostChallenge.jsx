@@ -15,7 +15,7 @@ const PostChallenge = () => {
   if (published) {
     return (
       <div className="max-w-3xl mx-auto py-12">
-        <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="glass-2 p-12 text-center flex flex-col items-center border-verified/30">
+        <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="glass-panel p-12 text-center flex flex-col items-center border-verified/30">
           <div className="w-20 h-20 rounded-full bg-verified/10 text-verified flex items-center justify-center mb-6 shadow-[0_0_40px_rgba(29,138,95,0.3)]">
             <CheckCircle className="w-10 h-10" />
           </div>
@@ -69,7 +69,7 @@ const PostChallenge = () => {
         
         <div className="space-y-6">
           {/* Live Preview could go here */}
-          <div className="glass-2 p-6 bg-gold/5 border-gold/20">
+          <div className="glass-panel p-6 bg-gold/5 border-gold/20">
             <h3 className="font-display font-semibold text-lg text-gold mb-2">How it works</h3>
             <ul className="space-y-4 text-sm text-ink-soft mt-4">
               <li className="flex gap-3"><span className="w-6 h-6 rounded-full bg-gold/20 text-gold flex items-center justify-center shrink-0 text-xs font-bold">1</span> Define a small task ($100-$500)</li>

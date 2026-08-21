@@ -3,7 +3,7 @@ import { CheckCircle, Shield } from 'lucide-react';
 
 const PassportPreview = ({ data }) => {
   return (
-    <div className="glass-2 p-6">
+    <div className="glass-panel p-6">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-sm font-display font-semibold text-ink">Live Preview</h3>
         <span className="text-[10px] font-mono text-gold">What employers see</span>

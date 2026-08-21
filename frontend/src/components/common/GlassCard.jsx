@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const GlassCard = ({ children, className = '', gold = false, style = {}, onClick, ...props }) => {
-  const baseClass = gold ? 'glass-2 glass-2-gold' : 'glass-2';
+  const baseClass = gold ? 'glass-panel glass-panel-gold' : 'glass-panel';
 
   return (
     <motion.div 

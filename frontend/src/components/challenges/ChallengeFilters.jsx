@@ -12,7 +12,7 @@ const ChallengeFilters = ({ filters, setFilters }) => {
   };
 
   return (
-    <div className="glass-2 p-4 md:p-6 mb-8 flex flex-col md:flex-row gap-6 md:items-start justify-between">
+    <div className="glass-panel p-4 md:p-6 mb-8 flex flex-col md:flex-row gap-6 md:items-start justify-between">
       {/* Search & Status */}
       <div className="space-y-4 flex-1">
         <div className="relative max-w-md">

@@ -25,7 +25,7 @@ const VerificationQueue = ({ verifications }) => {
 
   return (
     <>
-      <div className="glass-2 overflow-hidden flex flex-col h-full min-h-[500px]">
+      <div className="glass-panel overflow-hidden flex flex-col h-full min-h-[500px]">
         {/* Header & Controls */}
         <div className="p-6 border-b border-ink/5 space-y-4">
           <div className="flex justify-between items-center">
