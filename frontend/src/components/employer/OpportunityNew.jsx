@@ -7,6 +7,7 @@ import Select from '../common/Select';
 import Textarea from '../common/Textarea';
 import Button from '../common/Button';
 import toast from 'react-hot-toast';
+import { SpotlightCard } from '../react-bits/SpotlightCard';
 
 const OpportunityNew = () => {
   const navigate = useNavigate();
@@ -55,7 +56,7 @@ const OpportunityNew = () => {
       <form onSubmit={handleSubmit} className="space-y-6">
         
         {/* Step 1: Position & Scope */}
-        <GlassCard className="p-6 bg-white/90 space-y-4">
+        <SpotlightCard spotlightColor="rgba(199, 168, 104, 0.1)" className="p-6 bg-white/90 space-y-4">
           <h3 className="font-bold text-sm text-cover font-sans border-b border-cover/10 pb-2">
             1. Role Details &amp; Budget
           </h3>
@@ -97,10 +98,10 @@ const OpportunityNew = () => {
             onChange={(e) => setDescription(e.target.value)}
             required
           />
-        </GlassCard>
+        </SpotlightCard>
 
         {/* Step 2: Skill Specifications */}
-        <GlassCard className="p-6 bg-white/90 space-y-4">
+        <SpotlightCard spotlightColor="rgba(199, 168, 104, 0.1)" className="p-6 bg-white/90 space-y-4">
           <h3 className="font-bold text-sm text-cover font-sans border-b border-cover/10 pb-2">
             2. Deterministic Matching Weights
           </h3>
@@ -120,10 +121,10 @@ const OpportunityNew = () => {
             value={preferredSkills}
             onChange={(e) => setPreferredSkills(e.target.value)}
           />
-        </GlassCard>
+        </SpotlightCard>
 
         {/* Step 3: Paid Employer Challenge */}
-        <GlassCard className="p-6 bg-gradient-to-br from-gold/10 via-white to-page border-gold/35 space-y-4">
+        <SpotlightCard spotlightColor="rgba(199, 168, 104, 0.1)" className="p-6 bg-gradient-to-br from-gold/10 via-white to-page border-gold/35 space-y-4">
           <div className="flex items-center gap-2 border-b border-gold-dark/20 pb-2">
             <Zap className="w-4 h-4 text-gold-dark" />
             <h3 className="font-bold text-sm text-cover font-sans">
@@ -149,7 +150,7 @@ const OpportunityNew = () => {
               onChange={(e) => setBountyAmount(e.target.value)}
             />
           </div>
-        </GlassCard>
+        </SpotlightCard>
 
         {/* Actions */}
         <div className="flex justify-end gap-3 pt-2">

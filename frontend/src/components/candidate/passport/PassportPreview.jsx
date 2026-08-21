@@ -12,7 +12,7 @@ const PassportPreview = ({ data }) => {
       <div className="bg-cover/5 rounded-xl p-4 border border-cover/10">
         <div className="flex items-start gap-4">
           <div className="w-14 h-14 shrink-0 rounded-full bg-gradient-to-br from-cover to-cover-deep flex items-center justify-center text-white text-xl font-display">
-            {data.name.charAt(0)}
+            {data?.name?.charAt(0) || '?'}
           </div>
           <div className="min-w-0">
             <p className="font-display font-semibold text-ink text-lg truncate">{data.name}</p>
@@ -22,7 +22,7 @@ const PassportPreview = ({ data }) => {
         </div>
 
         <div className="mt-4 flex flex-wrap gap-1.5">
-          {data.skills.slice(0, 6).map((skill) => (
+          {(data.skills || []).slice(0, 6).map((skill) => (
             <span
               key={skill.name}
               className={`text-[10px] px-2 py-0.5 rounded-full font-mono ${
@@ -34,9 +34,9 @@ const PassportPreview = ({ data }) => {
               {skill.name}
             </span>
           ))}
-          {data.skills.length > 6 && (
+          {(data.skills || []).length > 6 && (
             <span className="text-[10px] px-2 py-0.5 rounded-full bg-ink/5 text-ink-faint font-mono">
-              +{data.skills.length - 6} more
+              +{(data.skills || []).length - 6} more
             </span>
           )}
         </div>
@@ -45,18 +45,18 @@ const PassportPreview = ({ data }) => {
           <div className="flex items-center gap-2">
             <CheckCircle className="w-3 h-3 text-verified" />
             <span className="font-mono">
-              {data.github.repos.length + data.certifications.filter(c => c.verified).length} verified sources
+              {(data.github?.repos?.length || 0) + (data.certifications || []).filter(c => c.verified).length} verified sources
             </span>
           </div>
           <div className="flex items-center gap-2">
             <Shield className="w-3 h-3 text-gold" />
-            <span className="font-mono">{data.projects.length} projects</span>
+            <span className="font-mono">{(data.projects || []).length} projects</span>
           </div>
         </div>
 
         <div className="mt-3 pt-3 border-t border-ink/5 flex items-center justify-between">
           <span className="text-[10px] font-mono text-ink-faint">
-            {data.privacy.discoverable ? '🔍 Discoverable' : '🔒 Private'}
+            {data?.privacy?.discoverable ? '🔍 Discoverable' : '🔒 Private'}
           </span>
           <span className="text-[10px] font-mono text-gold flex items-center gap-1">
             <Shield className="w-3 h-3" />

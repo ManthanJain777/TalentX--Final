@@ -7,6 +7,9 @@ import api from '../../api/api';
 import HealthIndicator from '../project/HealthIndicator';
 import Loader from '../ui/Loader';
 import EmptyState from '../ui/EmptyState';
+import { SpotlightCard } from '../react-bits/SpotlightCard';
+import { ShinyText } from '../react-bits/ShinyText';
+import { DecryptedText } from '../react-bits/DecryptedText';
 
 const CandidateProjects = () => {
   const [projects, setProjects] = useState([]);
@@ -49,7 +52,9 @@ const CandidateProjects = () => {
     <div className="space-y-8">
       <div className="flex flex-col md:flex-row justify-between md:items-end gap-4">
         <div>
-          <h2 className="text-2xl font-display font-bold text-ink">My Projects</h2>
+          <h2 className="text-2xl font-display font-bold text-ink">
+            <ShinyText text="My Projects" speed={2.5} shineColor="#C7A868" className="!text-cover block" />
+          </h2>
           <p className="text-sm text-ink-soft mt-1 font-mono">Manage your active engagements</p>
         </div>
         <div className="flex gap-4 p-4 glass-2 rounded-xl border border-ink/5">
@@ -95,13 +100,13 @@ const CandidateProjects = () => {
         >
           {filteredProjects.map((project) => (
             <motion.div key={project.id || project._id} variants={item}>
-              <div className="glass-2 p-6 flex flex-col h-full transition-all duration-300 hover:border-gold-soft/30 hover:shadow-xl hover:shadow-gold/5">
+              <SpotlightCard className="p-6 flex flex-col h-full transition-all duration-300 hover:border-gold-soft/30 hover:shadow-xl hover:shadow-gold/5" spotlightColor="rgba(199, 168, 104, 0.1)">
                 <div className="flex justify-between items-start mb-4 gap-4">
                   <div className="min-w-0">
                     <span className="px-2.5 py-1 rounded-full bg-gold/10 text-gold text-[10px] font-mono border border-gold/20 uppercase tracking-wider mb-2 inline-block">
                       {project.status}
                     </span>
-                    <h4 className="font-display font-semibold text-lg text-ink truncate">{project.title}</h4>
+                    <h4 className="font-display font-semibold text-lg text-ink truncate group-hover:text-gold transition-colors">{project.title}</h4>
                     <div className="flex items-center gap-1.5 text-sm text-ink-soft mt-1">
                       <Building2 className="w-3.5 h-3.5 text-gold" />
                       <span className="truncate">{project.employerId || project.client}</span>
@@ -109,7 +114,7 @@ const CandidateProjects = () => {
                   </div>
                   <div className="text-right shrink-0">
                     <p className="text-xs text-ink-faint uppercase tracking-wider font-mono">Budget</p>
-                    <p className="text-lg font-mono font-bold text-ink">₹{(project.totalBudget || project.budget || 0).toLocaleString()}</p>
+                    <p className="text-lg font-mono font-bold text-ink"><DecryptedText text={`₹${(project.totalBudget || project.budget || 0).toLocaleString()}`} animateOn="hover" /></p>
                   </div>
                 </div>
 
@@ -124,13 +129,13 @@ const CandidateProjects = () => {
                 <div className="mt-4 pt-2">
                   <Link 
                     to={`/candidate/projects/${project.id || project._id}`}
-                    className="w-full py-2.5 rounded-xl border border-ink/10 text-ink hover:bg-gold hover:border-gold hover:text-white transition-all text-sm font-medium flex items-center justify-center gap-2 group/btn"
+                    className="w-full py-2.5 rounded-xl border border-cover/10 text-cover hover:bg-gold hover:border-gold hover:text-white transition-all text-sm font-medium flex items-center justify-center gap-2 group/btn shadow-sm"
                   >
                     View Workspace
                     <ChevronRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
                   </Link>
                 </div>
-              </div>
+              </SpotlightCard>
             </motion.div>
           ))}
         </motion.div>

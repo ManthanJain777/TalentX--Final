@@ -2,6 +2,7 @@ import React from 'react';
 import GlassCard from '../common/GlassCard';
 import Button from '../common/Button';
 import StatusBadge from '../common/StatusBadge';
+import { SpotlightCard } from '../react-bits/SpotlightCard';
 
 const AdminOpportunities = () => {
   const listings = [
@@ -45,7 +46,7 @@ const AdminOpportunities = () => {
 
       <div className="space-y-4">
         {listings.map((opp) => (
-          <GlassCard key={opp.id} className="p-6 bg-white/90 border-cover/15 space-y-3">
+          <SpotlightCard spotlightColor="rgba(199, 168, 104, 0.1)" key={opp.id} className="p-6 bg-white/90 border-cover/15 space-y-3">
             <div className="flex justify-between items-start">
               <div>
                 <div className="flex items-center gap-2 mb-1">
@@ -69,7 +70,7 @@ const AdminOpportunities = () => {
               <span>Budget: <strong className="text-cover">{opp.budget}</strong></span>
               <span>Bounty: <strong className="text-gold-dark">{opp.bounty}</strong></span>
             </div>
-          </GlassCard>
+          </SpotlightCard>
         ))}
       </div>
 

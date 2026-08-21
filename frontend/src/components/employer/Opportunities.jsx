@@ -8,6 +8,7 @@ import Tabs from '../common/Tabs';
 import StatusBadge from '../common/StatusBadge';
 import EmptyState from '../ui/EmptyState';
 import Loader from '../ui/Loader';
+import { SpotlightCard } from '../react-bits/SpotlightCard';
 
 const EmployerOpportunities = () => {
   const { user } = useAuth();
@@ -79,7 +80,7 @@ const EmployerOpportunities = () => {
           />
         ) : (
           filtered.map((opp) => (
-            <GlassCard key={opp.id || opp._id} className="p-6 bg-white/90 border-cover/15 space-y-4">
+            <SpotlightCard spotlightColor="rgba(199, 168, 104, 0.1)" key={opp.id || opp._id} className="p-6 bg-white/90 border-cover/15 space-y-4">
               <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-cover/10 pb-4">
                 <div>
                   <div className="flex items-center gap-2 mb-1">
@@ -124,7 +125,7 @@ const EmployerOpportunities = () => {
                   <span>Submissions: <strong className="text-gold-dark">{opp.submissionCount || 0}</strong></span>
                 </div>
               </div>
-            </GlassCard>
+            </SpotlightCard>
           ))
         )}
       </div>

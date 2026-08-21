@@ -8,6 +8,7 @@ import Textarea from '../common/Textarea';
 import Button from '../common/Button';
 import Loader from '../ui/Loader';
 import toast from 'react-hot-toast';
+import { SpotlightCard } from '../react-bits/SpotlightCard';
 
 const PassportEdit = () => {
   const navigate = useNavigate();
@@ -112,7 +113,7 @@ const PassportEdit = () => {
       <form onSubmit={handleSave} className="space-y-6">
         
         {/* Core Identity */}
-        <GlassCard className="p-6 bg-white/90 space-y-4">
+        <SpotlightCard spotlightColor="rgba(199, 168, 104, 0.1)" className="p-6 bg-white/90 space-y-4">
           <h3 className="font-bold text-sm text-cover font-sans border-b border-cover/10 pb-2">
             1. Core Identity &amp; Headline
           </h3>
@@ -143,10 +144,10 @@ const PassportEdit = () => {
             placeholder="Describe your technical background and areas of expertise..."
             onChange={(e) => setSummary(e.target.value)}
           />
-        </GlassCard>
+        </SpotlightCard>
 
         {/* Skills & Evidence Proof */}
-        <GlassCard className="p-6 bg-white/90 space-y-4">
+        <SpotlightCard spotlightColor="rgba(199, 168, 104, 0.1)" className="p-6 bg-white/90 space-y-4">
           <h3 className="font-bold text-sm text-cover font-sans border-b border-cover/10 pb-2">
             2. Verified Skills &amp; Capabilities ({skills.length})
           </h3>
@@ -212,7 +213,7 @@ const PassportEdit = () => {
               Add Skill
             </Button>
           </div>
-        </GlassCard>
+        </SpotlightCard>
 
         <div className="flex justify-end gap-3 pt-2">
           <Link to="/candidate/passport" className="btn-outline text-xs px-5 py-2.5">

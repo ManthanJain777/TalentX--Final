@@ -5,61 +5,60 @@ import SkillManager from './SkillManager';
 import EvidenceTabs from './EvidenceTabs';
 import PrivacyControls from './PrivacyControls';
 import PassportPreview from './PassportPreview';
+import { useAuth } from '../../../contexts/AuthContext';
+import api from '../../../api/api';
 
 const PassportBuilder = () => {
+  const { user } = useAuth();
   // Central state for the entire passport
-  const [passportData, setPassportData] = useState({
-    name: 'Anika R.',
-    headline: 'Backend Engineer',
-    location: 'Bengaluru, IN',
-    skills: [
-      { name: 'Java', proficiency: 'Expert', verified: true },
-      { name: 'React', proficiency: 'Advanced', verified: true },
-      { name: 'System Design', proficiency: 'Advanced', verified: false },
-      { name: 'Spring Boot', proficiency: 'Expert', verified: true },
-      { name: 'MongoDB', proficiency: 'Advanced', verified: true },
-    ],
-    github: {
-      connected: true,
-      username: 'anikacodes',
-      repos: ['ecommerce-api', 'auth-service', 'payment-gateway'],
-      prsMerged: 34,
-      stars: 127,
-    },
-    certifications: [
-      { name: 'Oracle Java Certified', issuer: 'Oracle', verified: true },
-      { name: 'AWS Developer Associate', issuer: 'AWS', verified: false },
-    ],
-    projects: [
-      {
-        title: 'E-commerce API',
-        description: 'RESTful API with Spring Boot and MongoDB',
-        link: 'https://github.com/...',
-        evidence: 'GitHub',
-      },
-      {
-        title: 'Real-time Dashboard',
-        description: 'React + WebSocket dashboard',
-        link: 'https://github.com/...',
-        evidence: 'GitHub',
-      },
-    ],
-    assessments: [
-      { name: 'Java Core', score: 92, completed: true },
-      { name: 'System Design', score: 78, completed: true },
-    ],
-    privacy: {
-      public: true,
-      showCompensation: false,
-      allowDirectInvites: true,
-      discoverable: true,
-    },
-    profileCompletion: 72,
-  });
+  const [passportData, setPassportData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const updateField = (field, value) => {
-    setPassportData((prev) => ({ ...prev, [field]: value }));
+  React.useEffect(() => {
+    const fetchPassport = async () => {
+      try {
+        const response = await api.get('/passports/me');
+        if (response.data) {
+          setPassportData({
+            ...response.data,
+            name: response.data.name || user?.fullName || 'Candidate'
+          });
+        }
+      } catch (err) {
+        console.error('Failed to fetch passport', err);
+        // Fallback to empty state for new users
+        setPassportData({
+          name: '',
+          headline: '',
+          location: '',
+          skills: [],
+          github: { connected: false, username: '', repos: [], prsMerged: 0, stars: 0 },
+          certifications: [],
+          projects: [],
+          assessments: [],
+          privacy: { public: true, showCompensation: false, allowDirectInvites: true, discoverable: true },
+          profileCompletion: 0,
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPassport();
+  }, []);
+
+  const updateField = async (field, value) => {
+    const updatedData = { ...passportData, [field]: value };
+    setPassportData(updatedData);
+    try {
+      await api.put('/passports/me', updatedData);
+    } catch (err) {
+      console.error('Failed to update passport on backend', err);
+    }
   };
+
+  if (loading || !passportData) {
+    return <div className="flex items-center justify-center p-20 text-cover font-medium animate-pulse">Connecting to backend...</div>;
+  }
 
   return (
     <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
@@ -97,10 +96,10 @@ const PassportBuilder = () => {
           transition={{ duration: 0.5, delay: 0.2 }}
         >
           <EvidenceTabs
-            github={passportData.github}
-            certifications={passportData.certifications}
-            projects={passportData.projects}
-            assessments={passportData.assessments}
+            github={passportData.github || { connected: false, repos: [] }}
+            certifications={passportData.certifications || []}
+            projects={passportData.projects || []}
+            assessments={passportData.assessments || []}
             updateGithub={(val) => updateField('github', val)}
             updateCertifications={(val) => updateField('certifications', val)}
             updateProjects={(val) => updateField('projects', val)}
@@ -114,7 +113,7 @@ const PassportBuilder = () => {
           transition={{ duration: 0.5, delay: 0.3 }}
         >
           <PrivacyControls
-            privacy={passportData.privacy}
+            privacy={passportData.privacy || { public: false, discoverable: false, showCompensation: false, allowDirectInvites: false }}
             setPrivacy={(val) => updateField('privacy', val)}
           />
         </motion.div>

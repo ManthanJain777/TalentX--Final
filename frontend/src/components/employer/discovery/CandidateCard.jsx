@@ -3,6 +3,7 @@ import { CheckCircle, MapPin } from 'lucide-react';
 import MatchScoreDisplay from './MatchScoreDisplay';
 import SkillBreakdown from './SkillBreakdown';
 import MatchExplanation from './MatchExplanation';
+import { SpotlightCard } from '../../react-bits/SpotlightCard';
 
 const CandidateCard = ({ candidate, onInvite }) => {
   const cardRef = useRef(null);
@@ -28,7 +29,7 @@ const CandidateCard = ({ candidate, onInvite }) => {
   };
 
   return (
-    <div
+    <SpotlightCard
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
@@ -37,7 +38,8 @@ const CandidateCard = ({ candidate, onInvite }) => {
         transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
         transition: isHovered ? 'none' : 'transform 0.5s ease-out',
       }}
-      className="glass-2 p-6 flex flex-col h-full relative group transition-all duration-500 hover:shadow-2xl hover:shadow-gold/10"
+      className="p-6 flex flex-col h-full relative group transition-all duration-500 hover:shadow-2xl hover:shadow-gold/10 !border-cover/10"
+      spotlightColor="rgba(199, 168, 104, 0.1)"
     >
       {/* Top Header */}
       <div className="flex items-start justify-between mb-6">
@@ -101,7 +103,7 @@ const CandidateCard = ({ candidate, onInvite }) => {
           Invite
         </button>
       </div>
-    </div>
+    </SpotlightCard>
   );
 };
 

@@ -13,6 +13,9 @@ import Button from '../common/Button';
 import StatusBadge from '../common/StatusBadge';
 import EmptyState from '../ui/EmptyState';
 import Loader from '../ui/Loader';
+import { SpotlightCard } from '../react-bits/SpotlightCard';
+import { ShinyText } from '../react-bits/ShinyText';
+import { DecryptedText } from '../react-bits/DecryptedText';
 
 const CandidateDashboard = () => {
   const { user } = useAuth();
@@ -94,7 +97,7 @@ const CandidateDashboard = () => {
     },
     { 
       title: 'Escrow in Projects', 
-      value: `₹${totalEscrowAmount.toLocaleString()}`, 
+      value: <DecryptedText text={`₹${totalEscrowAmount.toLocaleString()}`} animateOn="hover" />, 
       icon: IndianRupee, 
       trend: `${projects.length} contracts`, 
       color: 'text-gold' 
@@ -120,23 +123,7 @@ const CandidateDashboard = () => {
             System Operational &bull; Live MongoDB Connected
           </p>
           <h1 className="text-4xl sm:text-5xl font-display font-semibold text-cover tracking-tight leading-[1.1]">
-            {welcomeWords.map((word, i) => (
-              <motion.span
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  type: 'spring',
-                  damping: 12,
-                  stiffness: 120,
-                  delay: 0.1 + i * 0.06 + Math.random() * 0.02
-                }}
-                className={word.toLowerCase().includes(candidateName.toLowerCase().split(' ')[0]) ? 'text-gold italic' : ''}
-                style={{ display: 'inline-block' }}
-              >
-                {word}{' '}
-              </motion.span>
-            ))}
+            <ShinyText text={`Welcome back, ${candidateName}`} speed={2.5} shineColor="#C7A868" className="!text-cover block" />
           </h1>
           <motion.p 
             initial={{ opacity: 0 }}
@@ -226,7 +213,7 @@ const CandidateDashboard = () => {
                     transition: 'filter 0.4s cubic-bezier(0.22, 1, 0.36, 1)'
                   }}
                 >
-                  <GlassCard className="p-5 group cursor-pointer">
+                  <SpotlightCard className="p-5 group cursor-pointer !border-cover/10" spotlightColor="rgba(199, 168, 104, 0.1)">
                     <div className="flex items-start justify-between">
                       <div>
                         <div className="flex items-center gap-3 mb-1">
@@ -251,7 +238,7 @@ const CandidateDashboard = () => {
                         <Eye className="w-4 h-4" />
                       </Link>
                     </div>
-                  </GlassCard>
+                  </SpotlightCard>
                 </motion.div>
               ))
             )}
@@ -290,7 +277,7 @@ const CandidateDashboard = () => {
                     transition: 'filter 0.4s cubic-bezier(0.22, 1, 0.36, 1)'
                   }}
                 >
-                  <GlassCard className="p-5 group cursor-pointer">
+                  <SpotlightCard className="p-5 group cursor-pointer !border-cover/10" spotlightColor="rgba(199, 168, 104, 0.1)">
                     <div className="flex justify-between items-start mb-3">
                       <h3 className="font-body font-semibold text-cover leading-tight group-hover:text-gold transition-colors pr-4">
                         {project.title}
@@ -304,7 +291,7 @@ const CandidateDashboard = () => {
                       <div className="flex justify-between items-end mb-2">
                         <div>
                           <p className="meta-label mb-1">Escrow Locked</p>
-                          <p className="font-mono text-lg font-bold text-cover-deep">₹{(project.totalBudget || project.budget || 0).toLocaleString()}</p>
+                          <p className="font-mono text-lg font-bold text-cover-deep"><DecryptedText text={`₹${(project.totalBudget || project.budget || 0).toLocaleString()}`} animateOn="hover" /></p>
                         </div>
                         <div className="text-right">
                           <p className="meta-label mb-1">Milestones</p>
@@ -327,7 +314,7 @@ const CandidateDashboard = () => {
                         <ArrowRight className="w-4 h-4 text-ink-faint group-hover:text-gold transition-colors" />
                       </Link>
                     </div>
-                  </GlassCard>
+                  </SpotlightCard>
                 </motion.div>
               ))
             )}

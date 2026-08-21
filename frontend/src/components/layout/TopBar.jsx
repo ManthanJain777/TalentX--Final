@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Bell, Menu, ChevronDown, Settings, LogOut, Search } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
+import { ShinyText } from '../react-bits/ShinyText';
 
 const TopBar = ({ onMenuClick, title = 'Dashboard' }) => {
   const { user, logout } = useAuth();
@@ -45,9 +46,9 @@ const TopBar = ({ onMenuClick, title = 'Dashboard' }) => {
           <motion.h1 
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
-            className="font-display text-lg sm:text-xl font-semibold text-cover tracking-tight leading-none"
+            className="font-display text-lg sm:text-xl font-semibold tracking-tight leading-none"
           >
-            {title}
+            <ShinyText text={title} speed={3} className="!text-cover" shineColor="#C7A868" />
           </motion.h1>
         </div>
 
@@ -125,7 +126,7 @@ const TopBar = ({ onMenuClick, title = 'Dashboard' }) => {
           </div>
         </div>
       </div>
-      <div className="absolute bottom-0 left-1/4 right-1/4 h-px bg-gradient-to-r from-transparent via-gold-soft/20 to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold-soft/30 to-transparent" />
     </header>
   );
 };

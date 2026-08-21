@@ -12,6 +12,9 @@ import Button from '../common/Button';
 import StatusBadge from '../common/StatusBadge';
 import EmptyState from '../ui/EmptyState';
 import Loader from '../ui/Loader';
+import { SpotlightCard } from '../react-bits/SpotlightCard';
+import { ShinyText } from '../react-bits/ShinyText';
+import { DecryptedText } from '../react-bits/DecryptedText';
 
 const EmployerDashboard = () => {
   const { user } = useAuth();
@@ -69,7 +72,7 @@ const EmployerDashboard = () => {
     { title: 'Open Challenges', value: `${challenges.length}`, icon: Briefcase, trend: `${challenges.filter(c => c.status === 'OPEN').length} active`, color: 'text-gold' },
     { title: 'Talent Pool in DB', value: `${candidates.length}`, icon: Users, trend: `${candidates.filter(c => c.available).length} available`, color: 'text-verified' },
     { title: 'Governed Projects', value: `${projects.length}`, icon: Shield, trend: `${projects.filter(p => p.status === 'Active').length} active`, color: 'text-gold-soft' },
-    { title: 'Escrow Vault', value: `₹${totalEscrow.toLocaleString()}`, icon: IndianRupee, trend: 'Protected funds', color: 'text-gold' },
+    { title: 'Escrow Vault', value: <DecryptedText text={`₹${totalEscrow.toLocaleString()}`} animateOn="hover" />, icon: IndianRupee, trend: 'Protected funds', color: 'text-gold' },
   ];
 
   if (loading) return <Loader />;
@@ -89,23 +92,7 @@ const EmployerDashboard = () => {
             Employer Portal &bull; MongoDB Connected
           </p>
           <h1 className="text-4xl sm:text-5xl font-display font-semibold text-cover tracking-tight leading-[1.1]">
-            {welcomeWords.map((word, i) => (
-              <motion.span
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  type: 'spring',
-                  damping: 12,
-                  stiffness: 120,
-                  delay: 0.1 + i * 0.06 + Math.random() * 0.02
-                }}
-                className={word.toLowerCase().includes(companyName.toLowerCase().split(' ')[0]) ? 'text-gold italic' : ''}
-                style={{ display: 'inline-block' }}
-              >
-                {word}{' '}
-              </motion.span>
-            ))}
+            <ShinyText text={`Welcome, ${companyName}`} speed={2.5} shineColor="#C7A868" className="!text-cover block" />
           </h1>
           <motion.p 
             initial={{ opacity: 0 }}
@@ -191,7 +178,7 @@ const EmployerDashboard = () => {
                     transition: 'filter 0.4s cubic-bezier(0.22, 1, 0.36, 1)'
                   }}
                 >
-                  <GlassCard className="p-5 group cursor-pointer">
+                  <SpotlightCard className="p-5 group cursor-pointer !border-cover/10" spotlightColor="rgba(199, 168, 104, 0.1)">
                     <div className="flex items-start justify-between mb-4">
                       <div>
                         <div className="flex items-center gap-3 mb-1">
@@ -222,7 +209,7 @@ const EmployerDashboard = () => {
                         </Button>
                       </Link>
                     </div>
-                  </GlassCard>
+                  </SpotlightCard>
                 </motion.div>
               ))
             )}

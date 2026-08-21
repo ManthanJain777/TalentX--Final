@@ -75,11 +75,11 @@ public class AuthService {
             passport.setInternships(new ArrayList<>());
             passportRepository.save(passport);
 
-            // 🚀 SEND CANDIDATE WELCOME EMAIL
-            emailService.sendWelcomeEmailCandidate(savedUser, passport);
+            // SEND CANDIDATE WELCOME EMAIL
+            emailService.sendWelcomeEmailCandidate(savedUser, passport, request.getPassword());
         } else {
-            // 🚀 SEND EMPLOYER WELCOME EMAIL
-            emailService.sendWelcomeEmailEmployer(savedUser);
+            // SEND EMPLOYER WELCOME EMAIL
+            emailService.sendWelcomeEmailEmployer(savedUser, request.getPassword());
         }
 
         Map<String, Object> response = new HashMap<>();

@@ -1,36 +1,36 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Invitation – TALENTX</title>
-    <style>
-        body { font-family: 'Inter', sans-serif; background: #F7F3E8; margin: 0; padding: 40px 20px; }
-        .container { max-width: 520px; margin: 0 auto; background: #FFFFFF; border-radius: 20px; padding: 40px 32px; box-shadow: 0 20px 60px rgba(20,37,68,0.06); border: 1px solid rgba(20,37,68,0.06); }
-        .footer { text-align: center; font-size: 12px; color: #93979F; padding-top: 24px; border-top: 1px solid rgba(20,37,68,0.06); }
-        .match-badge { display: inline-block; background: #1D8A5F; color: white; padding: 6px 16px; border-radius: 50px; font-weight: bold; font-size: 14px; margin-bottom: 12px; }
-        .btn { display: inline-block; background: #142544; color: white !important; padding: 14px 40px; border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 15px; }
-    </style>
+ <meta charset="UTF-8">
+ <title>Invitation – TALENTX</title>
+ <style>
+ body { font-family: 'Inter', sans-serif; background: #050505; margin: 0; padding: 40px 20px; }
+ .container { max-width: 520px; margin: 0 auto; background: #0A0A0B; border-radius: 20px; padding: 40px 32px; box-shadow: 0 20px 60px rgba(199,168,104,0.15); border: 1px solid rgba(199,168,104,0.15); }
+ .footer { text-align: center; font-size: 12px; color: #71717A; padding-top: 24px; border-top: 1px solid rgba(199,168,104,0.15); }
+ .match-badge { display: inline-block; background: #1D8A5F; color: white; padding: 6px 16px; border-radius: 8px; font-weight: bold; font-size: 14px; margin-bottom: 12px; }
+ .btn { display: inline-block; background: #050505; color: white !important; padding: 14px 40px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 15px; }
+ </style>
 </head>
 <body>
-    <div class="container">
-        <h2 style="font-family:'Georgia',serif; font-size:24px; color:#142544;">📨 You have an Invitation!</h2>
-        <p style="color:#585D68; font-size:15px;">
-            Hi <strong th:text="${candidateName}">Candidate</strong>, <strong th:text="${companyName}">Company</strong> is interested in working with you!
-        </p>
+ <div class="container">
+ <h2 style="font-family: 'Inter', sans-serif, monospace; font-size:24px; color: #FFFFFF;"> You have an Invitation!</h2>
+ <p style="color: #A1A1AA; font-size:15px;">
+ Hi <strong th:text="${candidateName}">Candidate</strong>, <strong th:text="${companyName}">Company</strong> is interested in working with you!
+ </p>
 
-        <div style="background:#FBF8F1; border-radius:12px; padding:20px; margin:20px 0; text-align:center;">
-            <div class="match-badge" th:text="${matchScore} + ' Match'">95% Match</div>
-            <h3 style="margin:8px 0; color:#142544;" th:text="${opportunityTitle}">Senior Developer</h3>
-            <p style="margin:0; color:#585D68; font-size:14px;">Budget: <strong th:text="${budget}">$5,000</strong></p>
-        </div>
+ <div style="background: #111111; border: 1px solid rgba(255,255,255,0.05); border-radius:12px; padding:20px; margin:20px 0; text-align:center;">
+ <div class="match-badge" th:text="${matchScore} + ' Match'">95% Match</div>
+ <h3 style="margin:8px 0; color: #FFFFFF;" th:text="${opportunityTitle}">Senior Developer</h3>
+ <p style="margin:0; color: #A1A1AA; font-size:14px;">Budget: <strong th:text="${budget}">$5,000</strong></p>
+ </div>
 
-        <div style="text-align:center; margin:24px 0;">
-            <a href="#" th:href="${inviteLink}" class="btn">View Invitation</a>
-        </div>
+ <div style="text-align:center; margin:24px 0;">
+ <a href="#" th:href="${inviteLink}" class="btn" style="border: 1px solid #C7A868;">View Invitation</a>
+ </div>
 
-        <div class="footer">
-            <p>© <span th:text="${currentYear}">2026</span> TALENTX. All rights reserved.</p>
-        </div>
-    </div>
+ <div class="footer">
+ <p> <span th:text="${currentYear}">2026</span> TALENTX. All rights reserved.</p>
+ </div>
+ </div>
 </body>
 </html>

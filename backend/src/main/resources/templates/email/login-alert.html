@@ -1,58 +1,58 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Login Alert – TALENTX</title>
-    <style>
-        body { font-family: 'Inter', sans-serif; background: #F7F3E8; margin: 0; padding: 40px 20px; }
-        .container { max-width: 520px; margin: 0 auto; background: #FFFFFF; border-radius: 20px; padding: 40px 32px; box-shadow: 0 20px 60px rgba(20,37,68,0.06); border: 1px solid rgba(20,37,68,0.06); }
-        .badge { display: inline-block; background: #8B6B23; color: white; padding: 4px 16px; border-radius: 50px; font-size: 12px; font-weight: 600; text-transform: uppercase; }
-        .detail-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(20,37,68,0.06); font-size: 14px; }
-        .detail-label { color: #93979F; }
-        .detail-value { color: #142544; font-weight: 500; }
-        .footer { text-align: center; font-size: 12px; color: #93979F; padding-top: 24px; border-top: 1px solid rgba(20,37,68,0.06); }
-        .btn { display: inline-block; background: #142544; color: white; padding: 12px 32px; border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 14px; }
-    </style>
+ <meta charset="UTF-8">
+ <title>Login Alert – TALENTX</title>
+ <style>
+ body { font-family: 'Inter', sans-serif; background: #050505; margin: 0; padding: 40px 20px; }
+ .container { max-width: 520px; margin: 0 auto; background: #0A0A0B; border-radius: 20px; padding: 40px 32px; box-shadow: 0 20px 60px rgba(199,168,104,0.15); border: 1px solid rgba(199,168,104,0.15); }
+ .badge { display: inline-block; background: #8B6B23; color: white; padding: 4px 16px; border-radius: 8px; font-size: 12px; font-weight: 600; text-transform: uppercase; }
+ .detail-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(199,168,104,0.15); font-size: 14px; }
+ .detail-label { color: #71717A; }
+ .detail-value { color: #FFFFFF; font-weight: 500; }
+ .footer { text-align: center; font-size: 12px; color: #71717A; padding-top: 24px; border-top: 1px solid rgba(199,168,104,0.15); }
+ .btn { display: inline-block; background: #050505; color: white; padding: 12px 32px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px; }
+ </style>
 </head>
 <body>
-    <div class="container">
-        <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
-            <div style="width:40px; height:40px; border-radius:50%; border:2px solid #C7A868; display:flex; align-items:center; justify-content:center; background:#142544;">
-                <div style="width:12px; height:12px; border-radius:50%; background:#C7A868;"></div>
-            </div>
-            <h2 style="font-family:'Georgia',serif; font-weight:700; font-size:22px; margin:0; color:#142544;">TALENT<span style="color:#8B6B23;">X</span></h2>
-        </div>
+ <div class="container">
+ <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
+ <div style="width:40px; height:40px; border-radius:50%; border:2px solid #C7A868; display:flex; align-items:center; justify-content:center; background: #050505;">
+ <div style="width:12px; height:12px; border-radius:50%; background:#C7A868;"></div>
+ </div>
+ <h2 style="font-family: 'Inter', sans-serif, monospace; font-weight:700; font-size:22px; margin:0; color: #FFFFFF;">TALENT<span style="color:#8B6B23;">X</span></h2>
+ </div>
 
-        <span class="badge">🔐 New Login Detected</span>
+ <span class="badge"> New Login Detected</span>
 
-        <h2 style="font-family:'Georgia',serif; font-size:20px; margin-top:12px; color:#142544;">
-            Hello, <span th:text="${userName}">Anika</span>
-        </h2>
-        <p style="color:#585D68; font-size:15px; margin-bottom:20px;">
-            A new login was detected for your <strong style="color:#142544;">TALENTX</strong> account.
-        </p>
+ <h2 style="font-family: 'Inter', sans-serif, monospace; font-size:20px; margin-top:12px; color: #FFFFFF;">
+ Hello, <span th:text="${userName}">Anika</span>
+ </h2>
+ <p style="color: #A1A1AA; font-size:15px; margin-bottom:20px;">
+ A new login was detected for your <strong style="color: #FFFFFF;">TALENTX</strong> account.
+ </p>
 
-        <div style="background:#FBF8F1; border-radius:12px; padding:16px; margin-bottom:20px;">
-            <div class="detail-row"><span class="detail-label">📅 Time</span><span class="detail-value" th:text="${loginTime}">19 Aug 2026, 02:30 PM</span></div>
-            <div class="detail-row"><span class="detail-label">🌐 IP Address</span><span class="detail-value" th:text="${ipAddress}">192.168.1.1</span></div>
-            <div class="detail-row"><span class="detail-label">📍 Location</span><span class="detail-value" th:text="${location}">Bengaluru, IN</span></div>
-            <div class="detail-row"><span class="detail-label">🖥️ Device</span><span class="detail-value" th:text="${userAgent}">Chrome on Windows</span></div>
-            <div class="detail-row"><span class="detail-label">👤 Role</span><span class="detail-value" th:text="${role}">Candidate</span></div>
-        </div>
+ <div style="background: #111111; border: 1px solid rgba(255,255,255,0.05); border-radius:12px; padding:16px; margin-bottom:20px;">
+ <div class="detail-row"><span class="detail-label"> Time</span><span class="detail-value" th:text="${loginTime}">19 Aug 2026, 02:30 PM</span></div>
+ <div class="detail-row"><span class="detail-label"> IP Address</span><span class="detail-value" th:text="${ipAddress}">192.168.1.1</span></div>
+ <div class="detail-row"><span class="detail-label"> Location</span><span class="detail-value" th:text="${location}">Bengaluru, IN</span></div>
+ <div class="detail-row"><span class="detail-label">️ Device</span><span class="detail-value" th:text="${userAgent}">Chrome on Windows</span></div>
+ <div class="detail-row"><span class="detail-label"> Role</span><span class="detail-value" th:text="${role}">Candidate</span></div>
+ </div>
 
-        <div style="text-align:center; margin-top:20px;">
-            <a href="#" th:href="${securityLink}" class="btn">🔐 Review Security Settings</a>
-        </div>
+ <div style="text-align:center; margin-top:20px;">
+ <a href="#" th:href="${securityLink}" class="btn" style="border: 1px solid #C7A868;"> Review Security Settings</a>
+ </div>
 
-        <div style="background:#EFE3C6; border-radius:8px; padding:12px; margin-top:20px; text-align:center;">
-            <p style="margin:0; font-size:13px; color:#585D68;">
-                ⚠️ If this wasn't you, <strong style="color:#C0424D;">reset your password immediately</strong>
-            </p>
-        </div>
+ <div style="background: rgba(199, 168, 104, 0.05); border: 1px solid rgba(199, 168, 104, 0.2); border-radius:8px; padding:12px; margin-top:20px; text-align:center;">
+ <p style="margin:0; font-size:13px; color: #A1A1AA;">
+ ️ If this wasn't you, <strong style="color:#C0424D;">reset your password immediately</strong>
+ </p>
+ </div>
 
-        <div class="footer">
-            <p>© <span th:text="${currentYear}">2026</span> TALENTX. All rights reserved.</p>
-        </div>
-    </div>
+ <div class="footer">
+ <p> <span th:text="${currentYear}">2026</span> TALENTX. All rights reserved.</p>
+ </div>
+ </div>
 </body>
 </html>

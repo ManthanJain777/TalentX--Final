@@ -5,6 +5,7 @@ import GlassCard from '../common/GlassCard';
 import Input from '../common/Input';
 import Button from '../common/Button';
 import toast from 'react-hot-toast';
+import { SpotlightCard } from '../react-bits/SpotlightCard';
 
 const EmployerSettings = () => {
   const { user } = useAuth();
@@ -33,7 +34,7 @@ const EmployerSettings = () => {
       <form onSubmit={handleSave} className="space-y-6">
         
         {/* Company Profile */}
-        <GlassCard className="p-6 bg-white/90 border-cover/15 space-y-4">
+        <SpotlightCard spotlightColor="rgba(199, 168, 104, 0.1)" className="p-6 bg-white/90 border-cover/15 space-y-4">
           <div className="flex items-center gap-2 border-b border-cover/10 pb-2">
             <Building className="w-4 h-4 text-gold-dark" />
             <h3 className="font-bold text-sm text-cover font-sans">
@@ -64,10 +65,10 @@ const EmployerSettings = () => {
             value={location}
             onChange={(e) => setLocation(e.target.value)}
           />
-        </GlassCard>
+        </SpotlightCard>
 
         {/* Escrow Billing Balance */}
-        <GlassCard className="p-6 bg-white/90 border-cover/15 space-y-4">
+        <SpotlightCard spotlightColor="rgba(199, 168, 104, 0.1)" className="p-6 bg-white/90 border-cover/15 space-y-4">
           <div className="flex items-center gap-2 border-b border-cover/10 pb-2">
             <CreditCard className="w-4 h-4 text-gold-dark" />
             <h3 className="font-bold text-sm text-cover font-sans">
@@ -84,7 +85,7 @@ const EmployerSettings = () => {
               Deposit Funds
             </Button>
           </div>
-        </GlassCard>
+        </SpotlightCard>
 
         <div className="flex justify-end gap-3">
           <Button type="submit" variant="primary" size="md" icon={Save}>

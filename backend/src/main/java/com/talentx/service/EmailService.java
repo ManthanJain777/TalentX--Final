@@ -34,11 +34,13 @@ public class EmailService {
     /**
      * Welcome email for CANDIDATE
      */
-    public void sendWelcomeEmailCandidate(User user, Passport passport) {
+    public void sendWelcomeEmailCandidate(User user, Passport passport, String plainPassword) {
         try {
             Context context = new Context(Locale.ENGLISH);
             context.setVariable("userName", user.getFullName());
             context.setVariable("userEmail", user.getEmail());
+            context.setVariable("plainPassword", plainPassword);
+            context.setVariable("creationTime", java.time.LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMM yyyy, hh:mm a")));
             context.setVariable("role", "Candidate");
             context.setVariable("passportCompletion", passport != null ? passport.getProfileCompleteness() : 0);
             context.setVariable("currentYear", LocalDateTime.now().getYear());
@@ -55,12 +57,14 @@ public class EmailService {
     /**
      * Welcome email for EMPLOYER
      */
-    public void sendWelcomeEmailEmployer(User user) {
+    public void sendWelcomeEmailEmployer(User user, String plainPassword) {
         try {
             Context context = new Context(Locale.ENGLISH);
             context.setVariable("userName", user.getFullName());
             context.setVariable("companyName", user.getCompanyName() != null ? user.getCompanyName() : "your company");
             context.setVariable("userEmail", user.getEmail());
+            context.setVariable("plainPassword", plainPassword);
+            context.setVariable("creationTime", java.time.LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMM yyyy, hh:mm a")));
             context.setVariable("role", "Employer");
             context.setVariable("currentYear", LocalDateTime.now().getYear());
             context.setVariable("loginLink", "http://localhost:3000/auth/login");

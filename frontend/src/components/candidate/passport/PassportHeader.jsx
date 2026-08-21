@@ -16,7 +16,7 @@ const PassportHeader = ({
         {/* Avatar */}
         <div className="relative shrink-0">
           <div className="w-20 h-20 rounded-full bg-gradient-to-br from-cover to-cover-deep flex items-center justify-center text-white text-2xl font-display border-2 border-gold-soft/30">
-            {name.charAt(0)}
+            {name?.charAt(0) || '?'}
           </div>
           <button className="absolute -bottom-1 -right-1 p-1.5 rounded-full bg-gold text-white hover:bg-gold-soft transition-colors shadow-lg">
             <Edit2 className="w-3 h-3" />

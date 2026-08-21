@@ -1,30 +1,30 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Submission Received – TALENTX</title>
-    <style>
-        body { font-family: 'Inter', sans-serif; background: #F7F3E8; margin: 0; padding: 40px 20px; }
-        .container { max-width: 520px; margin: 0 auto; background: #FFFFFF; border-radius: 20px; padding: 40px 32px; box-shadow: 0 20px 60px rgba(20,37,68,0.06); border: 1px solid rgba(20,37,68,0.06); }
-        .footer { text-align: center; font-size: 12px; color: #93979F; padding-top: 24px; border-top: 1px solid rgba(20,37,68,0.06); }
-    </style>
+ <meta charset="UTF-8">
+ <title>Submission Received – TALENTX</title>
+ <style>
+ body { font-family: 'Inter', sans-serif; background: #050505; margin: 0; padding: 40px 20px; }
+ .container { max-width: 520px; margin: 0 auto; background: #0A0A0B; border-radius: 20px; padding: 40px 32px; box-shadow: 0 20px 60px rgba(199,168,104,0.15); border: 1px solid rgba(199,168,104,0.15); }
+ .footer { text-align: center; font-size: 12px; color: #71717A; padding-top: 24px; border-top: 1px solid rgba(199,168,104,0.15); }
+ </style>
 </head>
 <body>
-    <div class="container">
-        <h2 style="font-family:'Georgia',serif; font-size:20px; color:#142544;">📥 Submission Received!</h2>
-        <p style="color:#585D68; font-size:15px;">
-            Hi <strong th:text="${candidateName}">Candidate</strong>, your solution for <strong th:text="${challengeTitle}">Challenge</strong> has been successfully received and is under review.
-        </p>
+ <div class="container">
+ <h2 style="font-family: 'Inter', sans-serif, monospace; font-size:20px; color: #FFFFFF;"> Submission Received!</h2>
+ <p style="color: #A1A1AA; font-size:15px;">
+ Hi <strong th:text="${candidateName}">Candidate</strong>, your solution for <strong th:text="${challengeTitle}">Challenge</strong> has been successfully received and is under review.
+ </p>
 
-        <div style="background:#EFE3C6; border-radius:8px; padding:12px; text-align:center; margin:20px 0;">
-            <p style="margin:0; font-size:13px; color:#585D68;">
-                Good luck! You will be notified once a winner is selected.
-            </p>
-        </div>
+ <div style="background: rgba(199, 168, 104, 0.05); border: 1px solid rgba(199, 168, 104, 0.2); border-radius:8px; padding:12px; text-align:center; margin:20px 0;">
+ <p style="margin:0; font-size:13px; color: #A1A1AA;">
+ Good luck! You will be notified once a winner is selected.
+ </p>
+ </div>
 
-        <div class="footer">
-            <p>© <span th:text="${currentYear}">2026</span> TALENTX. All rights reserved.</p>
-        </div>
-    </div>
+ <div class="footer">
+ <p> <span th:text="${currentYear}">2026</span> TALENTX. All rights reserved.</p>
+ </div>
+ </div>
 </body>
 </html>

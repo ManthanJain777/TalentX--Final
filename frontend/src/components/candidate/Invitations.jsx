@@ -10,6 +10,7 @@ import MatchScore from '../common/MatchScore';
 import EmptyState from '../ui/EmptyState';
 import Loader from '../ui/Loader';
 import toast from 'react-hot-toast';
+import { SpotlightCard } from '../react-bits/SpotlightCard';
 
 const CandidateInvitations = () => {
   const { user } = useAuth();
@@ -99,7 +100,7 @@ const CandidateInvitations = () => {
           />
         ) : (
           filtered.map((inv) => (
-            <GlassCard key={inv.id} className="p-6 bg-white/90 border-cover/15 space-y-4">
+            <SpotlightCard spotlightColor="rgba(199, 168, 104, 0.1)" key={inv.id} className="p-6 bg-white/90 border-cover/15 space-y-4">
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-cover/10 pb-4">
                 <div>
                   <div className="flex items-center gap-2 mb-1">
@@ -139,7 +140,7 @@ const CandidateInvitations = () => {
                   </div>
                 )}
               </div>
-            </GlassCard>
+            </SpotlightCard>
           ))
         )}
       </div>

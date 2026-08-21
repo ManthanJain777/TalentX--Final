@@ -58,9 +58,9 @@ const Sidebar = ({ isOpen, onClose }) => {
         isOpen ? 'translate-x-0' : '-translate-x-full'
       }`}
       style={{
-        background: 'rgba(13,25,48,0.92)',
-        backdropFilter: 'blur(24px) saturate(1.4)',
-        borderRight: '1px solid rgba(255,255,255,0.08)'
+        background: 'rgba(10,10,11,0.95)',
+        backdropFilter: 'blur(24px) saturate(1.5)',
+        borderRight: '1px solid rgba(255,255,255,0.05)'
       }}
     >
       {/* Brand Header */}
@@ -142,7 +142,7 @@ const Sidebar = ({ isOpen, onClose }) => {
         >
           <div className="w-10 h-10 rounded-full bg-cover border border-gold/40 flex items-center justify-center shrink-0 relative">
             <span className="font-mono text-xs font-bold text-gold">{initials}</span>
-            <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-[#0D1930] animate-pulse" />
+            <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-[#0A0A0B] animate-pulse" />
           </div>
           <div className="flex-1 min-w-0">
             <div className="text-sm font-bold text-white font-body truncate group-hover:text-gold transition-colors">

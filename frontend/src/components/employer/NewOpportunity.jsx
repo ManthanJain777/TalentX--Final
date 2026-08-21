@@ -11,6 +11,7 @@ import api from '../../api/api';
 import GlassCard from '../ui/GlassCard';
 import Input, { Select, Textarea } from '../ui/Input';
 import Button from '../ui/Button';
+import { SpotlightCard } from '../react-bits/SpotlightCard';
 
 
 const NewOpportunity = () => {
@@ -115,7 +116,7 @@ const NewOpportunity = () => {
       </div>
 
       {/* Step Form Container */}
-      <GlassCard className="p-6 sm:p-10 border-purple-500/30">
+      <SpotlightCard spotlightColor="rgba(199, 168, 104, 0.1)" className="p-6 sm:p-10 border-purple-500/30">
         {step === 1 && (
           <div className="space-y-4 animate-fade-up">
             <h3 className="text-lg font-bold text-white mb-2">Step 1: Role Overview & Engagement Model</h3>
@@ -315,7 +316,7 @@ const NewOpportunity = () => {
             </div>
           </div>
         )}
-      </GlassCard>
+      </SpotlightCard>
     </div>
   );
 };

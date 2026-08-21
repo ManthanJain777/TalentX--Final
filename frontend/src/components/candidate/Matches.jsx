@@ -6,6 +6,8 @@ import api from '../../api/api';
 import { useAuth } from '../../contexts/AuthContext';
 import Loader from '../ui/Loader';
 import EmptyState from '../ui/EmptyState';
+import { SpotlightCard } from '../react-bits/SpotlightCard';
+import { ShinyText } from '../react-bits/ShinyText';
 
 const Matches = () => {
   const { user } = useAuth();
@@ -47,7 +49,9 @@ const Matches = () => {
   return (
     <div className="space-y-8">
       <div>
-        <h2 className="text-2xl font-display font-bold text-ink">My Matches</h2>
+        <h2 className="text-2xl font-display font-bold text-ink">
+          <ShinyText text="My Matches" speed={2.5} shineColor="#C7A868" className="!text-cover block" />
+        </h2>
         <p className="text-sm text-ink-soft mt-1 font-mono">Opportunities matched to your Talent Passport in MongoDB</p>
       </div>
 
@@ -65,7 +69,7 @@ const Matches = () => {
       >
         {matches.map((match, idx) => (
           <motion.div key={match.id || idx} variants={item}>
-            <div className="glass-2 p-6 flex flex-col h-full relative group transition-all duration-300 hover:border-gold-soft/30 hover:shadow-xl hover:shadow-gold/5">
+            <SpotlightCard className="p-6 flex flex-col h-full relative group transition-all duration-300 hover:border-gold-soft/30 hover:shadow-xl hover:shadow-gold/5" spotlightColor="rgba(199, 168, 104, 0.1)">
               
               {/* Status Badge */}
               <div className="absolute top-4 right-4">
@@ -91,7 +95,7 @@ const Matches = () => {
                 <div className="flex-1">
                   <div className="flex flex-col md:flex-row justify-between md:items-start gap-4 mb-2">
                     <div>
-                      <h3 className="font-display font-semibold text-lg text-ink">
+                      <h3 className="font-display font-semibold text-lg text-ink group-hover:text-gold transition-colors">
                         {match.opportunityTitle || `Opportunity #${match.opportunityId?.slice(-6) || idx + 1}`}
                       </h3>
                       <div className="flex flex-wrap items-center gap-4 mt-2 text-sm text-ink-soft">
@@ -116,13 +120,13 @@ const Matches = () => {
               <div className="mt-auto">
                 <Link 
                   to={`/candidate/matches/${match.id}`}
-                  className="w-full py-2.5 rounded-xl border border-ink/10 text-ink hover:bg-gold hover:border-gold hover:text-white transition-all text-sm font-medium flex items-center justify-center gap-2 group/btn"
+                  className="w-full py-2.5 rounded-xl border border-cover/10 text-cover hover:bg-gold hover:border-gold hover:text-white transition-all text-sm font-medium flex items-center justify-center gap-2 group/btn shadow-sm"
                 >
                   View Details
                   <ChevronRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
                 </Link>
               </div>
-            </div>
+            </SpotlightCard>
           </motion.div>
         ))}
       </motion.div>

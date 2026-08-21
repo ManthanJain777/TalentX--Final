@@ -9,6 +9,7 @@ import GlassCard from '../ui/GlassCard';
 import Input from '../ui/Input';
 import Button from '../ui/Button';
 import Badge from '../ui/Badge';
+import { SpotlightCard } from '../react-bits/SpotlightCard';
 
 const AdminSettings = () => {
   const [protocolFee, setProtocolFee] = useState('0.0'); // 0% for employers, platform sponsored
@@ -37,7 +38,7 @@ const AdminSettings = () => {
 
       <form onSubmit={handleSave} className="space-y-6">
         {/* Protocol Fees */}
-        <GlassCard className="p-6 sm:p-8 space-y-4">
+        <SpotlightCard spotlightColor="rgba(199, 168, 104, 0.1)" className="p-6 sm:p-8 space-y-4">
           <h3 className="text-base font-bold text-white border-b border-white/[0.08] pb-3 flex items-center gap-2">
             <Lock className="w-4 h-4 text-purple-400" /> Economic & Smart Contract Parameters
           </h3>
@@ -63,10 +64,10 @@ const AdminSettings = () => {
             onChange={(e) => setAutoDisputeGraceHours(e.target.value)}
             helperText="168 hours = 7 calendar days before uncontested deliverable auto-releases."
           />
-        </GlassCard>
+        </SpotlightCard>
 
         {/* AI & ZK Node Consensus */}
-        <GlassCard className="p-6 sm:p-8 space-y-4 border-purple-500/30">
+        <SpotlightCard spotlightColor="rgba(199, 168, 104, 0.1)" className="p-6 sm:p-8 space-y-4 border-purple-500/30">
           <div className="flex items-center justify-between border-b border-white/[0.08] pb-3">
             <h3 className="text-base font-bold text-white flex items-center gap-2">
               <Cpu className="w-4 h-4 text-emerald-400" /> AI Match & Node Consensus Quorum
@@ -88,7 +89,7 @@ const AdminSettings = () => {
               helperText="Signatures required to mint on-chain skill badges."
             />
           </div>
-        </GlassCard>
+        </SpotlightCard>
 
         <div className="flex justify-end">
           <Button type="submit" variant="glow" size="lg" icon={Save}>

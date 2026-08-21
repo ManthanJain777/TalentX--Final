@@ -14,6 +14,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import GlassCard from '../ui/GlassCard';
 import Button from '../ui/Button';
 import Badge from '../ui/Badge';
+import { SpotlightCard } from '../react-bits/SpotlightCard';
 
 
 const CandidatePassport = () => {
@@ -96,7 +97,7 @@ const CandidatePassport = () => {
   return (
     <div className="space-y-8">
       {/* Proof Passport Hero Header */}
-      <GlassCard className="relative p-6 sm:p-10 border-purple-500/40 shadow-[0_0_60px_rgba(94,14,215,0.2)]">
+      <SpotlightCard spotlightColor="rgba(199, 168, 104, 0.1)" className="relative p-6 sm:p-10 border-purple-500/40 shadow-[0_0_60px_rgba(94,14,215,0.2)]">
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
           <div className="flex items-start gap-5">
             <div className="relative">
@@ -162,7 +163,7 @@ const CandidatePassport = () => {
             </Button>
           </div>
         </div>
-      </GlassCard>
+      </SpotlightCard>
 
       {/* Verified Skills Matrix */}
       <div className="space-y-4">
@@ -180,7 +181,7 @@ const CandidatePassport = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {verifiedSkills.map((item, idx) => (
-            <GlassCard key={idx} className="p-6 hover:border-purple-500/40 transition-all flex flex-col justify-between">
+            <SpotlightCard spotlightColor="rgba(199, 168, 104, 0.1)" key={idx} className="p-6 hover:border-purple-500/40 transition-all flex flex-col justify-between">
               <div>
                 <div className="flex items-start justify-between gap-3 mb-3">
                   <div>
@@ -204,7 +205,7 @@ const CandidatePassport = () => {
                 </span>
                 <span>Verified: {item.validatedOn}</span>
               </div>
-            </GlassCard>
+            </SpotlightCard>
           ))}
         </div>
       </div>
@@ -225,7 +226,7 @@ const CandidatePassport = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {githubValidations.map((pr, idx) => (
-            <GlassCard key={idx} className="p-5 flex flex-col justify-between hover:border-purple-500/40">
+            <SpotlightCard spotlightColor="rgba(199, 168, 104, 0.1)" key={idx} className="p-5 flex flex-col justify-between hover:border-purple-500/40">
               <div>
                 <div className="flex items-center justify-between text-xs mb-2">
                   <span className="font-mono text-purple-300 font-bold">{pr.repo}</span>
@@ -245,7 +246,7 @@ const CandidatePassport = () => {
                   Inspect On-Chain <ExternalLink className="w-3 h-3" />
                 </span>
               </div>
-            </GlassCard>
+            </SpotlightCard>
           ))}
         </div>
       </div>
@@ -253,7 +254,7 @@ const CandidatePassport = () => {
       {/* Share Modal */}
       {showExportModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-          <GlassCard className="max-w-md w-full p-6 border-purple-500/50 shadow-2xl space-y-4">
+          <SpotlightCard spotlightColor="rgba(199, 168, 104, 0.1)" className="max-w-md w-full p-6 border-purple-500/50 shadow-2xl space-y-4">
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-bold text-white">Share Verifiable Proof Passport</h3>
               <button
@@ -284,7 +285,7 @@ const CandidatePassport = () => {
                 Copy Link
               </Button>
             </div>
-          </GlassCard>
+          </SpotlightCard>
         </div>
       )}
     </div>

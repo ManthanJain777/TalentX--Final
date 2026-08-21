@@ -1,6 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Inbox, Sparkles } from 'lucide-react';
+import { SpotlightCard } from '../react-bits/SpotlightCard';
+import { ShinyText } from '../react-bits/ShinyText';
 
 const EmptyState = ({ 
   title = "No Records Found", 
@@ -16,8 +18,11 @@ const EmptyState = ({
       initial={{ opacity: 0, y: 16, scale: 0.98 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-      className="flex flex-col items-center justify-center p-10 sm:p-14 text-center rounded-2xl border border-cover/10 bg-white/70 backdrop-blur-md shadow-xs space-y-4 my-4"
     >
+      <SpotlightCard 
+        className="flex flex-col items-center justify-center p-10 sm:p-14 text-center !rounded-2xl !border-cover/10 shadow-xs space-y-4 my-4"
+        spotlightColor="rgba(199, 168, 104, 0.1)"
+      >
       <div className="relative">
         <div className="w-16 h-16 rounded-2xl bg-cover/5 border border-cover/10 flex items-center justify-center text-gold shadow-sm">
           {icon || <Inbox className="w-8 h-8 text-gold/70" />}
@@ -32,7 +37,9 @@ const EmptyState = ({
       </div>
 
       <div className="max-w-md space-y-1">
-        <h3 className="text-lg font-display font-bold text-cover tracking-tight">{displayTitle}</h3>
+        <h3 className="text-lg font-display font-bold text-cover tracking-tight">
+          <ShinyText text={displayTitle} speed={2} shineColor="#C7A868" className="!text-cover block" />
+        </h3>
         {description && (
           <p className="text-xs sm:text-sm text-ink-soft leading-relaxed font-sans">{description}</p>
         )}
@@ -43,6 +50,7 @@ const EmptyState = ({
           {action}
         </div>
       )}
+      </SpotlightCard>
     </motion.div>
   );
 };

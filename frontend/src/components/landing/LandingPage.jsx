@@ -430,14 +430,8 @@ const LandingPage = () => {
             <span className="hero-line"><ShinyText text="Stop applying" speed={3} className="!text-cover-deep" /></span>
             <span className="hero-line"><ShinyText text="into the void." speed={4} shineColor="#F3ECD8" className="!text-gold" /></span>
           </h1>
-          <div className="sub" id="subheadText" style={{ marginTop: '1rem', marginBottom: '2.5rem' }}>
-            <TrueFocus 
-              words={['Build', 'one', 'verified', 'Passport', '—', 'real', 'evidence', '—', 'and', 'let', 'employers', 'come', 'to', 'you.']} 
-              blurAmount={2.5}
-              borderColor="#C7A868"
-              glowColor="rgba(199, 168, 104, 0.4)"
-              animationDuration={0.3}
-            />
+          <div className="sub" id="subheadText" style={{ marginTop: '1rem', marginBottom: '2.5rem', color: '#A1A1AA', fontSize: '1.25rem', lineHeight: '1.6' }}>
+            Build one verified Passport — real evidence — and let employers come to you.
           </div>
           <div className="hero-actions">
             <Link
@@ -563,7 +557,7 @@ const LandingPage = () => {
             </ul>
           </div>
           <div data-reveal="glass">
-            <div className="card-passport glass-card">
+            <div className="card-passport glass-card" style={{ background: '#111111', borderColor: 'rgba(199,168,104,0.2)' }}>
               <div className="shimmer" />
               <div className="skill-grid">
                 <div className="skill-tile"><div className="name">Java</div><div className="src">CERTIFIED</div></div>
@@ -586,7 +580,7 @@ const LandingPage = () => {
             <h2>Nothing is a black box</h2>
             <p>Every match comes with a full, per-component breakdown — shown to both sides, every time.</p>
           </div>
-          <SpotlightCard className="match-panel !p-0" data-reveal="glass" spotlightColor="rgba(199, 168, 104, 0.12)">
+          <SpotlightCard className="match-panel !p-0" style={{ maxWidth: '900px', margin: '0 auto' }} data-reveal="glass" spotlightColor="rgba(199, 168, 104, 0.12)">
             <div className="match-left">
               <div className="id">PASSPORT NO. <DecryptedText text="TX-64471" animateOn="hover" /></div>
               <h3><ShinyText text="Anika R." speed={2.5} color="#0D1930" shineColor="#C7A868" /></h3>

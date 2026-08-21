@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Send } from 'lucide-react';
 import GlassCard from '../common/GlassCard';
@@ -7,43 +7,32 @@ import MatchScore from '../common/MatchScore';
 import StatusBadge from '../common/StatusBadge';
 import Avatar from '../common/Avatar';
 import toast from 'react-hot-toast';
+import api from '../../api/api';
+import { useParams } from 'react-router-dom';
+import { SpotlightCard } from '../react-bits/SpotlightCard';
 
 const OpportunityDetail = () => {
-  const matchedCandidates = [
-    {
-      id: 'cand-01',
-      name: 'Anika R.',
-      title: 'Senior Backend Infrastructure Engineer',
-      matchScore: 94,
-      skills: ['Java 21 / Spring Boot', 'Kafka Event Pipeline', 'PostgreSQL Tuning'],
-      rate: '₹10K/hr',
-      experience: '6 yrs production',
-      status: 'Top Candidate',
-      evidenceSummary: '18 merged PRs, 98th %ile lab, AWS SA Pro',
-    },
-    {
-      id: 'cand-02',
-      name: 'Dmitri V.',
-      title: 'High-Concurrency Systems Architect',
-      matchScore: 91,
-      skills: ['Spring Boot', 'PostgreSQL Tuning', 'Go'],
-      rate: '₹10.80K/hr',
-      experience: '8 yrs production',
-      status: 'Verified Fit',
-      evidenceSummary: '12 merged PRs, 95th %ile lab',
-    },
-    {
-      id: 'cand-03',
-      name: 'Maya Lin',
-      title: 'Cloud Event Pipeline Engineer',
-      matchScore: 88,
-      skills: ['Kafka', 'Docker', 'Kubernetes'],
-      rate: '₹9.20K/hr',
-      experience: '5 yrs production',
-      status: 'Strong Fit',
-      evidenceSummary: '8 merged PRs, CKA certified',
-    },
-  ];
+  const { id } = useParams();
+  const [matchedCandidates, setMatchedCandidates] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  React.useEffect(() => {
+    const fetchMatches = async () => {
+      try {
+        const response = await api.get(`/opportunities/${id || 'OPP-2041'}/matches`);
+        if (response.data) {
+          setMatchedCandidates(response.data);
+        }
+      } catch (err) {
+        console.error('Failed to fetch matched candidates', err);
+        // Clean empty state instead of mock data
+        setMatchedCandidates([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchMatches();
+  }, [id]);
 
   const handleSendInvite = (name) => {
     toast.success(`Invitation & challenge offer sent to ${name}!`);
@@ -74,19 +63,25 @@ const OpportunityDetail = () => {
       </div>
 
       {/* Overview Stats */}
+      {loading ? (
+        <div className="flex items-center justify-center p-20 text-cover font-medium animate-pulse">Loading live matches from database...</div>
+      ) : (
+      <>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <GlassCard className="p-4 bg-white/90">
+        <SpotlightCard spotlightColor="rgba(199, 168, 104, 0.1)" className="p-4 bg-white/90">
           <span className="text-xs font-mono text-ink-soft uppercase">Total Matched</span>
-          <div className="text-2xl font-bold text-cover font-mono mt-0.5">18 Candidates</div>
-        </GlassCard>
-        <GlassCard className="p-4 bg-white/90">
+          <div className="text-2xl font-bold text-cover font-mono mt-0.5">{matchedCandidates.length} Candidates</div>
+        </SpotlightCard>
+        <SpotlightCard spotlightColor="rgba(199, 168, 104, 0.1)" className="p-4 bg-white/90">
           <span className="text-xs font-mono text-ink-soft uppercase">Top Match Score</span>
-          <div className="text-2xl font-bold text-gold-dark font-mono mt-0.5">94.0% (Anika R.)</div>
-        </GlassCard>
-        <GlassCard className="p-4 bg-white/90">
+          <div className="text-2xl font-bold text-gold-dark font-mono mt-0.5">
+            {matchedCandidates.length > 0 ? `${matchedCandidates[0].matchScore}% (${matchedCandidates[0].name})` : 'N/A'}
+          </div>
+        </SpotlightCard>
+        <SpotlightCard spotlightColor="rgba(199, 168, 104, 0.1)" className="p-4 bg-white/90">
           <span className="text-xs font-mono text-ink-soft uppercase">Paid Challenge Bounty</span>
           <div className="text-2xl font-bold text-verified font-mono mt-0.5">₹28K Active</div>
-        </GlassCard>
+        </SpotlightCard>
       </div>
 
       {/* Matched Talent Leaderboard */}
@@ -97,7 +92,7 @@ const OpportunityDetail = () => {
 
         <div className="space-y-4">
           {matchedCandidates.map((cand) => (
-            <GlassCard
+            <SpotlightCard spotlightColor="rgba(199, 168, 104, 0.1)"
               key={cand.id}
               className="p-6 bg-white/90 border-cover/15 hover:border-gold/40 transition-all flex flex-col md:flex-row justify-between items-start md:items-center gap-6"
             >
@@ -143,10 +138,17 @@ const OpportunityDetail = () => {
                   </Button>
                 </div>
               </div>
-            </GlassCard>
+            </SpotlightCard>
           ))}
+          {matchedCandidates.length === 0 && !loading && (
+            <div className="text-center p-12 text-ink-soft border border-dashed border-cover/20 rounded-2xl">
+              No candidates found matching this opportunity yet.
+            </div>
+          )}
         </div>
       </div>
+      </>
+      )}
 
     </div>
   );

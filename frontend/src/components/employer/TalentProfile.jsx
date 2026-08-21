@@ -15,6 +15,7 @@ import Button from '../ui/Button';
 import Badge from '../ui/Badge';
 import Loader from '../ui/Loader';
 import EmptyState from '../ui/EmptyState';
+import { SpotlightCard } from '../react-bits/SpotlightCard';
 
 const EmployerTalentProfile = () => {
   const { id } = useParams();
@@ -85,7 +86,7 @@ const EmployerTalentProfile = () => {
       </button>
 
       {/* Candidate Profile Header */}
-      <GlassCard className="p-6 sm:p-10 border-cover/20 shadow-xl bg-white/90">
+      <SpotlightCard spotlightColor="rgba(199, 168, 104, 0.1)" className="p-6 sm:p-10 border-cover/20 shadow-xl bg-white/90">
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
           <div className="flex items-start gap-5">
             <div>
@@ -131,7 +132,7 @@ const EmployerTalentProfile = () => {
             </Button>
           </div>
         </div>
-      </GlassCard>
+      </SpotlightCard>
 
       {/* Skills */}
       <div className="space-y-4">
@@ -144,7 +145,7 @@ const EmployerTalentProfile = () => {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {skills.map((skill, idx) => (
-              <GlassCard key={idx} className="p-5 flex flex-col justify-between hover:border-gold/40">
+              <SpotlightCard spotlightColor="rgba(199, 168, 104, 0.1)" key={idx} className="p-5 flex flex-col justify-between hover:border-gold/40">
                 <div>
                   <h3 className="text-sm font-bold text-cover">{skill.name}</h3>
                   <span className="text-xs text-gold-dark font-mono mt-0.5 block">{skill.proficiency || 'Proficient'}</span>
@@ -152,7 +153,7 @@ const EmployerTalentProfile = () => {
                 <div className="pt-2 border-t border-cover/10 mt-3 flex justify-between items-center text-[10px] font-mono text-ink-soft">
                   <span>Status: {skill.verified ? '✓ Verified' : 'Self-declared'}</span>
                 </div>
-              </GlassCard>
+              </SpotlightCard>
             ))}
           </div>
         )}
@@ -161,7 +162,7 @@ const EmployerTalentProfile = () => {
       {/* Direct Offer Modal */}
       {showOfferModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-          <GlassCard className="max-w-lg w-full p-6 sm:p-8 border-cover/30 shadow-2xl space-y-4 bg-white">
+          <SpotlightCard spotlightColor="rgba(199, 168, 104, 0.1)" className="max-w-lg w-full p-6 sm:p-8 border-cover/30 shadow-2xl space-y-4 bg-white">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-lg font-bold text-cover">Extend Direct Escrow Offer</h3>
@@ -207,7 +208,7 @@ const EmployerTalentProfile = () => {
                 </Button>
               </div>
             </form>
-          </GlassCard>
+          </SpotlightCard>
         </div>
       )}
     </div>

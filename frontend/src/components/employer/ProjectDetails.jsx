@@ -11,6 +11,7 @@ import toast from 'react-hot-toast';
 import GlassCard from '../ui/GlassCard';
 import Button from '../ui/Button';
 import Badge from '../ui/Badge';
+import { SpotlightCard } from '../react-bits/SpotlightCard';
 
 const EmployerProjectDetails = () => {
   const { id } = useParams();
@@ -79,7 +80,7 @@ const EmployerProjectDetails = () => {
       </button>
 
       {/* Contract Header */}
-      <GlassCard className="p-6 sm:p-8 border-purple-500/40 shadow-[0_0_50px_rgba(94,14,215,0.15)]">
+      <SpotlightCard spotlightColor="rgba(199, 168, 104, 0.1)" className="p-6 sm:p-8 border-purple-500/40 shadow-[0_0_50px_rgba(94,14,215,0.15)]">
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
           <div className="flex items-start gap-4">
             <img
@@ -131,7 +132,7 @@ const EmployerProjectDetails = () => {
             <span className="text-xl font-bold text-white mt-1 block">₹4.40L</span>
           </div>
         </div>
-      </GlassCard>
+      </SpotlightCard>
 
       {/* Milestone Review Schedule */}
       <div className="space-y-4">
@@ -141,7 +142,7 @@ const EmployerProjectDetails = () => {
 
         <div className="space-y-4">
           {project.milestones.map((m) => (
-            <GlassCard
+            <SpotlightCard spotlightColor="rgba(199, 168, 104, 0.1)"
               key={m.number}
               className={`p-6 transition-all ${
                 m.status === 'Submitted for Review' ? 'border-purple-500/50 bg-purple-950/25 shadow-[0_0_30px_rgba(94,14,215,0.15)]' :
@@ -186,7 +187,7 @@ const EmployerProjectDetails = () => {
                   )}
                 </div>
               </div>
-            </GlassCard>
+            </SpotlightCard>
           ))}
         </div>
       </div>

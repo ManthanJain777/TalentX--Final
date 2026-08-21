@@ -9,6 +9,7 @@ import StatusBadge from '../common/StatusBadge';
 import Loader from '../ui/Loader';
 import EmptyState from '../ui/EmptyState';
 import toast from 'react-hot-toast';
+import { SpotlightCard } from '../react-bits/SpotlightCard';
 
 const UserDetails = () => {
   const { id } = useParams();
@@ -116,7 +117,7 @@ const UserDetails = () => {
       </div>
 
       {/* Profile Details */}
-      <GlassCard className="p-6 bg-white/90 border-cover/15 space-y-6">
+      <SpotlightCard spotlightColor="rgba(199, 168, 104, 0.1)" className="p-6 bg-white/90 border-cover/15 space-y-6">
         <div className="flex items-center gap-4 border-b border-cover/10 pb-4">
           <Avatar name={name} size="lg" verified={userData.verified} />
           <div>
@@ -154,7 +155,7 @@ const UserDetails = () => {
             {userData.id}
           </p>
         </div>
-      </GlassCard>
+      </SpotlightCard>
 
     </div>
   );

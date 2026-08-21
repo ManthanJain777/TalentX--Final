@@ -10,6 +10,7 @@ import toast from 'react-hot-toast';
 import GlassCard from '../ui/GlassCard';
 import Button from '../ui/Button';
 import Badge from '../ui/Badge';
+import { SpotlightCard } from '../react-bits/SpotlightCard';
 
 const CandidateProjectDetails = () => {
   const { id } = useParams();
@@ -72,7 +73,7 @@ const CandidateProjectDetails = () => {
       </button>
 
       {/* Contract Header */}
-      <GlassCard className="p-6 sm:p-8 border-purple-500/40 shadow-[0_0_50px_rgba(94,14,215,0.15)]">
+      <SpotlightCard spotlightColor="rgba(199, 168, 104, 0.1)" className="p-6 sm:p-8 border-purple-500/40 shadow-[0_0_50px_rgba(94,14,215,0.15)]">
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
           <div>
             <div className="flex items-center gap-2 flex-wrap mb-1.5">
@@ -127,7 +128,7 @@ const CandidateProjectDetails = () => {
             <span className="text-xl font-bold text-white mt-1 block">₹9.60L</span>
           </div>
         </div>
-      </GlassCard>
+      </SpotlightCard>
 
       {/* Milestones Progression */}
       <div className="space-y-4">
@@ -137,7 +138,7 @@ const CandidateProjectDetails = () => {
 
         <div className="space-y-4">
           {project.milestones.map((m) => (
-            <GlassCard
+            <SpotlightCard spotlightColor="rgba(199, 168, 104, 0.1)"
               key={m.number}
               className={`p-6 transition-all ${
                 m.status === 'Approved & Released' ? 'border-emerald-500/30 bg-emerald-950/10' :
@@ -182,7 +183,7 @@ const CandidateProjectDetails = () => {
                   </Badge>
                 </div>
               </div>
-            </GlassCard>
+            </SpotlightCard>
           ))}
         </div>
       </div>
