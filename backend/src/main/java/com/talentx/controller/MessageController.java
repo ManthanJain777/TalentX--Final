@@ -17,7 +17,8 @@ public class MessageController {
     private final MessageRepository messageRepository;
     private final com.talentx.security.SecurityService securityService;
 
-    public MessageController(MessageRepository messageRepository, com.talentx.security.SecurityService securityService) {
+    public MessageController(MessageRepository messageRepository,
+                             com.talentx.security.SecurityService securityService) {
         this.messageRepository = messageRepository;
         this.securityService = securityService;
     }
@@ -30,10 +31,13 @@ public class MessageController {
 
     @PostMapping
     public ResponseEntity<Message> sendMessage(@RequestBody Message message, Authentication authentication) {
-        if (!securityService.isProjectMember(authentication, message.getProjectId())) {
-            throw new org.springframework.security.access.AccessDeniedException("Not a member of this project");
+        if (!securityService.canMessageProjectMember(authentication, message.getProjectId(), message.getReceiverId())) {
+            throw new org.springframework.security.access.AccessDeniedException("Messages can only be sent between members of the same project");
         }
-        com.talentx.security.UserPrincipal principal = (com.talentx.security.UserPrincipal) authentication.getPrincipal();
+
+        com.talentx.security.UserPrincipal principal =
+                (com.talentx.security.UserPrincipal) authentication.getPrincipal();
+        message.setId(null);
         message.setSenderId(principal.getUserId());
         message.setSenderName(principal.getUsername());
         message.setSentAt(Instant.now());
@@ -51,12 +55,13 @@ public class MessageController {
     public ResponseEntity<Message> markAsRead(@PathVariable("id") String id, Authentication authentication) {
         Message msg = messageRepository.findById(id)
                 .orElseThrow(() -> new com.talentx.exception.ResourceNotFoundException("Message not found"));
-        
-        com.talentx.security.UserPrincipal principal = (com.talentx.security.UserPrincipal) authentication.getPrincipal();
+
+        com.talentx.security.UserPrincipal principal =
+                (com.talentx.security.UserPrincipal) authentication.getPrincipal();
         if (!principal.getUserId().equals(msg.getReceiverId())) {
             throw new org.springframework.security.access.AccessDeniedException("Cannot mark another user's message as read");
         }
-        
+
         msg.setRead(true);
         return ResponseEntity.ok(messageRepository.save(msg));
     }
