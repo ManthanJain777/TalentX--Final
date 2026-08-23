@@ -1,5 +1,6 @@
 package com.talentx.model;
 
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -11,7 +12,9 @@ public class Submission {
 
     @Id
     private String id;
+    @Indexed
     private String challengeId;
+    @Indexed
     private String candidateId;
     private String candidateName;
     private String solutionUrl;

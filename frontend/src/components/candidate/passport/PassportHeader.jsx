@@ -10,6 +10,7 @@ const PassportHeader = ({
   setHeadline,
   setLocation,
   setAvatarUrl,
+  profileCompleteness = 0,
 }) => {
   const [editingAvatar, setEditingAvatar] = useState(false);
   const [tempAvatar, setTempAvatar] = useState(avatarUrl || '');
@@ -95,12 +96,12 @@ const PassportHeader = ({
       <div className="pt-4 border-t border-ink/5">
         <div className="flex items-center justify-between text-xs text-ink-faint">
           <span className="font-mono">Profile Completion</span>
-          <span className="font-mono text-gold">72%</span>
+          <span className="font-mono text-gold">{profileCompleteness}%</span>
         </div>
         <div className="mt-1.5 w-full h-1.5 rounded-full bg-ink/5 overflow-hidden">
           <div
             className="h-full rounded-full bg-gradient-to-r from-gold-soft to-gold"
-            style={{ width: '72%' }}
+            style={{ width: `${profileCompleteness}%` }}
           />
         </div>
       </div>

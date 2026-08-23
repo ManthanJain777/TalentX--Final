@@ -1,5 +1,6 @@
 package com.talentx.model;
 
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -12,8 +13,11 @@ public class Project {
 
     @Id
     private String id;
+    @Indexed
     private String matchId;
+    @Indexed
     private String employerId;
+    @Indexed
     private String freelancerId;
     private String title;
     private String description;
@@ -72,8 +76,11 @@ public class Project {
 
     public static class ProjectBuilder {
         private String id;
+        @Indexed
         private String matchId;
+        @Indexed
         private String employerId;
+        @Indexed
         private String freelancerId;
         private String title;
         private String description;

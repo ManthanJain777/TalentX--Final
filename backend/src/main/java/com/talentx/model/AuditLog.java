@@ -1,5 +1,6 @@
 package com.talentx.model;
 
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -11,10 +12,12 @@ public class AuditLog {
 
     @Id
     private String id;
+    @Indexed
     private String userId;
     private String userName;
     private String action; // USER_LOGIN, ESCROW_RELEASED, DISPUTE_OPENED, etc.
     private String entityType; // USER, PROJECT, ESCROW, DISPUTE, CHALLENGE
+    @Indexed
     private String entityId;
     private String details;
     private String ipAddress;

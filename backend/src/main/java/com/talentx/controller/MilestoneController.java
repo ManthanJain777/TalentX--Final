@@ -3,6 +3,7 @@ package com.talentx.controller;
 import com.talentx.model.Milestone;
 import com.talentx.repository.MilestoneRepository;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
@@ -19,12 +20,14 @@ public class MilestoneController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Milestone>> getMilestones(@PathVariable String projectId) {
+    @PreAuthorize("@securityService.isProjectMember(authentication, #projectId)")
+    public ResponseEntity<List<Milestone>> getMilestones(@PathVariable("projectId") String projectId) {
         return ResponseEntity.ok(milestoneRepository.findByProjectIdOrderByOrderAsc(projectId));
     }
 
     @PostMapping
-    public ResponseEntity<Milestone> createMilestone(@PathVariable String projectId, @RequestBody Milestone milestone) {
+    @PreAuthorize("@securityService.isProjectEmployer(authentication, #projectId)")
+    public ResponseEntity<Milestone> createMilestone(@PathVariable("projectId") String projectId, @RequestBody Milestone milestone) {
         milestone.setProjectId(projectId);
         milestone.setCompleted(false);
         milestone.setStatus("PENDING");
@@ -32,7 +35,8 @@ public class MilestoneController {
     }
 
     @PatchMapping("/{milestoneId}/complete")
-    public ResponseEntity<Milestone> completeMilestone(@PathVariable String projectId, @PathVariable String milestoneId) {
+    @PreAuthorize("@securityService.isMilestoneEmployer(authentication, #milestoneId)")
+    public ResponseEntity<Milestone> completeMilestone(@PathVariable("projectId") String projectId, @PathVariable("milestoneId") String milestoneId) {
         Milestone milestone = milestoneRepository.findById(milestoneId)
                 .orElseThrow(() -> new com.talentx.exception.ResourceNotFoundException("Milestone not found"));
         milestone.setCompleted(true);

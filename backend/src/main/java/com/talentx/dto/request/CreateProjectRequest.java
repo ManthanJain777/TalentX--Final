@@ -17,6 +17,9 @@ public class CreateProjectRequest {
     @Positive(message = "Budget must be positive")
     private double budget;
 
+    private java.util.List<String> skills;
+    private java.util.List<MilestoneRequest> milestones;
+
     public CreateProjectRequest() {}
 
     public String getTitle() { return title; }
@@ -27,4 +30,25 @@ public class CreateProjectRequest {
 
     public double getBudget() { return budget; }
     public void setBudget(double budget) { this.budget = budget; }
+
+    public java.util.List<String> getSkills() { return skills; }
+    public void setSkills(java.util.List<String> skills) { this.skills = skills; }
+
+    public java.util.List<MilestoneRequest> getMilestones() { return milestones; }
+    public void setMilestones(java.util.List<MilestoneRequest> milestones) { this.milestones = milestones; }
+
+    public static class MilestoneRequest {
+        private String title;
+        private String amount;
+        private int weeks;
+        
+        public String getTitle() { return title; }
+        public void setTitle(String title) { this.title = title; }
+        
+        public String getAmount() { return amount; }
+        public void setAmount(String amount) { this.amount = amount; }
+        
+        public int getWeeks() { return weeks; }
+        public void setWeeks(int weeks) { this.weeks = weeks; }
+    }
 }

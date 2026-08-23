@@ -5,6 +5,7 @@ import com.talentx.model.User;
 import com.talentx.repository.PassportRepository;
 import com.talentx.repository.UserRepository;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -23,6 +24,7 @@ public class DiscoveryController {
     }
 
     @GetMapping("/candidates")
+    @PreAuthorize("hasAuthority('EMPLOYER') or hasAuthority('ADMIN')")
     public ResponseEntity<List<Map<String, Object>>> discoverCandidates(
             @RequestParam(required = false) String skills,
             @RequestParam(required = false) String location,

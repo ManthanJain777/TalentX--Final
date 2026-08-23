@@ -1,5 +1,6 @@
 package com.talentx.model;
 
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -11,8 +12,11 @@ public class Message {
 
     @Id
     private String id;
+    @Indexed
     private String projectId; // Context for the message
+    @Indexed
     private String senderId;
+    @Indexed
     private String receiverId;
     private String senderName;
     private String content;

@@ -6,32 +6,7 @@ const NotificationBell = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  const notifications = [
-    {
-      id: '1',
-      title: 'New Match: FinTech Core Architect',
-      desc: '94% match score with NeoBank Systems Inc.',
-      time: '10m ago',
-      unread: true,
-      link: '/candidate/matches',
-    },
-    {
-      id: '2',
-      title: 'Milestone Escrow Released',
-      desc: '₹1.92L funded directly to your project vault.',
-      time: '2h ago',
-      unread: true,
-      link: '/candidate/projects',
-    },
-    {
-      id: '3',
-      title: 'Paid Challenge Completed',
-      desc: 'Kafka Event Consumer verified (Score 98%).',
-      time: '1d ago',
-      unread: false,
-      link: '/candidate/passport',
-    },
-  ];
+  const [notifications, setNotifications] = useState([]);
 
   const unreadCount = notifications.filter((n) => n.unread).length;
 

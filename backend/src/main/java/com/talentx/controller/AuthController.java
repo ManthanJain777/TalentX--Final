@@ -30,6 +30,9 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
+    @org.springframework.beans.factory.annotation.Value("${app.security.cookie.secure:true}")
+    private boolean secureCookie;
+
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<JwtAuthenticationResponse>> login(@Valid @RequestBody LoginRequest request, jakarta.servlet.http.HttpServletRequest httpRequest) {
         Authentication authentication = authenticationManager.authenticate(
@@ -60,10 +63,10 @@ public class AuthController {
 
         org.springframework.http.ResponseCookie cookie = org.springframework.http.ResponseCookie.from("talentx_token", jwt)
                 .httpOnly(true)
-                .secure(false) // Set to true in production with HTTPS
+                .secure(secureCookie)
                 .path("/")
                 .maxAge(24 * 60 * 60)
-                .sameSite("Strict")
+                .sameSite("Lax") // Changed to Lax since we are dealing with cross-site navigations/SPA setups in some dev environments.
                 .build();
 
         return ResponseEntity.ok()
@@ -75,10 +78,10 @@ public class AuthController {
     public ResponseEntity<ApiResponse<String>> logout() {
         org.springframework.http.ResponseCookie cookie = org.springframework.http.ResponseCookie.from("talentx_token", "")
                 .httpOnly(true)
-                .secure(false)
+                .secure(secureCookie)
                 .path("/")
                 .maxAge(0)
-                .sameSite("Strict")
+                .sameSite("Lax")
                 .build();
         return ResponseEntity.ok()
                 .header(org.springframework.http.HttpHeaders.SET_COOKIE, cookie.toString())

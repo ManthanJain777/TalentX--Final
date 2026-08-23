@@ -1,5 +1,6 @@
 package com.talentx.model;
 
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -11,11 +12,15 @@ public class EscrowTransaction {
 
     @Id
     private String id;
+    @Indexed
     private String projectId;
+    @Indexed
     private String milestoneId;
     private double amount;
     private String currency; // INR
+    @Indexed
     private String payerId;   // Employer
+    @Indexed
     private String payeeId;   // Candidate
     private String status; // HELD, RELEASED, REFUNDED, DISPUTED
     private double platformFee; // 20% service fee

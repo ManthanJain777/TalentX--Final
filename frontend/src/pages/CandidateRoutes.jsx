@@ -13,10 +13,12 @@ import CandidateMessages from '../components/candidate/Messages';
 import CandidateSettings from '../components/candidate/Settings';
 import BrowseChallenges from '../components/candidate/BrowseChallenges';
 import ChallengeDetail from '../components/candidate/ChallengeDetail';
+import OnboardingGuard from '../routes/OnboardingGuard';
 
 const CandidateRoutes = () => {
   return (
-    <DashboardLayout title="Candidate Passport Portal">
+    <OnboardingGuard>
+      <DashboardLayout title="Candidate Passport Portal">
       <Routes>
         <Route path="/" element={<Navigate to="/candidate/dashboard" replace />} />
         <Route path="dashboard" element={<CandidateDashboard />} />
@@ -33,7 +35,8 @@ const CandidateRoutes = () => {
         <Route path="settings" element={<CandidateSettings />} />
         <Route path="*" element={<Navigate to="/candidate/dashboard" replace />} />
       </Routes>
-    </DashboardLayout>
+      </DashboardLayout>
+    </OnboardingGuard>
   );
 };
 

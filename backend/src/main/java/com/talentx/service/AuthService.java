@@ -62,11 +62,11 @@ public class AuthService {
         if ("CANDIDATE".equalsIgnoreCase(request.getRole())) {
             Passport passport = new Passport();
             passport.setUserId(savedUser.getId());
-            passport.setHeadline("Software Engineer");
-            passport.setLocation("Remote");
+            passport.setHeadline("");
+            passport.setLocation("");
             passport.setAvailability(true);
             passport.setVisibility(true);
-            passport.setProfileCompleteness(10);
+            passport.setProfileCompleteness(0);
             
             passportRepository.save(passport);
 

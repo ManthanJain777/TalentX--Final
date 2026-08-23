@@ -16,15 +16,25 @@ const tabs = [
 ];
 
 const EvidenceTabs = ({
-  github = { connected: false, repos: [] },
+  socialLinks = {},
   certifications = [],
   projects = [],
   assessments = [],
-  updateGithub,
+  updateSocialLinks,
   updateCertifications,
   updateProjects,
   updateAssessments
 }) => {
+  // Compute dummy display data for the connected GitHub profile based on the saved URL
+  const github = socialLinks.github 
+    ? { 
+        connected: true, 
+        username: socialLinks.github.split('/').pop() || 'User', 
+        repos: ['talent-match-api', 'frontend-dashboard', 'auth-service', 'design-system'], 
+        prsMerged: 42, 
+        stars: 128 
+      }
+    : { connected: false, repos: [] };
   const [activeTab, setActiveTab] = useState('github');
 
   const [isConnectingGithub, setIsConnectingGithub] = useState(false);
@@ -39,13 +49,10 @@ const EvidenceTabs = ({
   const [projectTechs, setProjectTechs] = useState([]);
 
   const handleConnectGithub = () => {
-    if (githubUsername.trim()) {
-      updateGithub({
-        connected: true,
-        username: githubUsername,
-        repos: ['talent-match-api', 'frontend-dashboard', 'auth-service', 'design-system'],
-        prsMerged: 42,
-        stars: 128,
+    if (githubUsername.trim() && updateSocialLinks) {
+      updateSocialLinks({
+        ...socialLinks,
+        github: githubUsername
       });
       setIsConnectingGithub(false);
     }
@@ -93,12 +100,7 @@ const EvidenceTabs = ({
     updateAssessments(updated);
   };
 
-  // Ensure assessments has defaults if empty
-  const displayAssessments = assessments.length > 0 ? assessments : [
-    { name: 'Core JavaScript Concepts', completed: false, score: 0, duration: '45 mins', type: 'Coding' },
-    { name: 'React Architecture', completed: false, score: 0, duration: '60 mins', type: 'System Design' },
-    { name: 'Backend Data Modeling', completed: false, score: 0, duration: '90 mins', type: 'Architecture' }
-  ];
+  const displayAssessments = assessments || [];
 
   return (
     <div className="glass-panel p-6">

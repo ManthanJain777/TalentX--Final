@@ -1,5 +1,6 @@
 package com.talentx.model;
 
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -13,6 +14,7 @@ public class Challenge {
 
     @Id
     private String id;
+    @Indexed
     private String employerId;
     private String title;
     private String description;
@@ -62,6 +64,7 @@ public class Challenge {
     public void setCreatedAt(Instant createdAt) { this.createdAt = createdAt; }
 
     public static class Winner {
+        @Indexed
         private String candidateId;
         private String candidateName;
         private Instant selectedAt;

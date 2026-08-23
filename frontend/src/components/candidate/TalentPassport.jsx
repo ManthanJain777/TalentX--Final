@@ -73,7 +73,7 @@ const TalentPassport = () => {
   const projects = passport?.projects || [];
   const certifications = passport?.certifications || [];
   const assessments = passport?.assessments || [];
-  const completeness = passport?.profileCompleteness || (skills.length ? Math.min(100, skills.length * 20 + 20) : 10);
+  const completeness = passport?.profileCompleteness ?? 0;
 
   const tabs = [
     { id: 'github', label: `GitHub Evidence (${projects.filter(p => p.evidence === 'GitHub').length})`, icon: GitBranch },

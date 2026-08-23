@@ -103,9 +103,9 @@ const Login = () => {
               </label>
               <div className="grid grid-cols-3 gap-1.5 p-1 rounded-xl bg-cover/5 border border-cover/10 relative">
                 {[
-                  { key: 'candidate', label: 'CANDIDATE', email: 'anika@talentx.com', pass: 'anika123' },
-                  { key: 'employer', label: 'EMPLOYER', email: 'cranes@gmail.com', pass: 'cranes123' },
-                  { key: 'admin', label: 'ADMIN', email: 'admin@talentx.com', pass: 'admin123' }
+                  { key: 'candidate', label: 'CANDIDATE' },
+                  { key: 'employer', label: 'EMPLOYER' },
+                  { key: 'admin', label: 'ADMIN' }
                 ].map((r) => {
                   const isSelected = role === r.key;
                   return (

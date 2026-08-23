@@ -31,21 +31,21 @@ public class OpportunityController {
     }
 
     @GetMapping
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('EMPLOYER') or hasAuthority('ADMIN')")
     public ResponseEntity<List<Opportunity>> getAllOpportunities(Authentication authentication) {
         com.talentx.security.UserPrincipal currentUser = (com.talentx.security.UserPrincipal) authentication.getPrincipal();
         return ResponseEntity.ok(opportunityRepository.findByEmployerId(currentUser.getUserId()));
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("@securityService.isOpportunityEmployer(authentication, #id) or hasRole('ADMIN')")
     public ResponseEntity<Opportunity> getOpportunity(@PathVariable String id) {
         return ResponseEntity.ok(opportunityRepository.findById(id)
                 .orElseThrow(() -> new com.talentx.exception.ResourceNotFoundException("Opportunity not found")));
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('EMPLOYER', 'ADMIN')")
+    @PreAuthorize("hasAuthority('EMPLOYER') or hasAuthority('ADMIN')")
     public ResponseEntity<Opportunity> createOpportunity(@RequestBody Opportunity opportunity, Authentication authentication) {
         com.talentx.security.UserPrincipal currentUser = (com.talentx.security.UserPrincipal) authentication.getPrincipal();
         opportunity.setEmployerId(currentUser.getUserId());
@@ -55,7 +55,7 @@ public class OpportunityController {
     }
 
     @GetMapping("/{id}/matches")
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("@securityService.isOpportunityEmployer(authentication, #id) or hasRole('ADMIN')")
     public ResponseEntity<List<Map<String, Object>>> getMatches(@PathVariable String id) {
         Opportunity opportunity = opportunityRepository.findById(id)
                 .orElseThrow(() -> new com.talentx.exception.ResourceNotFoundException("Opportunity not found"));
@@ -97,18 +97,10 @@ public class OpportunityController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("@securityService.isOpportunityEmployer(authentication, #id) or hasRole('ADMIN')")
     public ResponseEntity<?> deleteOpportunity(@PathVariable String id, Authentication authentication) {
         Opportunity opportunity = opportunityRepository.findById(id)
                 .orElseThrow(() -> new com.talentx.exception.ResourceNotFoundException("Opportunity not found"));
-        
-        com.talentx.security.UserPrincipal currentUser = (com.talentx.security.UserPrincipal) authentication.getPrincipal();
-        String role = currentUser.getAuthorities().iterator().next().getAuthority();
-        
-        if (!opportunity.getEmployerId().equals(currentUser.getUserId()) && 
-            !"ROLE_ADMIN".equals(role) && !"ADMIN".equals(role)) {
-            throw new AccessDeniedException("You are not authorized to delete this opportunity");
-        }
         
         opportunityRepository.delete(opportunity);
         return ResponseEntity.ok().build();

@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 public class PassportService {
 
     private final PassportRepository passportRepository;
+    private final com.talentx.repository.UserRepository userRepository;
 
-    public PassportService(PassportRepository passportRepository) {
+    public PassportService(PassportRepository passportRepository, com.talentx.repository.UserRepository userRepository) {
         this.passportRepository = passportRepository;
+        this.userRepository = userRepository;
     }
 
     public Passport getByUserId(String userId) {
@@ -36,14 +38,50 @@ public class PassportService {
                     
                     existing.setAvailability(passportData.isAvailability());
                     existing.setVisibility(passportData.isVisibility());
+                    
+                    if (passportData.getPrivacy() != null) {
+                        existing.setPrivacy(passportData.getPrivacy());
+                        existing.setVisibility(passportData.getPrivacy().isPublic());
+                    } else if (existing.getPrivacy() == null) {
+                        Passport.Privacy p = new Passport.Privacy();
+                        p.setPublic(passportData.isVisibility());
+                        existing.setPrivacy(p);
+                    } else {
+                        existing.getPrivacy().setPublic(passportData.isVisibility());
+                    }
+
                     existing.setProfileCompleteness(calculateCompleteness(existing));
                     
+                    boolean isDiscoverable = existing.getPrivacy() != null && existing.getPrivacy().isDiscoverable();
+                    userRepository.findById(userId).ifPresent(u -> {
+                        if (u.isDiscoverable() != isDiscoverable) {
+                            u.setDiscoverable(isDiscoverable);
+                            userRepository.save(u);
+                        }
+                    });
+
                     return passportRepository.save(existing);
                 })
                 .orElseGet(() -> {
-                    passportData.setUserId(userId);
-                    passportData.setProfileCompleteness(calculateCompleteness(passportData));
-                    return passportRepository.save(passportData);
+                        passportData.setUserId(userId);
+                        if (passportData.getPrivacy() == null) {
+                            Passport.Privacy p = new Passport.Privacy();
+                            p.setPublic(passportData.isVisibility());
+                            passportData.setPrivacy(p);
+                        } else {
+                            passportData.setVisibility(passportData.getPrivacy().isPublic());
+                        }
+                        passportData.setProfileCompleteness(calculateCompleteness(passportData));
+                        
+                        boolean isDiscoverable = passportData.getPrivacy().isDiscoverable();
+                        userRepository.findById(userId).ifPresent(u -> {
+                            if (u.isDiscoverable() != isDiscoverable) {
+                                u.setDiscoverable(isDiscoverable);
+                                userRepository.save(u);
+                            }
+                        });
+
+                        return passportRepository.save(passportData);
                 });
     }
 

@@ -5,6 +5,7 @@ import com.talentx.model.User;
 import com.talentx.repository.UserRepository;
 import com.talentx.service.PassportService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,6 +38,7 @@ public class PassportController {
     }
 
     @GetMapping("/{userId}")
+    @PreAuthorize("@securityService.canViewPassport(authentication, #userId)")
     public ResponseEntity<Passport> getPassport(@PathVariable String userId) {
         Passport passport = passportService.getByUserId(userId);
         if (passport == null) {

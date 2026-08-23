@@ -60,10 +60,14 @@ const PassportBuilder = () => {
   }, []);
 
   const updateField = async (field, value) => {
+    // Optimistic update
     const updatedData = { ...passportData, [field]: value };
     setPassportData(updatedData);
     try {
-      await api.put('/passports/me', updatedData);
+      const response = await api.put('/passports/me', updatedData);
+      if (response.data) {
+        setPassportData(response.data);
+      }
     } catch (err) {
       console.error('Failed to update passport on backend', err);
     }
@@ -108,6 +112,7 @@ const PassportBuilder = () => {
               headline={passportData.headline}
               location={passportData.location}
               avatarUrl={passportData.avatarUrl}
+              profileCompleteness={passportData.profileCompleteness || 0}
               setName={(val) => updateField('name', val)}
               setHeadline={(val) => updateField('headline', val)}
               setLocation={(val) => updateField('location', val)}
@@ -143,6 +148,8 @@ const PassportBuilder = () => {
         {activeStep === 4 && (
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
             <EvidenceTabs
+              socialLinks={passportData.socialLinks || { github: '', linkedin: '', portfolio: '' }}
+              updateSocialLinks={(val) => updateField('socialLinks', val)}
               certifications={passportData.certifications || []}
               projects={passportData.projects || []}
               assessments={passportData.assessments || []}

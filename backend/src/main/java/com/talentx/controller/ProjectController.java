@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import java.util.List;
 
 @RestController
@@ -46,7 +47,7 @@ public class ProjectController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Project> getProject(@PathVariable String id, Authentication authentication) {
+    public ResponseEntity<Project> getProject(@PathVariable("id") String id, Authentication authentication) {
         com.talentx.security.UserPrincipal user = (com.talentx.security.UserPrincipal) authentication.getPrincipal();
         Project project = projectRepository.findById(id)
                 .orElseThrow(() -> new com.talentx.exception.ResourceNotFoundException("Project not found"));
@@ -69,34 +70,48 @@ public class ProjectController {
     }
 
     @PatchMapping("/{id}/status")
-    public ResponseEntity<Project> updateStatus(@PathVariable String id, @RequestParam String status, Authentication authentication) {
+    public ResponseEntity<Project> updateStatus(@PathVariable("id") String id, @RequestParam String status, Authentication authentication) {
         com.talentx.security.UserPrincipal user = (com.talentx.security.UserPrincipal) authentication.getPrincipal();
         Project project = projectRepository.findById(id)
                 .orElseThrow(() -> new com.talentx.exception.ResourceNotFoundException("Project not found"));
         
         String role = user.getAuthorities().iterator().next().getAuthority();
-        if (!project.getEmployerId().equals(user.getUserId()) && 
-            !project.getFreelancerId().equals(user.getUserId()) &&
-            !"ROLE_ADMIN".equals(role) && !"ADMIN".equals(role)) {
+        boolean isAdmin = "ROLE_ADMIN".equals(role) || "ADMIN".equals(role);
+        boolean isEmployer = project.getEmployerId() != null && project.getEmployerId().equals(user.getUserId());
+        boolean isFreelancer = project.getFreelancerId() != null && project.getFreelancerId().equals(user.getUserId());
+
+        if (!isEmployer && !isFreelancer && !isAdmin) {
             throw new org.springframework.security.access.AccessDeniedException("You are not authorized to update this project");
+        }
+
+        // State Machine Integrity
+        if ("COMPLETED".equals(status) || "PAUSED".equals(status) || "ACTIVE".equals(status)) {
+            if (!isEmployer && !isAdmin) {
+                throw new org.springframework.security.access.AccessDeniedException("Only the employer can transition to " + status);
+            }
+        } else if ("DISPUTED".equals(status)) {
+            if (!isEmployer && !isFreelancer && !isAdmin) {
+                throw new org.springframework.security.access.AccessDeniedException("Only project members can open a dispute");
+            }
+        } else if ("DRAFT".equals(status)) {
+             throw new IllegalArgumentException("Cannot revert project to DRAFT status");
         }
         
         project.setStatus(status);
         return ResponseEntity.ok(projectRepository.save(project));
     }
 
-    @GetMapping("/{id}/milestones")
-    public ResponseEntity<List<Milestone>> getProjectMilestones(@PathVariable String id) {
-        return ResponseEntity.ok(milestoneRepository.findByProjectId(id));
-    }
+
 
     @GetMapping("/{id}/escrow")
-    public ResponseEntity<List<EscrowTransaction>> getProjectEscrow(@PathVariable String id) {
+    @PreAuthorize("@securityService.isProjectMember(authentication, #id)")
+    public ResponseEntity<List<EscrowTransaction>> getProjectEscrow(@PathVariable("id") String id) {
         return ResponseEntity.ok(escrowRepository.findByProjectId(id));
     }
 
     @GetMapping("/{id}/deliverables")
-    public ResponseEntity<List<Deliverable>> getProjectDeliverables(@PathVariable String id) {
+    @PreAuthorize("@securityService.isProjectMember(authentication, #id)")
+    public ResponseEntity<List<Deliverable>> getProjectDeliverables(@PathVariable("id") String id) {
         return ResponseEntity.ok(deliverableRepository.findByProjectId(id));
     }
 }

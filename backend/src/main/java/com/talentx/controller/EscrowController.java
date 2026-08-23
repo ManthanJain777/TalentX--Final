@@ -3,6 +3,8 @@ package com.talentx.controller;
 import com.talentx.model.EscrowTransaction;
 import com.talentx.repository.EscrowRepository;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.MessageDigest;
@@ -21,12 +23,16 @@ public class EscrowController {
     }
 
     @GetMapping("/project/{projectId}")
+    @PreAuthorize("@securityService.isProjectMember(authentication, #projectId)")
     public ResponseEntity<List<EscrowTransaction>> getByProject(@PathVariable String projectId) {
         return ResponseEntity.ok(escrowRepository.findByProjectId(projectId));
     }
 
     @PostMapping
-    public ResponseEntity<EscrowTransaction> createEscrow(@RequestBody EscrowTransaction transaction) {
+    @PreAuthorize("@securityService.isProjectEmployer(authentication, #transaction.projectId)")
+    public ResponseEntity<EscrowTransaction> createEscrow(@RequestBody EscrowTransaction transaction, Authentication authentication) {
+        com.talentx.security.UserPrincipal principal = (com.talentx.security.UserPrincipal) authentication.getPrincipal();
+        transaction.setPayerId(principal.getUserId());
         transaction.setStatus("HELD");
         transaction.setCurrency("INR");
         transaction.setPlatformFee(transaction.getAmount() * 0.20);
@@ -35,6 +41,7 @@ public class EscrowController {
     }
 
     @PatchMapping("/{id}/release")
+    @PreAuthorize("@securityService.isEscrowEmployer(authentication, #id)")
     public ResponseEntity<EscrowTransaction> releaseEscrow(@PathVariable String id) {
         EscrowTransaction txn = escrowRepository.findById(id)
                 .orElseThrow(() -> new com.talentx.exception.ResourceNotFoundException("Escrow transaction not found"));
@@ -44,6 +51,7 @@ public class EscrowController {
     }
 
     @PatchMapping("/{id}/refund")
+    @PreAuthorize("hasAuthority('ADMIN') or hasRole('ADMIN')")
     public ResponseEntity<EscrowTransaction> refundEscrow(@PathVariable String id) {
         EscrowTransaction txn = escrowRepository.findById(id)
                 .orElseThrow(() -> new com.talentx.exception.ResourceNotFoundException("Escrow transaction not found"));

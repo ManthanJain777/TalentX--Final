@@ -1,5 +1,6 @@
 package com.talentx.model;
 
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -11,8 +12,11 @@ public class Match {
 
     @Id
     private String id;
+    @Indexed
     private String opportunityId;
+    @Indexed
     private String candidateId;
+    @Indexed
     private String employerId;
     private double totalScore;
     private SkillBreakdown skillBreakdown;
@@ -57,8 +61,11 @@ public class Match {
 
     public static class MatchBuilder {
         private String id;
+        @Indexed
         private String opportunityId;
+        @Indexed
         private String candidateId;
+        @Indexed
         private String employerId;
         private double totalScore;
         private SkillBreakdown skillBreakdown;

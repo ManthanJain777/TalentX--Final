@@ -28,16 +28,28 @@ const NewOpportunity = () => {
   const [description, setDescription] = useState('');
 
   // Skills & Proof
-  const [skills, setSkills] = useState(['PyTorch', 'Distributed Systems', 'CUDA']);
+  const [skills, setSkills] = useState([]);
   const [newSkill, setNewSkill] = useState('');
   const [minProofLevel, setMinProofLevel] = useState('L3 Verifiable (Top 5%)');
 
   // Milestones
-  const [milestones, ] = useState([
-    { title: 'Milestone 1: Architecture & Baseline Benchmarks', amount: '₹12L', weeks: 3 },
-    { title: 'Milestone 2: High-throughput Kernel Optimization', amount: '₹16L', weeks: 4 },
-    { title: 'Milestone 3: Production Validation & Handover', amount: '₹8L', weeks: 2 },
-  ]);
+  const [milestones, setMilestones] = useState([]);
+  const [newMilestoneTitle, setNewMilestoneTitle] = useState('');
+  const [newMilestoneAmount, setNewMilestoneAmount] = useState('');
+  const [newMilestoneWeeks, setNewMilestoneWeeks] = useState('');
+
+  const addMilestone = () => {
+    if (newMilestoneTitle.trim() && newMilestoneAmount.trim()) {
+      setMilestones([...milestones, { 
+        title: newMilestoneTitle.trim(), 
+        amount: newMilestoneAmount.trim(), 
+        weeks: parseInt(newMilestoneWeeks) || 1 
+      }]);
+      setNewMilestoneTitle('');
+      setNewMilestoneAmount('');
+      setNewMilestoneWeeks('');
+    }
+  };
 
   const addSkill = () => {
     if (newSkill.trim() && !skills.includes(newSkill.trim())) {
@@ -64,7 +76,9 @@ const NewOpportunity = () => {
       await api.post('/projects', {
         title,
         description,
-        budget: numericBudget || 3600000
+        budget: numericBudget || 3600000,
+        skills,
+        milestones: milestones.filter(m => m.title && m.amount) // only send populated ones
       });
 
       toast.success('Project created! Smart contract initialized.', {
@@ -246,7 +260,41 @@ const NewOpportunity = () => {
             </p>
 
             <div className="space-y-3">
-              {milestones.map((m, idx) => (
+              <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 mb-4">
+                <div className="sm:col-span-6">
+                  <Input 
+                    placeholder="Milestone Title" 
+                    value={newMilestoneTitle} 
+                    onChange={(e) => setNewMilestoneTitle(e.target.value)} 
+                  />
+                </div>
+                <div className="sm:col-span-3">
+                  <Input 
+                    placeholder="Amount (e.g. ₹12L)" 
+                    value={newMilestoneAmount} 
+                    onChange={(e) => setNewMilestoneAmount(e.target.value)} 
+                  />
+                </div>
+                <div className="sm:col-span-3">
+                  <Input 
+                    type="number"
+                    placeholder="Weeks" 
+                    value={newMilestoneWeeks} 
+                    onChange={(e) => setNewMilestoneWeeks(e.target.value)} 
+                  />
+                </div>
+                <div className="sm:col-span-12">
+                  <Button variant="secondary" size="sm" onClick={addMilestone} className="w-full">
+                    Add Milestone
+                  </Button>
+                </div>
+              </div>
+
+              {milestones.length === 0 ? (
+                <div className="p-4 text-center text-white/50 text-xs border border-white/10 rounded-xl border-dashed">
+                  No milestones added yet. Add at least one milestone.
+                </div>
+              ) : milestones.map((m, idx) => (
                 <div key={idx} className="p-4 rounded-xl bg-white/[0.03] border border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                   <div className="flex items-center gap-3">
                     <span className="w-6 h-6 rounded-lg bg-[#5E0ED7] text-white text-xs font-bold flex items-center justify-center">

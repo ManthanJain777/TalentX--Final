@@ -1,5 +1,6 @@
 package com.talentx.model;
 
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -14,6 +15,7 @@ public class VerificationRequest {
 
     @Id
     private String id;
+    @Indexed
     private String userId;
     private String userEmail;
     private String userFullName;

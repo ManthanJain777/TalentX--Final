@@ -4,6 +4,8 @@ import { toast } from 'react-hot-toast';
 const api = axios.create({
     baseURL: 'http://localhost:8080/api',
     withCredentials: true,
+    xsrfCookieName: 'XSRF-TOKEN',
+    xsrfHeaderName: 'X-XSRF-TOKEN',
     headers: {
         'Content-Type': 'application/json',
     },
@@ -29,12 +31,11 @@ api.interceptors.response.use(
 
         if (!error.response) {
             toast.error('Network Error: Cannot connect to the backend server.');
-        } else if (error.response.status === 401) {
-            localStorage.removeItem('talentx_token');
-            localStorage.removeItem('talentx_user');
+        } else if (error.response.status === 401 || error.response.status === 403) {
+            localStorage.removeItem('talentx_user'); // Leave user metadata cleanup
             const isPublicPath = ['/', '/auth/login', '/auth/register', '/auth/forgot-password'].some(p => window.location.pathname.startsWith(p));
             if (!isPublicPath) {
-                toast.error('Session expired. Please log in again.');
+                toast.error('Session expired or access denied. Please log in again.');
                 window.location.href = '/auth/login';
             }
         } else if (error.response.status === 500) {

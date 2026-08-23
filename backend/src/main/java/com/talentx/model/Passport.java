@@ -33,7 +33,8 @@ public class Passport {
     private SocialLinks socialLinks = new SocialLinks();
 
     private boolean availability;
-    private boolean visibility;
+    private boolean visibility; // Legacy support
+    private Privacy privacy;
     private int profileCompleteness;
 
     @CreatedDate
@@ -93,6 +94,9 @@ public class Passport {
 
     public boolean isVisibility() { return visibility; }
     public void setVisibility(boolean visibility) { this.visibility = visibility; }
+
+    public Privacy getPrivacy() { return privacy; }
+    public void setPrivacy(Privacy privacy) { this.privacy = privacy; }
 
     public int getProfileCompleteness() { return profileCompleteness; }
     public void setProfileCompleteness(int profileCompleteness) { this.profileCompleteness = profileCompleteness; }
@@ -255,6 +259,30 @@ public class Passport {
 
         public String getYear() { return year; }
         public void setYear(String year) { this.year = year; }
+    }
+
+    public static class Privacy {
+        private boolean publicProfile; // Need to map "public" to publicProfile or just isPublic()
+        private boolean discoverable;
+        private boolean showCompensation;
+        private boolean allowDirectInvites;
+
+        public Privacy() {}
+
+        @com.fasterxml.jackson.annotation.JsonProperty("public")
+        public boolean isPublic() { return publicProfile; }
+
+        @com.fasterxml.jackson.annotation.JsonProperty("public")
+        public void setPublic(boolean publicProfile) { this.publicProfile = publicProfile; }
+
+        public boolean isDiscoverable() { return discoverable; }
+        public void setDiscoverable(boolean discoverable) { this.discoverable = discoverable; }
+
+        public boolean isShowCompensation() { return showCompensation; }
+        public void setShowCompensation(boolean showCompensation) { this.showCompensation = showCompensation; }
+
+        public boolean isAllowDirectInvites() { return allowDirectInvites; }
+        public void setAllowDirectInvites(boolean allowDirectInvites) { this.allowDirectInvites = allowDirectInvites; }
     }
 }
 
