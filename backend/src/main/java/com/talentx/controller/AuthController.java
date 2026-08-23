@@ -14,14 +14,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.http.ResponseCookie;
 
 import java.util.Map;
 
@@ -36,10 +37,9 @@ public class AuthController {
     @Value("${app.security.cookie.secure:false}")
     private boolean secureCookie;
 
-    @PostMapping("/csrf")
-    public ResponseEntity<Void> csrf(HttpServletRequest request) {
-        request.getAttribute("_csrf");
-        return ResponseEntity.noContent().build();
+    @GetMapping("/csrf")
+    public ResponseEntity<Map<String, String>> csrf(CsrfToken token) {
+        return ResponseEntity.ok(Map.of("token", token.getToken()));
     }
 
     @PostMapping("/login")
