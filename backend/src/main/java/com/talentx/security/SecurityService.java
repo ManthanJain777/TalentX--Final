@@ -53,7 +53,7 @@ public class SecurityService {
     public boolean isProjectMember(Authentication auth, String projectId) {
         String userId = getUserId(auth);
         if (userId == null || projectId == null) return false;
-        
+
         Optional<Project> opt = projectRepository.findById(projectId);
         if (opt.isEmpty()) return false;
         Project p = opt.get();
@@ -63,16 +63,28 @@ public class SecurityService {
     public boolean isProjectEmployer(Authentication auth, String projectId) {
         String userId = getUserId(auth);
         if (userId == null || projectId == null) return false;
-        
+
         Optional<Project> opt = projectRepository.findById(projectId);
         if (opt.isEmpty()) return false;
         return userId.equals(opt.get().getEmployerId());
     }
 
+    /** Ensures a message recipient is one of the two participants in the project. */
+    public boolean canMessageProjectMember(Authentication auth, String projectId, String receiverId) {
+        String senderId = getUserId(auth);
+        if (senderId == null || projectId == null || receiverId == null) return false;
+        Optional<Project> opt = projectRepository.findById(projectId);
+        if (opt.isEmpty()) return false;
+        Project project = opt.get();
+        boolean senderIsMember = senderId.equals(project.getEmployerId()) || senderId.equals(project.getFreelancerId());
+        boolean receiverIsMember = receiverId.equals(project.getEmployerId()) || receiverId.equals(project.getFreelancerId());
+        return senderIsMember && receiverIsMember && !senderId.equals(receiverId);
+    }
+
     public boolean isMilestoneMember(Authentication auth, String milestoneId) {
         String userId = getUserId(auth);
         if (userId == null || milestoneId == null) return false;
-        
+
         Optional<Milestone> opt = milestoneRepository.findById(milestoneId);
         if (opt.isEmpty()) return false;
         return isProjectMember(auth, opt.get().getProjectId());
@@ -81,7 +93,7 @@ public class SecurityService {
     public boolean isMilestoneEmployer(Authentication auth, String milestoneId) {
         String userId = getUserId(auth);
         if (userId == null || milestoneId == null) return false;
-        
+
         Optional<Milestone> opt = milestoneRepository.findById(milestoneId);
         if (opt.isEmpty()) return false;
         return isProjectEmployer(auth, opt.get().getProjectId());
@@ -90,7 +102,7 @@ public class SecurityService {
     public boolean isMilestoneFreelancer(Authentication auth, String milestoneId) {
         String userId = getUserId(auth);
         if (userId == null || milestoneId == null) return false;
-        
+
         Optional<Milestone> opt = milestoneRepository.findById(milestoneId);
         if (opt.isEmpty()) return false;
         Project p = projectRepository.findById(opt.get().getProjectId()).orElse(null);
@@ -101,7 +113,7 @@ public class SecurityService {
     public boolean isDeliverableEmployer(Authentication auth, String deliverableId) {
         String userId = getUserId(auth);
         if (userId == null || deliverableId == null) return false;
-        
+
         Optional<Deliverable> opt = deliverableRepository.findById(deliverableId);
         if (opt.isEmpty()) return false;
         return isProjectEmployer(auth, opt.get().getProjectId());
@@ -110,7 +122,7 @@ public class SecurityService {
     public boolean isDisputeMember(Authentication auth, String disputeId) {
         String userId = getUserId(auth);
         if (userId == null || disputeId == null) return false;
-        
+
         Optional<Dispute> opt = disputeRepository.findById(disputeId);
         if (opt.isEmpty()) return false;
         Dispute d = opt.get();
@@ -120,7 +132,7 @@ public class SecurityService {
     public boolean isEscrowEmployer(Authentication auth, String escrowId) {
         String userId = getUserId(auth);
         if (userId == null || escrowId == null) return false;
-        
+
         Optional<EscrowTransaction> opt = escrowRepository.findById(escrowId);
         if (opt.isEmpty()) return false;
         return userId.equals(opt.get().getPayerId());
@@ -129,7 +141,7 @@ public class SecurityService {
     public boolean isOpportunityEmployer(Authentication auth, String opportunityId) {
         String userId = getUserId(auth);
         if (userId == null || opportunityId == null) return false;
-        
+
         Optional<Opportunity> opt = opportunityRepository.findById(opportunityId);
         if (opt.isEmpty()) return false;
         return userId.equals(opt.get().getEmployerId());
@@ -138,7 +150,7 @@ public class SecurityService {
     public boolean isMatchEmployer(Authentication auth, String matchId) {
         String userId = getUserId(auth);
         if (userId == null || matchId == null) return false;
-        
+
         Optional<Match> opt = matchDao.findById(matchId);
         if (opt.isEmpty()) return false;
         return userId.equals(opt.get().getEmployerId());
@@ -147,7 +159,7 @@ public class SecurityService {
     public boolean isMatchMember(Authentication auth, String matchId) {
         String userId = getUserId(auth);
         if (userId == null || matchId == null) return false;
-        
+
         Optional<Match> opt = matchDao.findById(matchId);
         if (opt.isEmpty()) return false;
         Match m = opt.get();
@@ -157,7 +169,7 @@ public class SecurityService {
     public boolean isChallengeEmployer(Authentication auth, String challengeId) {
         String userId = getUserId(auth);
         if (userId == null || challengeId == null) return false;
-        
+
         Optional<Challenge> opt = challengeRepository.findById(challengeId);
         if (opt.isEmpty()) return false;
         return userId.equals(opt.get().getEmployerId());
@@ -166,7 +178,7 @@ public class SecurityService {
     public boolean isSubmissionEmployer(Authentication auth, String submissionId) {
         String userId = getUserId(auth);
         if (userId == null || submissionId == null) return false;
-        
+
         Optional<Submission> opt = submissionRepository.findById(submissionId);
         if (opt.isEmpty()) return false;
         return isChallengeEmployer(auth, opt.get().getChallengeId());
@@ -174,28 +186,19 @@ public class SecurityService {
 
     public boolean canViewPassport(Authentication auth, String targetUserId) {
         Optional<Passport> opt = passportRepository.findByUserId(targetUserId);
-        if (opt.isEmpty()) return false; // Doesn't exist, can't view
+        if (opt.isEmpty()) return false;
         Passport p = opt.get();
 
-        // If public (checking both nested privacy and legacy visibility), allow all
-        boolean isPublic = false;
-        if (p.getPrivacy() != null) {
-            isPublic = p.getPrivacy().isPublic();
-        } else {
-            isPublic = p.isVisibility();
-        }
-
+        boolean isPublic = p.getPrivacy() != null ? p.getPrivacy().isPublic() : p.isVisibility();
         if (isPublic) return true;
 
-        // If private, only owner or admin can view
         if (auth == null || !auth.isAuthenticated() || !(auth.getPrincipal() instanceof UserPrincipal)) {
             return false;
         }
         UserPrincipal principal = (UserPrincipal) auth.getPrincipal();
         String currentUserId = principal.getUserId();
-        
         if (currentUserId.equals(targetUserId)) return true;
-        
+
         return principal.getAuthorities().stream()
                 .anyMatch(a -> a.getAuthority().equals("ADMIN") || a.getAuthority().equals("ROLE_ADMIN"));
     }
