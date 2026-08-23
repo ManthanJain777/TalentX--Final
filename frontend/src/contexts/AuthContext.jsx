@@ -10,27 +10,20 @@ export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const bootstrapSession = async () => {
+    const bootstrap = async () => {
       try {
-        // The backend sets the XSRF-TOKEN cookie here. Axios then sends it
-        // automatically as X-XSRF-TOKEN on state-changing requests.
         await api.get('/auth/csrf');
       } catch (error) {
-        // Authentication can still be checked; a CSRF failure is surfaced
-        // when a state-changing request is attempted.
-        console.warn('CSRF bootstrap failed:', error);
+        console.error('CSRF bootstrap failed', error);
       }
 
       try {
         const res = await api.get('/auth/me');
-        if (res?.data?.data?.user) {
+        if (res.data?.data?.user) {
           setUser(res.data.data.user);
           setIsAuthenticated(true);
-        } else {
-          setUser(null);
-          setIsAuthenticated(false);
         }
-      } catch (error) {
+      } catch {
         setUser(null);
         setIsAuthenticated(false);
       } finally {
@@ -38,24 +31,19 @@ export const AuthProvider = ({ children }) => {
       }
     };
 
-    bootstrapSession();
+    bootstrap();
   }, []);
 
   const login = async (email, password) => {
     try {
+      // Refresh the CSRF token immediately before authentication.
       await api.get('/auth/csrf');
       const res = await api.post('/auth/login', { email, password });
       const { user: activeUser } = res.data.data;
-
       setUser(activeUser);
       setIsAuthenticated(true);
-
       toast.success(`Welcome back, ${activeUser.fullName} (${activeUser.role.toUpperCase()})`, {
-        style: {
-          background: '#142544',
-          color: '#FFFFFF',
-          border: '1px solid #C7A868',
-        },
+        style: { background: '#142544', color: '#FFFFFF', border: '1px solid #C7A868' },
       });
       return activeUser;
     } catch (error) {
@@ -70,7 +58,7 @@ export const AuthProvider = ({ children }) => {
       const endpoint = role === 'employer' ? '/auth/register/employer' : '/auth/register/candidate';
       await api.post(endpoint, userData);
       toast.success('Registration successful. Please login.', {
-        style: { background: '#142544', color: '#FFFFFF', border: '1px solid #C7A868' }
+        style: { background: '#142544', color: '#FFFFFF', border: '1px solid #C7A868' },
       });
       return true;
     } catch (error) {
@@ -83,43 +71,26 @@ export const AuthProvider = ({ children }) => {
     try {
       await api.get('/auth/csrf');
       await api.post('/auth/logout');
-    } catch (e) {
-      console.error('Logout failed on server, clearing local state anyway', e);
+    } catch (error) {
+      console.error('Logout failed on server, clearing local state anyway', error);
     }
     setUser(null);
     setIsAuthenticated(false);
+    localStorage.removeItem('talentx_user');
     toast.success('Logged out successfully', {
-      style: {
-        background: '#142544',
-        color: '#FFFFFF',
-        border: '1px solid rgba(255,255,255,0.1)',
-      },
+      style: { background: '#142544', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.1)' },
     });
     window.location.href = '/';
   };
 
-  const updateUser = (updates) => {
-    setUser((prev) => ({
-      ...prev,
-      ...updates,
-    }));
-  };
+  const updateUser = (updates) => setUser((prev) => (prev ? { ...prev, ...updates } : prev));
 
   if (isLoading) {
     return <div className="min-h-screen bg-[#111827] flex items-center justify-center text-white">Loading...</div>;
   }
 
   return (
-    <AuthContext.Provider
-      value={{
-        user,
-        isAuthenticated,
-        login,
-        register,
-        logout,
-        updateUser,
-      }}
-    >
+    <AuthContext.Provider value={{ user, isAuthenticated, login, register, logout, updateUser }}>
       {children}
     </AuthContext.Provider>
   );
@@ -127,9 +98,7 @@ export const AuthProvider = ({ children }) => {
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
+  if (!context) throw new Error('useAuth must be used within an AuthProvider');
   return context;
 };
 
