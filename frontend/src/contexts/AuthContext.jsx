@@ -9,12 +9,21 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Verify token on load via API (relies on HttpOnly cookie being sent)
   useEffect(() => {
-    const verifyAuth = async () => {
+    const bootstrapSession = async () => {
       try {
-        const res = await api.get('/auth/me').catch(() => null);
-        if (res && res.data?.data?.user) {
+        // The backend sets the XSRF-TOKEN cookie here. Axios then sends it
+        // automatically as X-XSRF-TOKEN on state-changing requests.
+        await api.get('/auth/csrf');
+      } catch (error) {
+        // Authentication can still be checked; a CSRF failure is surfaced
+        // when a state-changing request is attempted.
+        console.warn('CSRF bootstrap failed:', error);
+      }
+
+      try {
+        const res = await api.get('/auth/me');
+        if (res?.data?.data?.user) {
           setUser(res.data.data.user);
           setIsAuthenticated(true);
         } else {
@@ -28,17 +37,19 @@ export const AuthProvider = ({ children }) => {
         setIsLoading(false);
       }
     };
-    verifyAuth();
+
+    bootstrapSession();
   }, []);
 
   const login = async (email, password) => {
     try {
+      await api.get('/auth/csrf');
       const res = await api.post('/auth/login', { email, password });
       const { user: activeUser } = res.data.data;
-      
+
       setUser(activeUser);
       setIsAuthenticated(true);
-      
+
       toast.success(`Welcome back, ${activeUser.fullName} (${activeUser.role.toUpperCase()})`, {
         style: {
           background: '#142544',
@@ -55,7 +66,8 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (userData, role) => {
     try {
-      let endpoint = role === 'employer' ? '/auth/register/employer' : '/auth/register/candidate';
+      await api.get('/auth/csrf');
+      const endpoint = role === 'employer' ? '/auth/register/employer' : '/auth/register/candidate';
       await api.post(endpoint, userData);
       toast.success('Registration successful. Please login.', {
         style: { background: '#142544', color: '#FFFFFF', border: '1px solid #C7A868' }
@@ -69,9 +81,10 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
+      await api.get('/auth/csrf');
       await api.post('/auth/logout');
     } catch (e) {
-      console.error("Logout failed on server, clearing local state anyway", e);
+      console.error('Logout failed on server, clearing local state anyway', e);
     }
     setUser(null);
     setIsAuthenticated(false);
