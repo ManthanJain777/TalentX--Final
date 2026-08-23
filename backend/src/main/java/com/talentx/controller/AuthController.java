@@ -7,14 +7,20 @@ import com.talentx.dto.response.ApiResponse;
 import com.talentx.dto.response.JwtAuthenticationResponse;
 import com.talentx.security.JwtUtil;
 import com.talentx.service.AuthService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -30,16 +36,28 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
-    @org.springframework.beans.factory.annotation.Value("${app.security.cookie.secure:true}")
+    @Value("${app.security.cookie.secure:false}")
     private boolean secureCookie;
 
+    /**
+     * Bootstraps the browser CSRF cookie. This endpoint is intentionally public;
+     * the token only authorizes the browser origin and does not authenticate a user.
+     */
+    @GetMapping("/csrf")
+    public ResponseEntity<ApiResponse<String>> csrf(CsrfToken csrfToken) {
+        return ResponseEntity.ok(ApiResponse.success("CSRF token issued", csrfToken.getToken()));
+    }
+
     @PostMapping("/login")
-    public ResponseEntity<ApiResponse<JwtAuthenticationResponse>> login(@Valid @RequestBody LoginRequest request, jakarta.servlet.http.HttpServletRequest httpRequest) {
+    public ResponseEntity<ApiResponse<JwtAuthenticationResponse>> login(
+            @Valid @RequestBody LoginRequest request,
+            HttpServletRequest httpRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
         );
 
-        com.talentx.security.UserPrincipal userPrincipal = (com.talentx.security.UserPrincipal) authentication.getPrincipal();
+        com.talentx.security.UserPrincipal userPrincipal =
+                (com.talentx.security.UserPrincipal) authentication.getPrincipal();
         String role = userPrincipal.getAuthorities().iterator().next().getAuthority();
         String jwt = jwtUtil.generateToken(userPrincipal.getUsername(), userPrincipal.getUserId(), role);
 
@@ -49,48 +67,47 @@ public class AuthController {
         }
         String userAgent = httpRequest.getHeader("User-Agent");
 
-        // Call your existing AuthService to capture login
         authService.captureLoginDetails(request.getEmail(), ipAddress, userAgent);
-        
         Object userObj = authService.getMe(userPrincipal.getUsername()).get("user");
 
         JwtAuthenticationResponse response = new JwtAuthenticationResponse(
-                null, // JWT is now in cookie
-                userPrincipal.getUserId(), 
+                null,
+                userPrincipal.getUserId(),
                 role,
                 userObj
         );
 
-        org.springframework.http.ResponseCookie cookie = org.springframework.http.ResponseCookie.from("talentx_token", jwt)
+        ResponseCookie cookie = ResponseCookie.from("talentx_token", jwt)
                 .httpOnly(true)
                 .secure(secureCookie)
                 .path("/")
                 .maxAge(24 * 60 * 60)
-                .sameSite("Lax") // Changed to Lax since we are dealing with cross-site navigations/SPA setups in some dev environments.
+                .sameSite("Lax")
                 .build();
 
         return ResponseEntity.ok()
-                .header(org.springframework.http.HttpHeaders.SET_COOKIE, cookie.toString())
+                .header(HttpHeaders.SET_COOKIE, cookie.toString())
                 .body(ApiResponse.success("Login successful", response));
     }
 
     @PostMapping("/logout")
     public ResponseEntity<ApiResponse<String>> logout() {
-        org.springframework.http.ResponseCookie cookie = org.springframework.http.ResponseCookie.from("talentx_token", "")
+        ResponseCookie cookie = ResponseCookie.from("talentx_token", "")
                 .httpOnly(true)
                 .secure(secureCookie)
                 .path("/")
                 .maxAge(0)
                 .sameSite("Lax")
                 .build();
+        SecurityContextHolder.clearContext();
         return ResponseEntity.ok()
-                .header(org.springframework.http.HttpHeaders.SET_COOKIE, cookie.toString())
+                .header(HttpHeaders.SET_COOKIE, cookie.toString())
                 .body(ApiResponse.success("Logout successful", null));
     }
 
     @PostMapping("/register/candidate")
-    public ResponseEntity<ApiResponse<String>> registerCandidate(@Valid @RequestBody RegisterCandidateRequest request) {
-        // Call your existing AuthService logic
+    public ResponseEntity<ApiResponse<String>> registerCandidate(
+            @Valid @RequestBody RegisterCandidateRequest request) {
         authService.registerCandidate(
                 request.getEmail(),
                 request.getPassword(),
@@ -102,8 +119,8 @@ public class AuthController {
     }
 
     @PostMapping("/register/employer")
-    public ResponseEntity<ApiResponse<String>> registerEmployer(@Valid @RequestBody RegisterEmployerRequest request) {
-        // Call your existing AuthService logic
+    public ResponseEntity<ApiResponse<String>> registerEmployer(
+            @Valid @RequestBody RegisterEmployerRequest request) {
         authService.registerEmployer(
                 request.getEmail(),
                 request.getPassword(),
@@ -115,11 +132,15 @@ public class AuthController {
 
     @GetMapping("/me")
     public ResponseEntity<ApiResponse<java.util.Map<String, Object>>> getMe(Authentication authentication) {
-        if (authentication == null || !authentication.isAuthenticated() || !(authentication.getPrincipal() instanceof com.talentx.security.UserPrincipal)) {
+        if (authentication == null || !authentication.isAuthenticated()
+                || !(authentication.getPrincipal() instanceof com.talentx.security.UserPrincipal)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(ApiResponse.error("Unauthorized: No active session"));
         }
-        com.talentx.security.UserPrincipal userPrincipal = (com.talentx.security.UserPrincipal) authentication.getPrincipal();
-        return ResponseEntity.ok(ApiResponse.success("User fetched successfully", authService.getMe(userPrincipal.getUsername())));
+        com.talentx.security.UserPrincipal userPrincipal =
+                (com.talentx.security.UserPrincipal) authentication.getPrincipal();
+        return ResponseEntity.ok(
+                ApiResponse.success("User fetched successfully", authService.getMe(userPrincipal.getUsername()))
+        );
     }
 }
