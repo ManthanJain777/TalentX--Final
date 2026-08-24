@@ -48,15 +48,10 @@ public class ProjectController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Project> getProject(@PathVariable String id, Authentication authentication) {
-        var user = (com.talentx.security.UserPrincipal) authentication.getPrincipal();
+    @PreAuthorize("@securityService.isProjectMember(authentication, #id) or hasRole('ADMIN')")
+    public ResponseEntity<Project> getProject(@PathVariable("id") String id, Authentication authentication) {
         Project project = projectRepository.findById(id)
                 .orElseThrow(() -> new com.talentx.exception.ResourceNotFoundException("Project not found"));
-        String role = user.getAuthorities().iterator().next().getAuthority();
-        if (!project.getEmployerId().equals(user.getUserId()) && !project.getFreelancerId().equals(user.getUserId())
-                && !"ROLE_ADMIN".equals(role) && !"ADMIN".equals(role)) {
-            throw new AccessDeniedException("You are not authorized to view this project");
-        }
         return ResponseEntity.ok(project);
     }
 
@@ -67,42 +62,13 @@ public class ProjectController {
     }
 
     @PatchMapping("/{id}/status")
-    public ResponseEntity<Project> updateStatus(@PathVariable String id, @RequestParam String status, Authentication authentication) {
-        if (status == null) throw new IllegalArgumentException("Status is required");
-        status = status.trim().toUpperCase();
-        if (!VALID_STATUSES.contains(status)) throw new IllegalArgumentException("Invalid project status: " + status);
-
-        var user = (com.talentx.security.UserPrincipal) authentication.getPrincipal();
-        Project project = projectRepository.findById(id)
-                .orElseThrow(() -> new com.talentx.exception.ResourceNotFoundException("Project not found"));
+    public ResponseEntity<Project> updateStatus(@PathVariable("id") String id, @RequestParam String status, Authentication authentication) {
+        com.talentx.security.UserPrincipal user = (com.talentx.security.UserPrincipal) authentication.getPrincipal();
         String role = user.getAuthorities().iterator().next().getAuthority();
-        boolean admin = "ROLE_ADMIN".equals(role) || "ADMIN".equals(role);
-        boolean employer = user.getUserId().equals(project.getEmployerId());
-        boolean freelancer = user.getUserId().equals(project.getFreelancerId());
-        if (!employer && !freelancer && !admin) throw new AccessDeniedException("Not a project member");
+        boolean isAdmin = "ROLE_ADMIN".equals(role) || "ADMIN".equals(role);
 
-        String current = project.getStatus() == null ? "DRAFT" : project.getStatus().toUpperCase();
-        if (current.equals(status)) return ResponseEntity.ok(project);
-
-        boolean allowed;
-        if (admin) {
-            allowed = true;
-        } else if ("DRAFT".equals(current)) {
-            allowed = employer && "ACTIVE".equals(status);
-        } else if ("ACTIVE".equals(current)) {
-            allowed = (employer && Set.of("PAUSED", "COMPLETED").contains(status))
-                    || ((employer || freelancer) && "DISPUTED".equals(status));
-        } else if ("PAUSED".equals(current)) {
-            allowed = employer && Set.of("ACTIVE", "COMPLETED").contains(status);
-        } else if ("DISPUTED".equals(current)) {
-            allowed = admin || (employer && "COMPLETED".equals(status));
-        } else {
-            allowed = false;
-        }
-        if (!allowed) throw new AccessDeniedException("Invalid project status transition: " + current + " -> " + status);
-
-        project.setStatus(status);
-        return ResponseEntity.ok(projectRepository.save(project));
+        Project updatedProject = projectService.transitionProjectState(id, status, user.getUserId(), isAdmin);
+        return ResponseEntity.ok(updatedProject);
     }
 
     @GetMapping("/{id}/escrow")
