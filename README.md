@@ -69,7 +69,7 @@ Whether you are a professional building a "Skill Passport" or an employer seekin
 Watch the TalentX platform in action:
 
 <div align="center">
-  <video src="linkedin/media1.mp4" controls="controls" width="100%"></video>
+  <video src="https://github.com/ManthanJain777/TalentX--Final/raw/main/linkedin/media1.mp4" controls="controls" width="100%"></video>
 </div>
 
 ---
