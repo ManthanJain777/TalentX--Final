@@ -17,10 +17,12 @@ public class ProjectService {
 
     private final ProjectDao projectDao;
     private final MilestoneRepository milestoneRepository;
+    private final com.talentx.repository.ProjectRepository projectRepository;
 
-    public ProjectService(ProjectDao projectDao, MilestoneRepository milestoneRepository) {
+    public ProjectService(ProjectDao projectDao, MilestoneRepository milestoneRepository, com.talentx.repository.ProjectRepository projectRepository) {
         this.projectDao = projectDao;
         this.milestoneRepository = milestoneRepository;
+        this.projectRepository = projectRepository;
     }
 
     public Project createProject(String employerId, CreateProjectRequest request) {
@@ -77,5 +79,57 @@ public class ProjectService {
                 .createdAt(Instant.now())
                 .build();
         return projectDao.save(project);
+    }
+
+    public Project transitionProjectState(String projectId, String targetState, String userId, boolean isAdmin) {
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new IllegalArgumentException("Project not found"));
+                
+        boolean isEmployer = project.getEmployerId() != null && project.getEmployerId().equals(userId);
+        boolean isFreelancer = project.getFreelancerId() != null && project.getFreelancerId().equals(userId);
+
+        if (!isEmployer && !isFreelancer && !isAdmin) {
+            throw new org.springframework.security.access.AccessDeniedException("Not authorized to modify this project");
+        }
+
+        String currentState = project.getStatus();
+        if (currentState == null) currentState = "DRAFT";
+
+        // DAG Rules
+        if ("DRAFT".equals(targetState)) {
+            throw new IllegalArgumentException("Cannot revert project to DRAFT status");
+        }
+
+        switch (targetState) {
+            case "ACTIVE":
+                if (!isAdmin && !isEmployer) throw new org.springframework.security.access.AccessDeniedException("Only employer can activate");
+                if (!"DRAFT".equals(currentState) && !"PAUSED".equals(currentState)) {
+                    throw new IllegalArgumentException("Can only transition to ACTIVE from DRAFT or PAUSED");
+                }
+                break;
+            case "PAUSED":
+                if (!isAdmin && !isEmployer) throw new org.springframework.security.access.AccessDeniedException("Only employer can pause");
+                if (!"ACTIVE".equals(currentState)) {
+                    throw new IllegalArgumentException("Can only transition to PAUSED from ACTIVE");
+                }
+                break;
+            case "COMPLETED":
+                if (!isAdmin && !isEmployer) throw new org.springframework.security.access.AccessDeniedException("Only employer can complete");
+                if (!"ACTIVE".equals(currentState)) {
+                    throw new IllegalArgumentException("Can only transition to COMPLETED from ACTIVE");
+                }
+                break;
+            case "DISPUTED":
+                // Anyone involved can dispute an active or paused project
+                if (!"ACTIVE".equals(currentState) && !"PAUSED".equals(currentState)) {
+                    throw new IllegalArgumentException("Can only transition to DISPUTED from ACTIVE or PAUSED");
+                }
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown state: " + targetState);
+        }
+
+        project.setStatus(targetState);
+        return projectRepository.save(project);
     }
 }

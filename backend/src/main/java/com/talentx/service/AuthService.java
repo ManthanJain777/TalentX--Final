@@ -94,10 +94,12 @@ public class AuthService {
         // Gather security context data
         String ipAddress = httpReq != null ? httpReq.getRemoteAddr() : "Unknown";
         String userAgent = httpReq != null ? httpReq.getHeader("User-Agent") : "Unknown";
-        String location = "Unknown Location"; // getLocationFromIP(ipAddress);
+        
+        String location = getLocationFromIP(ipAddress);
+        String parsedBrowser = parseUserAgent(userAgent);
 
         // 🚀 SEND LOGIN ALERT EMAIL
-        emailService.sendLoginAlert(user, ipAddress, userAgent, location);
+        emailService.sendLoginAlert(user, ipAddress, parsedBrowser, location);
 
         Map<String, Object> response = new HashMap<>();
         response.put("token", "TOKEN_GENERATED_BY_CONTROLLER");
@@ -143,9 +145,48 @@ public class AuthService {
     public void captureLoginDetails(String email, String ipAddress, String userAgent) {
         User user = userDao.findByEmail(email).orElse(null);
         if (user != null) {
-            String location = "Location Lookup Disabled"; // Usually requires GeoIP API
-            emailService.sendLoginAlert(user, ipAddress, userAgent, location);
+            String location = getLocationFromIP(ipAddress);
+            String parsedBrowser = parseUserAgent(userAgent);
+            emailService.sendLoginAlert(user, ipAddress, parsedBrowser, location);
         }
+    }
+
+    private String getLocationFromIP(String ip) {
+        if (ip == null || ip.equals("127.0.0.1") || ip.equals("0:0:0:0:0:0:0:1") || ip.equals("localhost")) {
+            return "Local System";
+        }
+        try {
+            org.springframework.web.client.RestTemplate restTemplate = new org.springframework.web.client.RestTemplate();
+            java.util.Map<String, Object> response = restTemplate.getForObject("http://ip-api.com/json/" + ip, java.util.Map.class);
+            if (response != null && "success".equals(response.get("status"))) {
+                String city = (String) response.get("city");
+                String country = (String) response.get("country");
+                return (city != null ? city + ", " : "") + (country != null ? country : "Unknown");
+            }
+        } catch (Exception e) {
+            // Silently fall back
+        }
+        return "Unknown Location";
+    }
+
+    private String parseUserAgent(String ua) {
+        if (ua == null) return "Unknown Browser";
+        
+        String browser = "Unknown";
+        if (ua.contains("Edg")) browser = "Microsoft Edge";
+        else if (ua.contains("OPR") || ua.contains("Opera")) browser = "Opera";
+        else if (ua.contains("Chrome")) browser = "Google Chrome";
+        else if (ua.contains("Firefox")) browser = "Mozilla Firefox";
+        else if (ua.contains("Safari")) browser = "Apple Safari";
+        
+        String os = "Unknown OS";
+        if (ua.contains("Windows")) os = "Windows";
+        else if (ua.contains("Mac OS X")) os = "macOS";
+        else if (ua.contains("Linux")) os = "Linux";
+        else if (ua.contains("Android")) os = "Android";
+        else if (ua.contains("iPhone") || ua.contains("iPad")) os = "iOS";
+        
+        return browser + " on " + os;
     }
 
     public void registerCandidate(String email, String password, String firstName, String lastName) {

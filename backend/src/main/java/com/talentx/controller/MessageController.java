@@ -1,8 +1,13 @@
 package com.talentx.controller;
 
 import com.talentx.model.Message;
+import com.talentx.model.Project;
 import com.talentx.repository.MessageRepository;
+import com.talentx.repository.ProjectRepository;
+import com.talentx.security.SecurityService;
+import com.talentx.security.UserPrincipal;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -13,55 +18,62 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/messages")
 public class MessageController {
-
     private final MessageRepository messageRepository;
-    private final com.talentx.security.SecurityService securityService;
+    private final ProjectRepository projectRepository;
+    private final SecurityService securityService;
 
-    public MessageController(MessageRepository messageRepository,
-                             com.talentx.security.SecurityService securityService) {
+    public MessageController(MessageRepository messageRepository, ProjectRepository projectRepository, SecurityService securityService) {
         this.messageRepository = messageRepository;
+        this.projectRepository = projectRepository;
         this.securityService = securityService;
     }
 
     @GetMapping({"/project/{projectId}", "/{projectId}"})
     @PreAuthorize("@securityService.isProjectMember(authentication, #projectId)")
-    public ResponseEntity<List<Message>> getProjectMessages(@PathVariable("projectId") String projectId) {
+    public ResponseEntity<List<Message>> getProjectMessages(@PathVariable String projectId) {
         return ResponseEntity.ok(messageRepository.findByProjectIdOrderBySentAtAsc(projectId));
     }
 
     @PostMapping
     public ResponseEntity<Message> sendMessage(@RequestBody Message message, Authentication authentication) {
-        if (!securityService.canMessageProjectMember(authentication, message.getProjectId(), message.getReceiverId())) {
-            throw new org.springframework.security.access.AccessDeniedException("Messages can only be sent between members of the same project");
+        if (message.getProjectId() == null || !securityService.isProjectMember(authentication, message.getProjectId())) {
+            throw new AccessDeniedException("Not a member of this project");
         }
 
-        com.talentx.security.UserPrincipal principal =
-                (com.talentx.security.UserPrincipal) authentication.getPrincipal();
-        message.setId(null);
-        message.setSenderId(principal.getUserId());
-        message.setSenderName(principal.getUsername());
-        message.setSentAt(Instant.now());
-        message.setRead(false);
-        return ResponseEntity.ok(messageRepository.save(message));
+        Project project = projectRepository.findById(message.getProjectId())
+                .orElseThrow(() -> new com.talentx.exception.ResourceNotFoundException("Project not found"));
+        UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
+        String senderId = principal.getUserId();
+        String receiverId = message.getReceiverId();
+        if (receiverId == null || (!receiverId.equals(project.getEmployerId()) && !receiverId.equals(project.getFreelancerId())) || receiverId.equals(senderId)) {
+            throw new AccessDeniedException("Receiver must be the other participant in this project");
+        }
+
+        Message outgoing = new Message();
+        outgoing.setProjectId(project.getId());
+        outgoing.setSenderId(senderId);
+        outgoing.setSenderName(principal.getUsername());
+        outgoing.setReceiverId(receiverId);
+        outgoing.setContent(message.getContent());
+        outgoing.setSentAt(Instant.now());
+        outgoing.setRead(false);
+        return ResponseEntity.ok(messageRepository.save(outgoing));
     }
 
     @GetMapping("/unread/{receiverId}")
     @PreAuthorize("authentication.principal.userId == #receiverId")
-    public ResponseEntity<List<Message>> getUnread(@PathVariable("receiverId") String receiverId) {
+    public ResponseEntity<List<Message>> getUnread(@PathVariable String receiverId) {
         return ResponseEntity.ok(messageRepository.findByReceiverIdAndReadFalse(receiverId));
     }
 
     @PatchMapping("/{id}/read")
-    public ResponseEntity<Message> markAsRead(@PathVariable("id") String id, Authentication authentication) {
+    public ResponseEntity<Message> markAsRead(@PathVariable String id, Authentication authentication) {
         Message msg = messageRepository.findById(id)
                 .orElseThrow(() -> new com.talentx.exception.ResourceNotFoundException("Message not found"));
-
-        com.talentx.security.UserPrincipal principal =
-                (com.talentx.security.UserPrincipal) authentication.getPrincipal();
+        UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
         if (!principal.getUserId().equals(msg.getReceiverId())) {
-            throw new org.springframework.security.access.AccessDeniedException("Cannot mark another user's message as read");
+            throw new AccessDeniedException("Cannot mark another user's message as read");
         }
-
         msg.setRead(true);
         return ResponseEntity.ok(messageRepository.save(msg));
     }

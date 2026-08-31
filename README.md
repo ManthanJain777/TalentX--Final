@@ -1,144 +1,153 @@
 <div align="center">
-  <div style="width: 80px; height: 80px; border-radius: 50%; border: 3px solid #C7A868; display: inline-flex; align-items: center; justify-content: center; background: #111827; margin-bottom: 20px;">
-    <div style="width: 16px; height: 16px; border-radius: 50%; background: #C7A868;"></div>
-  </div>
+  <img src="preview/logo.jpg" alt="TalentX Logo" width="250" style="border-radius: 20px; margin-bottom: 15px;" />
   
-  # TALENT<span style="color: #C7A868;">X</span>
-  **The Proof-First Talent Ecosystem**
+  <h1>TalentX - The Verified Talent Marketplace</h1>
+  
+  <p>
+    Bridging the gap between skilled professionals and employers through verified competence.
+  </p>
+  
+  <p>
+    <a href="https://talentx-h7lr.onrender.com"><strong>View Live Demo</strong></a> ·
+    <a href="#features"><strong>Explore Features</strong></a> ·
+    <a href="#getting-started"><strong>Getting Started</strong></a>
+  </p>
 
-  [![React](https://img.shields.io/badge/React-18-blue.svg?style=for-the-badge&logo=react)](https://reactjs.org/)
-  [![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.2-6DB33F.svg?style=for-the-badge&logo=spring)](https://spring.io/projects/spring-boot)
-  [![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248.svg?style=for-the-badge&logo=mongodb)](https://www.mongodb.com/)
-  [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC.svg?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
+  <p>
+    <img src="https://img.shields.io/badge/React-19-blue?style=for-the-badge&logo=react" alt="React" />
+    <img src="https://img.shields.io/badge/Java-21-orange?style=for-the-badge&logo=openjdk" alt="Java" />
+    <img src="https://img.shields.io/badge/Spring_Boot-3-brightgreen?style=for-the-badge&logo=spring" alt="Spring Boot" />
+    <img src="https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB" />
+    <img src="https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white" alt="Docker" />
+  </p>
 </div>
 
-<br/>
+<br />
 
-**TALENTX** is a revolutionary verified talent marketplace built to disrupt traditional hiring. By replacing subjective resumes with cryptographically backed **Talent Passports**, integrating **Milestone Escrow** contracts, and leveraging an **Explainable AI Matching Engine**, TALENTX connects elite engineering talent with premier employers in a zero-trust environment.
+## 📖 Overview
 
----
+The hiring landscape is broken. Resumes are easily exaggerated, and finding candidates with genuinely verified skills takes far too much time. **TalentX** is a modern full-stack web application designed to solve this problem by ensuring that every skill, milestone, and project on a candidate's profile is authentically verified.
 
-## 🌟 Core Architecture & Features
-
-### 1. 🛡️ The Talent Passport (Proof-of-Work Identity)
-The traditional resume is dead. In its place is the Talent Passport—a dynamic, immutable record of a candidate's actual capabilities.
-*   **Verification Tiers:** Skills are not just listed; they are ranked by verification level (`SELF_REPORTED`, `PEER_REVIEWED`, `ASSESSED`, `PROVEN_IN_WORK`).
-*   **Live Metrics:** Real-time calculation of verified sources (GitHub, authenticated certifications, on-platform project escrow completion).
-*   **Encrypted Privacy:** Candidates have granular control over their discoverability, with sensitive data protected by AES-256 encryption.
-
-### 2. 🧠 Explainable AI Matching Engine
-Employers no longer rely on boolean keyword searches. 
-*   **Contextual Matching:** The backend algorithm scores candidates based on weighted skill vectors, project success rates, and verification tiers.
-*   **Explainability:** Employers see exactly *why* a candidate matched their opportunity (e.g., "94% Match: Strong overlap in Spring Boot & Microservices, proven through 3 escrowed projects").
-
-### 3. 💼 Milestone Escrow System
-For freelance or contract opportunities, TALENTX ensures fair play.
-*   **Smart Milestones:** Projects are broken into funding milestones.
-*   **Zero-Trust Funding:** Employers deposit funds; candidates execute the work. Funds are only released upon cryptographic approval by the employer.
-*   **Automated Dispute Resolution:** Built-in mediation workflow for stalled milestones.
-
-### 4. 🎨 "Beast Mode" UX/UI
-A visually stunning, ultra-premium interface designed with the **Ivory, Gold, and Ink** palette.
-*   **Glassmorphism & Aurora:** High-end aesthetic utilizing frosted glass panels and fluid gradient animations.
-*   **Framer Motion:** Snappy, physics-based micro-interactions that make the platform feel alive.
-*   **Cinematic Canvas:** Advanced 3D/Canvas hero sections utilizing React Bits and Three.js dependencies.
+Whether you are a professional building a "Skill Passport" or an employer seeking guaranteed talent, TalentX provides a seamless, secure, and intuitive platform to connect and collaborate.
 
 ---
 
-## 🛠️ Technology Stack
+## ✨ Key Features
 
-| Layer | Technologies Used |
-| :--- | :--- |
-| **Frontend** | React 18, Vite, Tailwind CSS, Framer Motion, React Router DOM, Axios, Lucide React |
-| **Backend** | Java 21, Spring Boot 3.2, Spring Security, Spring Data MongoDB, Thymeleaf (Email), JavaMailSender |
-| **Database** | MongoDB Atlas (NoSQL) |
-| **Security** | JWT (JSON Web Tokens), AES-256 Encryption, BCrypt Password Hashing |
+- 🛂 **Verified Skill Passports:** Candidates build comprehensive profiles with verifiable evidence and milestone tracking.
+- 🔍 **Seamless Discovery:** Advanced search and matching algorithms for employers to find exact-fit talent.
+- 🔒 **Secure Collaboration:** Integrated milestone tracking and Escrow management for project deliverables.
+- 🎨 **Immersive UI/UX:** A sleek, dark-mode dashboard built with Tailwind CSS, Framer Motion, GSAP, and Three.js.
+- 🛡️ **Enterprise Security:** JWT-based stateless authentication and Spring Security authorization.
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+- **Framework:** React 19 + Vite
+- **Styling:** Tailwind CSS, Radix UI
+- **Animations:** Framer Motion, GSAP, React Three Fiber (Three.js)
+- **Forms & Validation:** React Hook Form, Zod
+- **Routing:** React Router DOM v7
+
+### Backend
+- **Core:** Java 21, Spring Boot 3
+- **Security:** Spring Security, JWT
+- **Database:** MongoDB (Spring Data MongoDB)
+- **Email:** Spring Mail (Transactional notifications)
+
+### DevOps & Deployment
+- **Containerization:** Docker (Multi-stage builds)
+- **CI/CD:** GitHub Actions
+- **Hosting:** Render.com (Monolithic deployment)
+
+---
+
+## 🎥 Platform Demo
+
+Watch the TalentX platform in action:
+
+<div align="center">
+  <video src="https://github.com/ManthanJain777/TalentX--Final/raw/main/preview/media1.mp4" controls="controls" width="100%"></video>
+</div>
+
+---
+
+## 📸 Platform Previews
+
+| Feature | Interface |
+| :---: | :---: |
+| <img src="preview/image1.png" width="400" /> | <img src="preview/image2.png" width="400" /> |
+| <img src="preview/image7.png" width="400" /> | <img src="preview/image8.png" width="400" /> |
 
 ---
 
 ## 🚀 Getting Started
 
+Follow these instructions to set up the project locally for development and testing.
+
 ### Prerequisites
-Before you begin, ensure you have the following installed:
-*   [Node.js](https://nodejs.org/) (v18+)
-*   [Java 21](https://www.oracle.com/java/technologies/javase/jdk21-archive-downloads.html)
-*   [Maven](https://maven.apache.org/)
-*   A [MongoDB Atlas](https://www.mongodb.com/) account (or local MongoDB instance)
+- Node.js (v20+)
+- Java JDK 21
+- Maven
+- MongoDB (Running locally or MongoDB Atlas)
+- Docker (Optional)
 
-### 1. Backend Setup
+### Local Development
 
-1. Navigate to the backend directory:
-   ```bash
-   cd backend
-   ```
-2. Create your environment variables file:
-   ```bash
-   cp .env.example .env
-   ```
-3. **Configure `.env`**: Open the `.env` file and insert your MongoDB URI, a secure 32+ character `JWT_SECRET`, an exact 32-character `AES_SECRET`, and your SMTP email credentials.
-4. Run the Spring Boot server:
-   ```bash
-   mvn spring-boot:run
-   ```
-   *The server will start on `http://localhost:8080`.*
+**1. Clone the repository**
+```bash
+git clone https://github.com/ManthanJain777/TalentX--Final.git
+cd TalentX--Final
+```
 
-### 2. Frontend Setup
+**2. Setup Backend Environment Variables**
+Navigate to the backend directory and create an environment file:
+```bash
+cd backend
+cp .env.example .env
+```
+*Populate the `.env` file with your MongoDB URI, JWT Secret, and SMTP credentials.*
 
-1. Open a new terminal and navigate to the frontend directory:
-   ```bash
-   cd frontend
-   ```
-2. Create your environment variables file:
-   ```bash
-   cp .env.example .env
-   ```
-   *(Ensure `VITE_API_URL` points to your backend).*
-3. Install dependencies:
-   *Note: Due to advanced Three.js UI components, legacy peer dependencies are required.*
-   ```bash
-   npm install --legacy-peer-deps
-   ```
-4. Start the development server:
-   ```bash
-   npm run dev
-   ```
-   *The application will be available at `http://localhost:3000` (or the port specified by Vite).*
+**3. Run the Backend (Spring Boot)**
+```bash
+mvn spring-boot:run
+```
+*The backend will start on `http://localhost:8080`.*
+
+**4. Run the Frontend (React/Vite)**
+Open a new terminal and navigate to the frontend directory:
+```bash
+cd frontend
+npm install
+npm run dev
+```
+*The frontend will start on `http://localhost:3000`.*
 
 ---
 
-## 📂 Project Structure
+## 🐳 Docker Deployment
 
-```text
-TALENTX/
-├── backend/
-│   ├── src/main/java/com/talentx/
-│   │   ├── config/       # Security & App Configurations (CORS, JWT)
-│   │   ├── controller/   # REST API Endpoints
-│   │   ├── dao/          # Data Access Objects (MongoDB abstractions)
-│   │   ├── model/        # Domain Models (User, Passport, Match, etc.)
-│   │   ├── service/      # Business Logic & Algorithms
-│   │   └── security/     # JWT Filters & Authentication logic
-│   └── src/main/resources/
-│       └── templates/email/  # Premium HTML Email Templates
-└── frontend/
-    ├── src/
-    │   ├── api/          # Axios interceptors and API services
-    │   ├── components/   # Modular React components (Candidate, Employer, UI)
-    │   ├── contexts/     # React Contexts (AuthContext)
-    │   ├── pages/        # Main route views
-    │   └── routes/       # React Router configurations & Protected Routes
-    └── index.css         # Tailwind directives & global styling
+The entire application (Frontend + Backend) can be run as a single cohesive unit using the provided multi-stage Dockerfile.
+
+```bash
+# Build the Docker image
+docker build -t talentx-app .
+
+# Run the container (make sure to pass environment variables)
+docker run -p 8080:8080 --env-file ./backend/.env talentx-app
 ```
 
 ---
 
-## 🔒 Security Practices
-*   **No Hardcoded Secrets:** All credentials, database URIs, and encryption keys are injected via `.env`.
-*   **GitIgnored Configurations:** The `.env` files are strictly excluded from version control.
-*   **State-less Auth:** Fully stateless JWT authentication prevents session hijacking and enables horizontal scaling.
-*   **Encrypted PII:** Sensitive Personally Identifiable Information (PII) is encrypted at rest using AES-256 in the MongoDB database.
+## 📄 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
+
 <div align="center">
-  <i>Developed with an obsession for flawless user experience and robust security.</i>
+  <b>Built by Manthan Jain</b><br/>
+  <a href="https://github.com/ManthanJain777">GitHub</a> • <a href="https://linkedin.com/in/manthanjain">LinkedIn</a>
 </div>
