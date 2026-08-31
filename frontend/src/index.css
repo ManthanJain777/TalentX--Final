@@ -2378,3 +2378,95 @@ p, span, div { font-family: 'Manrope', sans-serif; }
     background-position: -100% 0;
   }
 }
+
+/* ============================================================
+   RESPONSIVE DESIGN OVERRIDES (MOBILE & TABLET)
+   ============================================================ */
+@media (max-width: 968px) {
+  /* Landing Page Hero */
+  .hero {
+    grid-template-columns: 1fr;
+    padding-top: 120px;
+    gap: 32px;
+    text-align: center;
+  }
+  .hero-copy h1 {
+    font-size: clamp(32px, 8vw, 48px);
+  }
+  .hero-actions, .hero-meta {
+    justify-content: center;
+  }
+  
+  /* Match Panel */
+  .match-panel {
+    display: flex;
+    flex-direction: column;
+  }
+  .match-left {
+    border-right: none;
+    border-bottom: 1px solid rgba(199,168,104,0.1);
+    padding: 32px 24px;
+  }
+  
+  /* Rail / Timeline */
+  .rail {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px 0;
+  }
+  .rail-node:nth-child(n+5) {
+    display: none; /* Hide some nodes on small screens for clarity */
+  }
+
+  /* Table Compare */
+  .compare th, .compare td {
+    padding: 12px 10px;
+    font-size: 13px;
+  }
+
+  /* Footer */
+  .footer-grid {
+    text-align: center;
+  }
+  .footer-brand {
+    align-items: center;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Landing Page Hero 3D Card */
+  .passport-stage {
+    margin: 0 auto;
+  }
+
+  /* Grids */
+  .problem-grid, .stamp-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  /* Dashboard layout adjustments */
+  .card-passport {
+    padding: 20px;
+  }
+  
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  
+  .footer-bottom {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  .hero-actions .btn {
+    width: 100%;
+  }
+}
+

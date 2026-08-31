@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="linkedin/logo.jpg" alt="TalentX Logo" width="250" style="border-radius: 20px; margin-bottom: 15px;" />
+  <img src="preview/logo.jpg" alt="TalentX Logo" width="250" style="border-radius: 20px; margin-bottom: 15px;" />
   
   <h1>TalentX - The Verified Talent Marketplace</h1>
   
@@ -69,7 +69,7 @@ Whether you are a professional building a "Skill Passport" or an employer seekin
 Watch the TalentX platform in action:
 
 <div align="center">
-  <video src="https://github.com/ManthanJain777/TalentX--Final/raw/main/linkedin/media1.mp4" controls="controls" width="100%"></video>
+  <video src="https://github.com/ManthanJain777/TalentX--Final/raw/main/preview/media1.mp4" controls="controls" width="100%"></video>
 </div>
 
 ---
@@ -78,8 +78,8 @@ Watch the TalentX platform in action:
 
 | Feature | Interface |
 | :---: | :---: |
-| <img src="linkedin/image1.png" width="400" /> | <img src="linkedin/image2.png" width="400" /> |
-| <img src="linkedin/image7.png" width="400" /> | <img src="linkedin/image8.png" width="400" /> |
+| <img src="preview/image1.png" width="400" /> | <img src="preview/image2.png" width="400" /> |
+| <img src="preview/image7.png" width="400" /> | <img src="preview/image8.png" width="400" /> |
 
 ---
 
