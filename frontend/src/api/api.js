@@ -2,7 +2,9 @@ import axios from 'axios';
 import { toast } from 'react-hot-toast';
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8080/api',
+  // In production, this will use the relative path '/api', automatically appending to your Render URL.
+  // In local development, the Vite proxy in vite.config.js will forward '/api' to 'http://localhost:8080'.
+  baseURL: import.meta.env.VITE_API_URL || '/api',
   withCredentials: true,
   xsrfCookieName: 'XSRF-TOKEN',
   xsrfHeaderName: 'X-XSRF-TOKEN',
