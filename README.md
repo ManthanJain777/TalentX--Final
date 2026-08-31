@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="linkedin/image1.png" alt="TalentX Logo" width="200" />
+  <img src="linkedin/logo.jpg" alt="TalentX Logo" width="250" style="border-radius: 20px; margin-bottom: 15px;" />
   
   <h1>TalentX - The Verified Talent Marketplace</h1>
   
@@ -64,13 +64,22 @@ Whether you are a professional building a "Skill Passport" or an employer seekin
 
 ---
 
-## 📸 Screenshots
+## 🎥 Platform Demo
 
-*(Replace these paths with the actual paths or image URLs once you push to GitHub!)*
+Watch the TalentX platform in action:
 
-| Dashboard | Discovery |
+<div align="center">
+  <video src="linkedin/media1.mp4" controls="controls" width="100%"></video>
+</div>
+
+---
+
+## 📸 Platform Previews
+
+| Feature | Interface |
 | :---: | :---: |
-| <img src="linkedin/image2.png" width="400" /> | <img src="linkedin/image7.png" width="400" /> |
+| <img src="linkedin/image1.png" width="400" /> | <img src="linkedin/image2.png" width="400" /> |
+| <img src="linkedin/image7.png" width="400" /> | <img src="linkedin/image8.png" width="400" /> |
 
 ---
 
