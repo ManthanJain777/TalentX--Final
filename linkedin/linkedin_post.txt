@@ -1,0 +1,35 @@
+I'm excited to share my latest full-stack project: TalentX – A Verified Talent Marketplace designed to bridge the gap between skilled professionals and employers. 
+
+I built TalentX to solve a core issue in hiring: trusting candidate capabilities. Instead of standard resumes, TalentX uses "Verified Skill Passports" and milestones to prove competence.
+
+Here is how the platform works:
+1. Candidate Onboarding: Professionals create profiles and build their "Skill Passports" with verifiable evidence.
+2. Employer Discovery: Companies use advanced search and matching algorithms to find the exact talent they need.
+3. Secure Collaboration: Once matched, parties use our Escrow and Milestone tracking systems to manage deliverables securely.
+
+I architected and developed the entire application from scratch. Here is the tech stack I used to bring it to life:
+
+Frontend Architecture:
+- React 19 & Vite for high-performance rendering
+- Tailwind CSS & Radix UI for a fully responsive, accessible design system
+- Framer Motion, GSAP, & Three.js for immersive 3D and micro-animations
+- React Hook Form & Zod for robust client-side validation
+
+Backend & Database:
+- Java 21 & Spring Boot 3 for a secure, scalable REST API
+- Spring Security & JWT for stateless authentication
+- MongoDB for flexible, document-based data modeling
+- Spring Mail for transactional email notifications
+
+DevOps & Deployment:
+- Docker (Multi-stage builds combining the frontend and backend)
+- GitHub Actions for CI/CD pipelines
+
+I've attached a video walkthrough and some architectural screenshots below. I would love to connect with engineering leaders and recruiters who are looking for full-stack developers passionate about building secure, scalable products. 
+
+🔗 Live Demo: https://talentx-h7lr.onrender.com
+💻 GitHub Repo: https://github.com/ManthanJain777/TalentX--Final
+
+Feedback is always welcome!
+
+#FullStackDevelopment #SpringBoot #ReactJS #Java21 #SoftwareEngineering #TechCareers #Hiring
